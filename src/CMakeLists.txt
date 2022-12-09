@@ -1,0 +1,1 @@
+add_library(${PROJECT_NAME} connection.cpp commandhandler.cpp block.cpp entity.cpp util.cpp)
