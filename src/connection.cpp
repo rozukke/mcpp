@@ -1,7 +1,6 @@
 #include <string>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <iostream>
 #include <arpa/inet.h>
 #include <stdexcept>
 #include "connection.h"
@@ -30,7 +29,7 @@ SocketConnection::SocketConnection(string_view address_str, int port) {
 }
 
 void SocketConnection::conn() {
-    const int result = ::connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
+    const int result = ::connect(sockfd, (struct sockaddr *) &addr, sizeof(addr));
     if (result == -1) {
         throw std::runtime_error("Connection Failed");
     }
@@ -40,9 +39,9 @@ void SocketConnection::send(string_view data_str) const {
     ::send(sockfd, data_str.data(), data_str.length(), 0);
 }
 
-string SocketConnection::recv() {
+string SocketConnection::recv() const {
     char msg[MAX_PACKET_SIZE];
     const size_t bytes_received = ::recv(sockfd, msg, MAX_PACKET_SIZE, 0);
-    std::cout << (string)msg << "of size" << bytes_received <<std::endl;
-    return (string)msg;
+//    std::cout << (string)msg << "of size" << bytes_received <<std::endl;
+    return (string) msg;
 }

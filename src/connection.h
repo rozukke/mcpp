@@ -10,7 +10,7 @@ class SocketConnection {
 public:
     explicit SocketConnection(std::string_view address_str = "localhost", int port = 4711);
     void send(std::string_view data_str) const;
-    std::string recv();
+    std::string recv() const;
 
 private:
     const int INVALID_SOCKET = -1;
