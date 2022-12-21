@@ -6,5 +6,5 @@ bool BlockType::operator==(const BlockType &other) const {
 }
 
 BlockType BlockType::withData(int newData) const {
-    return BlockType(this->id, newData);
+    return {this->id, newData};
 }

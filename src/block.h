@@ -14,6 +14,7 @@ public:
 
 
 //using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
+// Use by calling Blocks::NAME
 struct Blocks {
     static constexpr BlockType AIR = BlockType(0);
     static constexpr BlockType STONE = BlockType(1);
