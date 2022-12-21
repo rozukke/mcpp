@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "../src/util.h"
+#include "../src/block.h"
 
 /*
  * Used to test code that is not connection dependent such as the implementation of Coordinate and various other
@@ -54,5 +55,25 @@ TEST_CASE("Test Coordinate class"){
 
         CHECK((testCoord == testCoordClone));
         CHECK((&testCoord != &testCoordClone));
+    }
+}
+
+TEST_CASE("Test block class") {
+    SUBCASE("Test init") {
+        BlockType testBlock(0);
+    }
+
+    SUBCASE("Test equality") {
+        BlockType testBlock(10, 2);
+        BlockType testBlockRHS(10, 2);
+        CHECK((testBlock == testBlockRHS));
+//        CHECK((testBlock == 10));
+    }
+
+    SUBCASE("Test withData") {
+        BlockType testBlock(10);
+        BlockType testBlockRHS(10, 2);
+        CHECK((testBlock.withData(2) == testBlockRHS));
+
     }
 }

@@ -1,7 +1,12 @@
 #include "doctest.h"
 #include "../src/connection.h"
+#include "../src/mcpp.h"
+#include "../src/util.h"
+#include "../src/block.h"
 
 using std::string;
+using namespace std::string_literals;
+using namespace mcpp;
 
 /*
  * All tests require a running instance of Spigot server with the ELCI plugin in order to run successfully. This
@@ -20,27 +25,78 @@ TEST_CASE("Socket connection test")
     SUBCASE("Test send") {
         //more or less manual test case used more so to check for errors sending
         tcp_conn.send("chat.post(test string)\n");
+        tcp_conn.send("player.setTile(100,100,100)\n");
     }
 
-    //TODO do additional tests on recv
     SUBCASE("Test receive") {
-        tcp_conn.send("world.setBlock(0,0,0,0)\n");
-        tcp_conn.send("world.getBlock(0,0,0)\n");
+        tcp_conn.send("world.setBlock(100,100,100,30)\n");
+        tcp_conn.send("world.getBlock(100,100,100)\n");
         string return_str = tcp_conn.recv();
-        CHECK((return_str == string("0\n")));
+        CHECK((return_str == "30"));
     }
 
     SUBCASE("Repeated receive") {
-        tcp_conn.send("world.getBlock(0,0,0)\n");
+        tcp_conn.send("world.setBlock(100,100,100,29)\n");
+        tcp_conn.send("world.getBlock(100,100,100)\n");
         string return_str = tcp_conn.recv();
-        CHECK((return_str == string("0\n")));
-        tcp_conn.send("world.getBlock(0,0,0)\n");
-        return_str = tcp_conn.recv();
-        CHECK((return_str == string("0\n")));
+        CHECK((return_str == "29"));
     }
 
-    //TODO destructor
-    SUBCASE("Destructor") {
-//        delete tcp_conn;
+    SUBCASE("Send command") {
+        tcp_conn.sendCommand("chat.post"s, "test message"s);
     }
+
+    SUBCASE("Send receive command") {
+        tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 30);
+        tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 26);
+        auto result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
+        CHECK((result == "26"));
+
+        tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 25);
+        result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
+        CHECK((result == "25"));
+    }
+}
+
+TEST_CASE("Test the main mcpp class") {
+    MinecraftConnection mc;
+    Coordinate testLoc(100, 100, 100);
+
+    SUBCASE("postToChat") {
+        mc.postToChat("test string");
+    }
+
+    SUBCASE("setBlock") {
+        mc.setBlock(testLoc, BlockType(50));
+    }
+
+    SUBCASE("getBlock") {
+        mc.setBlock(testLoc, BlockType(34));
+        auto resultBlock = mc.getBlock(testLoc);
+        CHECK((mc.getBlock(testLoc) == BlockType(34)));
+    }
+
+    //Using values from the Blocks struct in block.h beyond this point
+
+    SUBCASE("getBlockWithData") {
+        mc.setBlock(testLoc, BlockType(5, 5));
+        CHECK((mc.getBlockWithData(testLoc) == BlockType(5, 5)));
+
+        mc.setBlock(testLoc, Blocks::LIGHT_BLUE_CONCRETE);
+        CHECK((mc.getBlockWithData(testLoc) == Blocks::LIGHT_BLUE_CONCRETE));
+    }
+
+    SUBCASE("getHeight") {
+        mc.setBlock(testLoc, Blocks::DIRT);
+        CHECK((mc.getHeight(testLoc.x, testLoc.z) == testLoc.y));
+    }
+}
+
+TEST_CASE("Test blocks struct") {
+    MinecraftConnection mc;
+    Coordinate testLoc;
+    mc.setBlock(testLoc, Blocks::AIR);
+    CHECK((mc.getBlock(testLoc) == Blocks::AIR));
+    mc.setBlock(testLoc, Blocks::STONE);
+    CHECK((mc.getBlock(testLoc) == Blocks::STONE));
 }
