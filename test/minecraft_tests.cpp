@@ -9,7 +9,7 @@ using namespace std::string_literals;
 using namespace mcpp;
 
 /*
- * All tests require a running instance of Spigot server with the ELCI plugin in order to run successfully. This
+ * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
  * requirement stems from the fact that it's a pain in the ass to run a local TCP server just in order to test if the
  * client is sending across a string successfully, and would probably require either writing or importing that
  * TCP server from somewhere and writing around it in a way that does not block code execution when waiting for a
@@ -43,7 +43,7 @@ TEST_CASE("Socket connection test")
     }
 
     SUBCASE("Send command") {
-        tcp_conn.sendCommand("chat.post"s, "test message"s);
+        tcp_conn.sendCommand("chat.post", "test message");
     }
 
     SUBCASE("Send receive command") {

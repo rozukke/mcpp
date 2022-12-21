@@ -33,13 +33,12 @@ namespace mcpp {
 
             // iterate over args pack
             ((ss << args << ','), ...);
+            // Remove trailing comma
+            ss.seekp(-1, std::ios_base::end);
 
-            std::string builtString = ss.str();
-            builtString.pop_back();
-            builtString.append(")\n");
+            ss << ")\n";
 
-//            std::cout << stringBuild << std::endl;
-            send(builtString);
+            send(ss.str());
         }
 
         template<typename T, typename... Types>
