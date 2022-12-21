@@ -26,20 +26,20 @@ namespace mcpp {
         [[nodiscard]] std::string recv() const;
 
         template<typename... Types>
-        void sendCommand(const std::string& prefix, Types ...args) {
-            std::string stringBuild;
+        void sendCommand(const std::string &prefix, Types ...args) {
+            std::stringstream ss;
 
-            stringBuild.append(prefix);
-            stringBuild.append("(");
+            ss << prefix << "(";
 
             // iterate over args pack
-            ((stringBuild.append(handleArg(args))), ...);
+            ((ss << args << ','), ...);
 
-            stringBuild.pop_back();
-            stringBuild.append(")\n");
+            std::string builtString = ss.str();
+            builtString.pop_back();
+            builtString.append(")\n");
 
 //            std::cout << stringBuild << std::endl;
-            send(stringBuild);
+            send(builtString);
         }
 
         template<typename T, typename... Types>
@@ -50,16 +50,5 @@ namespace mcpp {
         }
 
         SocketConnection &operator=(const SocketConnection &other);
-
-    private:
-
-        // Used within sendCommand to handle different types provided to it
-        template<typename T>
-        std::string handleArg(T arg) {
-            std::stringstream ss;
-            ss << arg << ",";
-            return ss.str();
-        }
-
     };
 }
