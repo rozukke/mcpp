@@ -2,6 +2,7 @@
 #include "doctest.h"
 #include "../src/util.h"
 #include "../src/block.h"
+#include "../src/entity.h"
 
 /*
  * Used to test code that is not connection dependent such as the implementation of Coordinate and various other
@@ -59,10 +60,6 @@ TEST_CASE("Test Coordinate class"){
 }
 
 TEST_CASE("Test block class") {
-    SUBCASE("Test init") {
-        BlockType testBlock(0);
-    }
-
     SUBCASE("Test equality") {
         BlockType testBlock(10, 2);
         BlockType testBlockRHS(10, 2);
@@ -75,5 +72,14 @@ TEST_CASE("Test block class") {
         BlockType testBlockRHS(10, 2);
         CHECK((testBlock.withData(2) == testBlockRHS));
 
+    }
+}
+
+TEST_CASE("Test entity class") {
+    Entity testEntity = Entities::CHICKEN;
+
+    SUBCASE("Equality operator") {
+        Entity testEntityRHS(93);
+        CHECK((testEntity == testEntityRHS));
     }
 }
