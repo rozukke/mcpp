@@ -15,9 +15,11 @@ namespace mcpp {
 
 //        void setBlock(int x, int y, int z, BlockType blockType);
         void setBlock(Coordinate loc, BlockType blockType);
+        void setBlocks(Coordinate loc1, Coordinate loc2, BlockType blockType);
 //        BlockType getBlock(int x, int y, int z);
         BlockType getBlock(Coordinate loc);
         BlockType getBlockWithData(Coordinate loc);
+        std::vector<BlockType> getBlocks(Coordinate loc1, Coordinate loc2);
 
         int getHeight(int x, int z);
 

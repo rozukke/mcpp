@@ -87,8 +87,24 @@ TEST_CASE("Test the main mcpp class") {
     }
 
     SUBCASE("getHeight") {
-        mc.setBlock(testLoc, Blocks::DIRT);
-        CHECK((mc.getHeight(testLoc.x, testLoc.z) == testLoc.y));
+        Coordinate heightTestLoc(200, 200, 200);
+        mc.setBlock(heightTestLoc, Blocks::DIRT);
+        auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
+        CHECK((height == heightTestLoc.y));
+    }
+
+    SUBCASE("setBlocks") {
+        Coordinate testLoc2(96, 96, 96);
+        mc.setBlocks(testLoc, testLoc2, Blocks::STONE);
+    }
+
+    SUBCASE("getBlocks") {
+        Coordinate testLoc2(96, 96, 96);
+        mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
+
+        std::vector<BlockType> expected(125, BlockType(3));
+        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
+        CHECK((returnVector == expected));
     }
 }
 

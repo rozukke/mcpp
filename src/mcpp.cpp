@@ -25,6 +25,12 @@ namespace mcpp {
         conn.sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id, blockType.data);
     }
 
+    void MinecraftConnection::setBlocks(Coordinate loc1, Coordinate loc2, BlockType blockType) {
+        auto [x, y, z] = loc1;
+        auto [x2, y2, z2] = loc2;
+        conn.sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id, blockType.data);
+    }
+
 //    void MinecraftConnection::setBlock(int x, int y, int z, BlockType blockType) {
 //        conn.sendCommand("world.setBlock", x, y, z, blockType.id, blockType.data);
 //    }
@@ -48,6 +54,19 @@ namespace mcpp {
         std::string data = returnValue;
 
         return {std::stoi(id), std::stoi(data)};
+    }
+
+    std::vector<BlockType> MinecraftConnection::getBlocks(Coordinate loc1, Coordinate loc2) {
+        std::string returnValue = conn.sendReceiveCommand("world.getBlocks", loc1.x, loc1.y, loc1.z, loc2.x, loc2.y, loc2.z);
+        std::stringstream ss(returnValue);
+        std::string container;
+        std::vector<BlockType> returnVector;
+
+        while (std::getline(ss, container, ',')) {
+            returnVector.emplace_back(BlockType(std::stoi(container)));
+        }
+
+        return returnVector;
     }
 
     int MinecraftConnection::getHeight(int x, int z) {
