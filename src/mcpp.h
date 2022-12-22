@@ -4,9 +4,12 @@
 #include "connection.h"
 #include "block.h"
 #include "util.h"
+//#include "handlers.h"
 
 namespace mcpp {
     class MinecraftConnection {
+    private:
+        SocketConnection conn;
     public:
         MinecraftConnection(std::string_view address = "localhost", int port = 4711);
 
@@ -19,11 +22,14 @@ namespace mcpp {
 //        BlockType getBlock(int x, int y, int z);
         BlockType getBlock(Coordinate loc);
         BlockType getBlockWithData(Coordinate loc);
+
         std::vector<BlockType> getBlocks(Coordinate loc1, Coordinate loc2);
+        std::vector<BlockType> getBlocksWithData(Coordinate loc1, Coordinate loc2);
 
         int getHeight(int x, int z);
-
+        std::vector<int> getHeights(Coordinate loc1, Coordinate loc2);
     private:
-        SocketConnection conn;
+
+
     };
 }

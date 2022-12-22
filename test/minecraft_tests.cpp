@@ -93,20 +93,58 @@ TEST_CASE("Test the main mcpp class") {
         CHECK((height == heightTestLoc.y));
     }
 
+    SUBCASE("getHeights") {
+        Coordinate platformCoord1(151, 100, 151);
+        Coordinate platformCoord2(160, 100, 160);
+
+        //create even heights
+        mc.setBlocks(platformCoord1, platformCoord2, Blocks::DIRT);
+
+        std::vector<int> expected(100, 100);
+        auto resultHeights = mc.getHeights(platformCoord1, platformCoord2);
+        CHECK((resultHeights == expected));
+    }
+
+    // used for cuboid functions
+    Coordinate testLoc2(96, 96, 96);
+
     SUBCASE("setBlocks") {
-        Coordinate testLoc2(96, 96, 96);
         mc.setBlocks(testLoc, testLoc2, Blocks::STONE);
     }
 
     SUBCASE("getBlocks") {
-        Coordinate testLoc2(96, 96, 96);
         mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
 
         std::vector<BlockType> expected(125, BlockType(3));
         std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
         CHECK((returnVector == expected));
     }
+
+    SUBCASE("getBlocksWithData") {
+        mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
+
+        std::vector<BlockType> expected(125, Blocks::GRANITE);
+        std::vector returnVector = mc.getBlocksWithData(testLoc, testLoc2);
+
+        CHECK((returnVector == expected));
+    }
 }
+
+//requires player joined to server
+//TEST_CASE("Player operations") {
+//    MinecraftConnection mc;
+//    Coordinate testLoc(110, 110, 110);
+//    mc.setBlock(testLoc, Blocks::DIRT);
+//
+//    SUBCASE("Set position") {
+//        mc.player.setPosition(testLoc + Coordinate(0, 1, 0));
+//    }
+//
+//    SUBCASE("Get position") {
+//        Coordinate playerLoc = mc.player.getPosition();
+//        CHECK((playerLoc == (testLoc + Coordinate(0, 1, 0))));
+//    }
+//}
 
 TEST_CASE("Test blocks struct") {
     MinecraftConnection mc;
