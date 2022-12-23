@@ -1,4 +1,4 @@
-#include "util.h"
+#include "../include/util.h"
 
 Coordinate::Coordinate(int x, int y, int z) {
     this->x = x;

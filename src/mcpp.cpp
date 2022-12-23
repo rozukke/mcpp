@@ -1,5 +1,5 @@
-#include "mcpp.h"
-#include "connection.h"
+#include "../include/mcpp.h"
+#include "../include/connection.h"
 #include <string_view>
 #include <string>
 #include <utility>
@@ -22,6 +22,10 @@ namespace mcpp {
         conn.sendCommand("world.setting", setting);
     }
 
+    void MinecraftConnection::doCommand(std::string_view command) {
+        conn.sendCommand("player.doCommand", command);
+    }
+
     void MinecraftConnection::setBlock(Coordinate loc, BlockType blockType) {
         conn.sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id, blockType.data);
     }
@@ -31,15 +35,6 @@ namespace mcpp {
         auto [x2, y2, z2] = loc2;
         conn.sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id, blockType.data);
     }
-
-//    void MinecraftConnection::setBlock(int x, int y, int z, BlockType blockType) {
-//        conn.sendCommand("world.setBlock", x, y, z, blockType.id, blockType.data);
-//    }
-//
-//    BlockType MinecraftConnection::getBlock(int x, int y, int z) {
-//        std::string_view returnValue = conn.sendReceiveCommand("world.getBlock", x, y, z);
-//        return BlockType(std::stoi(returnValue.data()));
-//    }
 
     BlockType MinecraftConnection::getBlock(Coordinate loc) {
         std::string returnValue = conn.sendReceiveCommand("world.getBlock", loc.x, loc.y, loc.z);
@@ -109,6 +104,7 @@ namespace mcpp {
     std::vector<int> MinecraftConnection::getHeights(Coordinate loc1, Coordinate loc2) {
         std::string returnValue = conn.sendReceiveCommand("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
+        // Returned in format "1,2,3,4,5"
         std::stringstream ss(returnValue);
         std::string container;
         std::vector<int> returnVector;

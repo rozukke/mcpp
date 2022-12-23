@@ -1,8 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "../src/util.h"
-#include "../src/block.h"
-#include "../src/entity.h"
+#include "../include/util.h"
+#include "../include/block.h"
+#include "../include/entity.h"
 
 /*
  * Used to test code that is not connection dependent such as the implementation of Coordinate and various other

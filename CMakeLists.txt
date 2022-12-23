@@ -10,7 +10,5 @@ add_subdirectory(src)
 enable_testing()
 add_subdirectory(test)
 
-#set(BOOST_ROOT "$ENV{HOME}/boost/boost")
-
 
 

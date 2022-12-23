@@ -17,11 +17,12 @@ namespace mcpp {
     private:
         boost::asio::ip::tcp::socket *socket;
         const std::string FailedCommandResponse = "Fail";
+        std::string lastSent;
 
     public:
-        SocketConnection(std::string_view address_str = "localhost", uint16_t port = 4711);
+        explicit SocketConnection(std::string_view address_str = "localhost", uint16_t port = 4711);
 
-        void send(std::string_view data_str) const;
+        void send(const std::string& dataString);
 
         [[nodiscard]] std::string recv() const;
 
@@ -49,5 +50,7 @@ namespace mcpp {
         }
 
         SocketConnection &operator=(const SocketConnection &other);
+    private:
+        bool checkCommandFailed(const std::string& result) const;
     };
 }

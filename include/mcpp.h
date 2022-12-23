@@ -11,10 +11,11 @@ namespace mcpp {
     private:
         SocketConnection conn;
     public:
-        MinecraftConnection(std::string_view address = "localhost", int port = 4711);
+        explicit MinecraftConnection(std::string_view address = "localhost", int port = 4711);
 
         void postToChat(std::string_view message);
         void setSetting(std::string_view setting);
+        void doCommand(std::string_view command);
 
 //        void setBlock(int x, int y, int z, BlockType blockType);
         void setBlock(Coordinate loc, BlockType blockType);
@@ -28,7 +29,6 @@ namespace mcpp {
 
         int getHeight(int x, int z);
         std::vector<int> getHeights(Coordinate loc1, Coordinate loc2);
-    private:
 
 
     };

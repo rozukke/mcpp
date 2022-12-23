@@ -1,4 +1,4 @@
-#include "block.h"
+#include "../include/block.h"
 
 //this compares the data as well!!
 bool BlockType::operator==(const BlockType &other) const {

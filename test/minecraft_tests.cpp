@@ -1,12 +1,14 @@
 #include "doctest.h"
-#include "../src/connection.h"
-#include "../src/mcpp.h"
-#include "../src/util.h"
-#include "../src/block.h"
+#include "../include/connection.h"
+#include "../include/mcpp.h"
+#include "../include/util.h"
+#include "../include/block.h"
 
 using std::string;
 using namespace std::string_literals;
 using namespace mcpp;
+
+bool DO_PLAYER_TESTS = false;
 
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
@@ -15,6 +17,7 @@ using namespace mcpp;
  * TCP server from somewhere and writing around it in a way that does not block code execution when waiting for a
  * connection.
  */
+
 
 
 //Run test_suite profile to perform tests in this file.
@@ -56,6 +59,10 @@ TEST_CASE("Socket connection test")
         result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
         CHECK((result == "25"));
     }
+
+    SUBCASE("Check fail condition") {
+        CHECK_THROWS(tcp_conn.sendReceiveCommand("failCommand", ""));
+    }
 }
 
 TEST_CASE("Test the main mcpp class") {
@@ -65,6 +72,8 @@ TEST_CASE("Test the main mcpp class") {
     SUBCASE("postToChat") {
         mc.postToChat("test string");
     }
+
+
 
     SUBCASE("setBlock") {
         mc.setBlock(testLoc, BlockType(50));
@@ -131,11 +140,16 @@ TEST_CASE("Test the main mcpp class") {
 }
 
 //requires player joined to server
-//TEST_CASE("Player operations") {
-//    MinecraftConnection mc;
-//    Coordinate testLoc(110, 110, 110);
-//    mc.setBlock(testLoc, Blocks::DIRT);
-//
+
+TEST_CASE("Player operations") {
+    MinecraftConnection mc;
+    Coordinate testLoc(110, 110, 110);
+    mc.setBlock(testLoc, Blocks::DIRT);
+    if (DO_PLAYER_TESTS) {
+    SUBCASE("Execute command") {
+        mc.doCommand("time set noon");
+    }
+
 //    SUBCASE("Set position") {
 //        mc.player.setPosition(testLoc + Coordinate(0, 1, 0));
 //    }
@@ -144,7 +158,8 @@ TEST_CASE("Test the main mcpp class") {
 //        Coordinate playerLoc = mc.player.getPosition();
 //        CHECK((playerLoc == (testLoc + Coordinate(0, 1, 0))));
 //    }
-//}
+    }
+}
 
 TEST_CASE("Test blocks struct") {
     MinecraftConnection mc;
