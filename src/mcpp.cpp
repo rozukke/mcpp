@@ -3,17 +3,27 @@
 #include <string_view>
 #include <string>
 #include <utility>
+#include <vector>
 
 using std::string_view;
 using namespace std::string_literals;
 using namespace mcpp;
 
 namespace mcpp {
+    /**
+     * Represents the main endpoint for interaction with the minecraft world.
+     * @param address String address in IPV4 format, defaults to "localhost"
+     * @param port Integer port to run on, defaults to 4711 as that is the port for ELCI
+     */
     MinecraftConnection::MinecraftConnection(std::string_view address, int port) {
         SocketConnection newConnection(address, port);
         conn = newConnection;
     }
 
+    /**
+     * Sends a message to the in-game chat, does not require a joined player
+     * @param message
+     */
     void MinecraftConnection::postToChat(string_view message) {
         conn.sendCommand("chat.post", message);
     }
@@ -22,25 +32,53 @@ namespace mcpp {
         conn.sendCommand("world.setting", setting);
     }
 
+    /**
+     * Performs an in-game minecraft command. Players have to exist on the server and
+     * should be server operators (default with ELCI)
+     * @param command Command string in the in-game format (e.g. time set day)
+     */
     void MinecraftConnection::doCommand(std::string_view command) {
         conn.sendCommand("player.doCommand", command);
     }
 
+    /**
+     * Sets block at Coordinate loc to the BlockType specified by blockType
+     * @param loc
+     * @param blockType
+     */
     void MinecraftConnection::setBlock(Coordinate loc, BlockType blockType) {
         conn.sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id, blockType.data);
     }
 
+    /**
+     * Sets a cuboid of blocks to the specified BlockType blockType, with the corners of the cuboid
+     * provided by the Coordinate loc1 and loc2
+     * @param loc1
+     * @param loc2
+     * @param blockType
+     */
     void MinecraftConnection::setBlocks(Coordinate loc1, Coordinate loc2, BlockType blockType) {
         auto [x, y, z] = loc1;
         auto [x2, y2, z2] = loc2;
         conn.sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id, blockType.data);
     }
 
+    /**
+     * Returns BlockType object of the specified Coordinate loc location (this does not provide the
+     * block.data element)
+     * @param loc
+     * @return BlockType of the requested block
+     */
     BlockType MinecraftConnection::getBlock(Coordinate loc) {
         std::string returnValue = conn.sendReceiveCommand("world.getBlock", loc.x, loc.y, loc.z);
         return {std::stoi(returnValue)};
     }
 
+    /**
+     * Same functionality as getBlockWithData but provides the Block.data element in the returned BlockType
+     * @param loc
+     * @return
+     */
     BlockType MinecraftConnection::getBlockWithData(Coordinate loc) {
         std::string returnValue = conn.sendReceiveCommand("world.getBlockWithData", loc.x, loc.y, loc.z);
         auto commaLoc = returnValue.find(',');
@@ -52,6 +90,14 @@ namespace mcpp {
         return {std::stoi(id), std::stoi(data)};
     }
 
+    //TODO: specify the way to iterate through the returned list in correct order
+    /**
+     * Returns a vector of the BlockTypes at the requested cuboid. Be careful with order of iteration when
+     * parsing the returned data.
+     * @param loc1
+     * @param loc2
+     * @return Vector of BlockType's in the specified cuboid.
+     */
     std::vector<BlockType> MinecraftConnection::getBlocks(Coordinate loc1, Coordinate loc2) {
         std::string returnValue = conn.sendReceiveCommand("world.getBlocks",
                                                           loc1.x, loc1.y, loc1.z,
@@ -67,6 +113,12 @@ namespace mcpp {
         return returnVector;
     }
 
+    /**
+     * Same functionality as getBlocks but with the additional BlockType.data element.
+     * @param loc1
+     * @param loc2
+     * @return Vector of BlockType's at the requested cuboid.
+     */
     std::vector<BlockType> MinecraftConnection::getBlocksWithData(Coordinate loc1, Coordinate loc2) {
         std::string returnValue = conn.sendReceiveCommand("world.getBlocksWithData",
                                                           loc1.x, loc1.y, loc1.z,
@@ -96,11 +148,24 @@ namespace mcpp {
         return result;
     }
 
+    /**
+     * Gets the y-value of the highest non-air block at the specified (x, y) coordinate.
+     * @param x
+     * @param z
+     * @return Returns the integer y-height at the requested coordinate.
+     */
     int MinecraftConnection::getHeight(int x, int z) {
         std::string returnValue = conn.sendReceiveCommand("world.getHeight", x, z);
         return stoi(returnValue);
     }
 
+    /**
+     * Provides a scaled option of the getHeight call to allow for considerable performance gains. !!Use this
+     * instead of getHeight in a for loop.
+     * @param loc1
+     * @param loc2
+     * @return Returns a vector of integers representing the 2D area of heights.
+     */
     std::vector<int> MinecraftConnection::getHeights(Coordinate loc1, Coordinate loc2) {
         std::string returnValue = conn.sendReceiveCommand("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 

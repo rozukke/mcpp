@@ -14,7 +14,11 @@ public:
 
 
 //using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
-// Use by calling Blocks::NAME
+
+/**
+ * Struct of static block objects that allows for a "search" of sorts, callable using Blocks::TYPE
+ * after importing <block.h>
+ */
 struct Blocks {
     static constexpr BlockType AIR = BlockType(0);
     static constexpr BlockType STONE = BlockType(1);

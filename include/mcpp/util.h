@@ -1,7 +1,10 @@
 #pragma once
 
+/**
+ * Represented using integers since sub-unit coordinates are not of particular relevance. Allows for
+ * operations such as addition between coordinates.
+ */
 class Coordinate {
-    // is represented using ints since sub-grid coordinates are not particularly relevant
 public:
     explicit Coordinate(int x = 0, int y = 0, int z = 0);
     Coordinate(double x, double y, double z);
