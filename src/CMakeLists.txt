@@ -1,1 +1,1 @@
-add_library(${PROJECT_NAME} connection.cpp mcpp.cpp block.cpp util.cpp ../include/connection.h ../include/util.h ../include/mcpp.h ../include/block.h ../include/entity.h handlers.h)
+add_library(${PROJECT_NAME} connection.cpp mcpp.cpp block.cpp util.cpp ../include/mcpp/connection.h ../include/mcpp/util.h ../include/mcpp/mcpp.h ../include/mcpp/block.h ../include/mcpp/entity.h handlers.h)

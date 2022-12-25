@@ -1,5 +1,5 @@
-#include "../include/mcpp.h"
-#include "../include/connection.h"
+#include "../include/mcpp/mcpp.h"
+#include "../include/mcpp/connection.h"
 #include <string_view>
 #include <string>
 #include <utility>

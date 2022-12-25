@@ -1,8 +1,8 @@
 #include "doctest.h"
-#include "../include/connection.h"
-#include "../include/mcpp.h"
-#include "../include/util.h"
-#include "../include/block.h"
+#include "../include/mcpp/connection.h"
+#include "../include/mcpp/mcpp.h"
+#include "../include/mcpp/util.h"
+#include "../include/mcpp/block.h"
 
 using std::string;
 using namespace std::string_literals;
