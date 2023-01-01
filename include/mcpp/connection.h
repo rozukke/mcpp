@@ -23,10 +23,18 @@ namespace mcpp {
     public:
         explicit SocketConnection(std::string_view address_str = "localhost", uint16_t port = 4711);
 
-        void send(const std::string& dataString);
+        void send(const std::string &dataString);
 
         [[nodiscard]] std::string recv() const;
 
+
+        /**
+         * Takes in parameters supporting std::stringstream conversion and a string prefix and transforms them into
+         * format "prefix(arg1,arg2,arg3)\n" (e.g. chat.post(test)\n) and sends command to the server.
+         * @tparam Types
+         * @param prefix
+         * @param args
+         */
         template<typename... Types>
         void sendCommand(const std::string &prefix, Types ...args) {
             std::stringstream ss;
@@ -51,7 +59,8 @@ namespace mcpp {
         }
 
         SocketConnection &operator=(const SocketConnection &other);
+
     private:
-        bool checkCommandFailed(const std::string& result) const;
+        bool checkCommandFailed(const std::string &result) const;
     };
 }

@@ -4,11 +4,13 @@
 #include "../include/mcpp/util.h"
 #include "../include/mcpp/block.h"
 
+
+//set to 1 if testing with joined player on server
+#define PLAYERTEST 1
+
 using std::string;
 using namespace std::string_literals;
 using namespace mcpp;
-
-bool DO_PLAYER_TESTS = false;
 
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
@@ -72,7 +74,6 @@ TEST_CASE("Test the main mcpp class") {
     SUBCASE("postToChat") {
         mc.postToChat("test string");
     }
-
 
 
     SUBCASE("setBlock") {
@@ -139,27 +140,29 @@ TEST_CASE("Test the main mcpp class") {
     }
 }
 
-//requires player joined to server
+//requires player joined to server, will throw serverside if player is not joined and hang execution
+#if PLAYERTEST
 
 TEST_CASE("Player operations") {
     MinecraftConnection mc;
     Coordinate testLoc(110, 110, 110);
     mc.setBlock(testLoc, Blocks::DIRT);
-    if (DO_PLAYER_TESTS) {
     SUBCASE("Execute command") {
         mc.doCommand("time set noon");
     }
 
-//    SUBCASE("Set position") {
-//        mc.player.setPosition(testLoc + Coordinate(0, 1, 0));
-//    }
-//
-//    SUBCASE("Get position") {
-//        Coordinate playerLoc = mc.player.getPosition();
-//        CHECK((playerLoc == (testLoc + Coordinate(0, 1, 0))));
-//    }
+    SUBCASE("Set position") {
+        mc.setPlayerPosition(testLoc + Coordinate(0, 1, 0));
+    }
+
+    SUBCASE("Get position") {
+        Coordinate playerLoc = mc.getPlayerPosition();
+        CHECK((playerLoc == (testLoc + Coordinate(0, 1, 0))));
     }
 }
+
+#endif
+
 
 TEST_CASE("Test blocks struct") {
     MinecraftConnection mc;
