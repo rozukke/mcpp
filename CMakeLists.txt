@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(PROJECT_SOURCE_DIR src)
 
 add_subdirectory(src)
-find_package(BOOST REQUIRED COMPONENTS system thread)
 
 enable_testing()
 add_subdirectory(test)
