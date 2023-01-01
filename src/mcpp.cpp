@@ -55,11 +55,14 @@ namespace mcpp {
     }
 
     Coordinate MinecraftConnection::getPlayerPosition() {
+        //TODO remove currently required empty string that ensures formatting
         std::string returnString = conn.sendReceiveCommand("player.getPos", "");
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     }
+
+    //TODO tile variants of getPos and setPos
 
     /**
      * Sets block at Coordinate loc to the BlockType specified by blockType
@@ -100,14 +103,12 @@ namespace mcpp {
      * @return
      */
     BlockType MinecraftConnection::getBlockWithData(Coordinate loc) {
-        std::string returnValue = conn.sendReceiveCommand("world.getBlockWithData", loc.x, loc.y, loc.z);
-        auto commaLoc = returnValue.find(',');
+        std::string returnString = conn.sendReceiveCommand("world.getBlockWithData", loc.x, loc.y, loc.z);
+        std::vector<int> parsedInts;
+        splitCommaStringToInts(returnString, parsedInts);
 
-        std::string id = returnValue.substr(0, commaLoc);
-        returnValue.erase(0, commaLoc + 1);
-        std::string data = returnValue;
-
-        return {std::stoi(id), std::stoi(data)};
+        //data and id
+        return {parsedInts[0], parsedInts[1]};
     }
 
     //TODO: specify the way to iterate through the returned list in correct order
@@ -190,13 +191,8 @@ namespace mcpp {
         std::string returnValue = conn.sendReceiveCommand("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
         // Returned in format "1,2,3,4,5"
-        std::stringstream ss(returnValue);
-        std::string container;
         std::vector<int> returnVector;
-
-        while (std::getline(ss, container, ',')) {
-            returnVector.emplace_back(std::stoi(container));
-        }
+        splitCommaStringToInts(returnValue, returnVector);
 
         return returnVector;
     }
