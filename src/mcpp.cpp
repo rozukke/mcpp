@@ -1,8 +1,8 @@
 #include "../include/mcpp/mcpp.h"
-#include "../include/mcpp/connection.h"
+#include "../include/mcpp/util.h"
+
 #include <string_view>
 #include <string>
-#include <utility>
 #include <vector>
 
 using std::string_view;
@@ -10,6 +10,15 @@ using namespace std::string_literals;
 using namespace mcpp;
 
 namespace mcpp {
+
+    void splitCommaStringToInts(const std::string &str, std::vector<int> &vec) {
+        std::stringstream ss(str);
+        std::string item;
+        while (std::getline(ss, item, ',')) {
+            vec.push_back(std::stoi(item));
+        }
+    }
+
     /**
      * Represents the main endpoint for interaction with the minecraft world.
      * @param address String address in IPV4 format, defaults to "localhost"
@@ -39,6 +48,17 @@ namespace mcpp {
      */
     void MinecraftConnection::doCommand(std::string_view command) {
         conn.sendCommand("player.doCommand", command);
+    }
+
+    void MinecraftConnection::setPlayerPosition(Coordinate pos) {
+        conn.sendCommand("player.setPos", pos.x, pos.y, pos.z);
+    }
+
+    Coordinate MinecraftConnection::getPlayerPosition() {
+        std::string returnString = conn.sendReceiveCommand("player.getPos", "");
+        std::vector<int> parsedInts;
+        splitCommaStringToInts(returnString, parsedInts);
+        return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     }
 
     /**
