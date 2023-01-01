@@ -1,15 +1,18 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
 #include "doctest.h"
 #include "../include/mcpp/util.h"
 #include "../include/mcpp/block.h"
 #include "../include/mcpp/entity.h"
+
+using namespace mcpp;
 
 /*
  * Used to test code that is not connection dependent such as the implementation of Coordinate and various other
  * utility functions as well as Block functionality.
  */
 
-TEST_CASE("Test Coordinate class"){
+TEST_CASE("Test Coordinate class") {
     SUBCASE("Test init") {
         Coordinate testCoord;
         CHECK((testCoord.x == 0));
@@ -64,7 +67,6 @@ TEST_CASE("Test block class") {
         BlockType testBlock(10, 2);
         BlockType testBlockRHS(10, 2);
         CHECK((testBlock == testBlockRHS));
-//        CHECK((testBlock == 10));
     }
 
     SUBCASE("Test withData") {
