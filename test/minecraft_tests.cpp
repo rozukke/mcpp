@@ -12,6 +12,9 @@ using std::string;
 using namespace std::string_literals;
 using namespace mcpp;
 
+
+SocketConnection tcp_conn;
+MinecraftConnection mc;
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
  * requirement stems from the fact that it's a pain in the ass to run a local TCP server just in order to test if the
@@ -25,7 +28,6 @@ using namespace mcpp;
 //Run test_suite profile to perform tests in this file.
 TEST_CASE("Socket connection test")
 {
-    SocketConnection tcp_conn;
 
     SUBCASE("Test send") {
         //more or less manual test case used more so to check for errors sending
@@ -68,7 +70,6 @@ TEST_CASE("Socket connection test")
 }
 
 TEST_CASE("Test the main mcpp class") {
-    MinecraftConnection mc;
     Coordinate testLoc(100, 100, 100);
 
     SUBCASE("postToChat") {
@@ -82,7 +83,6 @@ TEST_CASE("Test the main mcpp class") {
 
     SUBCASE("getBlock") {
         mc.setBlock(testLoc, BlockType(34));
-        auto resultBlock = mc.getBlock(testLoc);
         CHECK((mc.getBlock(testLoc) == BlockType(34)));
     }
 
@@ -144,7 +144,6 @@ TEST_CASE("Test the main mcpp class") {
 #if PLAYERTEST
 
 TEST_CASE("Player operations") {
-    MinecraftConnection mc;
     Coordinate testLoc(110, 110, 110);
     mc.setBlock(testLoc, Blocks::DIRT);
     SUBCASE("Execute command") {
@@ -165,7 +164,6 @@ TEST_CASE("Player operations") {
 
 
 TEST_CASE("Test blocks struct") {
-    MinecraftConnection mc;
     Coordinate testLoc;
     mc.setBlock(testLoc, Blocks::AIR);
     CHECK((mc.getBlock(testLoc) == Blocks::AIR));
