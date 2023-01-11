@@ -1,1 +1,3 @@
-add_library(${PROJECT_NAME} connection.cpp mcpp.cpp block.cpp util.cpp ../include/mcpp/connection.h ../include/mcpp/util.h ../include/mcpp/mcpp.h ../include/mcpp/block.h ../include/mcpp/entity.h)
+file(GLOB SOURCES *.cpp)
+include_directories(../include)
+add_library(${PROJECT_NAME} ${SOURCES})
