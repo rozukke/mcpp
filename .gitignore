@@ -34,3 +34,5 @@ lib
 *.exe
 *.out
 *.app
+/cmake-build-debug-coverage/
+/cmake-build-release-coverage/
