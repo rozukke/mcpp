@@ -16,9 +16,17 @@ This C++ version was created for the Royal Melbourne Institute of Technology (RM
 (Programming Studio 2) course.
 
 ## Installation
-**PENDING RELEASE**
+**The release is
+compiled using g++ and is intended for use with UNIX systems.**
+### Windows
+Since the release is intended for UNIX systems and not tested on Windows, the options to run locally are as follows:
+- Build manually, requiring the Boost library (there are included CMake build files)
+- Run with WSL, in which case follow the Linux instructions below. You may need to specify a connection address manually in `MinecraftConnection()` if you are running Spigot with ELCI on Windows, which you can find using `nslookup "$(hostname).local"` on your WSL terminal. The default port for ELCI is 4711.
 
-Download and build the library yourself (this repository contains some configuration for and was developed using 
-JetBrains CLion), or download the most recent release and run `install.sh` on your Linux install, whereupon 
-the library should now be accessible in most IDEs through a global `#include <mcpp/mcpp.h>` directive. **The release is
-compiled using g++**.
+### Mac and Linux
+- Download the latest release, unzip and run `install_mcpp_lib.sh`. 
+- You may need to make it executable using `sudo chmod a+x install_mcpp_lib.sh` in your terminal. 
+- After doing this, the library should be accessible via a `#include <mcpp/mcpp.h>` directive. 
+- When compiling code using the library, use the flag `-lmcpp` for Makefiles or `target_link_libraries` for CMake.
+
+
