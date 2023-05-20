@@ -10,33 +10,33 @@ namespace mcpp {
     private:
         SocketConnection conn;
     public:
-        explicit MinecraftConnection(std::string_view address = "localhost", int port = 4711);
+        explicit MinecraftConnection(const std::string& address = "localhost", int port = 4711);
 
-        void postToChat(std::string_view message);
+        void postToChat(const std::string& message);
 
-        void setSetting(std::string_view setting);
+        void setSetting(const std::string& setting);
 
-        void doCommand(std::string_view command);
+        void doCommand(const std::string& command);
 
-        void setPlayerPosition(Coordinate pos);
+        void setPlayerPosition(const Coordinate& pos);
 
         Coordinate getPlayerPosition();
 
-        void setBlock(Coordinate loc, BlockType blockType);
+        void setBlock(const Coordinate& loc, const BlockType& blockType);
 
-        void setBlocks(Coordinate loc1, Coordinate loc2, BlockType blockType);
+        void setBlocks(const Coordinate& loc1, const Coordinate& loc2, const BlockType& blockType);
 
-        BlockType getBlock(Coordinate loc);
+        BlockType getBlock(const Coordinate& loc);
 
-        BlockType getBlockWithData(Coordinate loc);
+        BlockType getBlockWithData(const Coordinate& loc);
 
-        std::vector<BlockType> getBlocks(Coordinate loc1, Coordinate loc2);
+        std::vector<BlockType> getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
-        std::vector<BlockType> getBlocksWithData(Coordinate loc1, Coordinate loc2);
+        std::vector<BlockType> getBlocksWithData(const Coordinate& loc1, const Coordinate& loc2);
 
         int getHeight(int x, int z);
 
-        std::vector<int> getHeights(Coordinate loc1, Coordinate loc2);
+        std::vector<int> getHeights(const Coordinate& loc1, const Coordinate& loc2);
 
     };
 }

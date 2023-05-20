@@ -11,11 +11,11 @@ namespace mcpp {
 
         Coordinate(double x, double y, double z);
 
-        Coordinate operator+(const Coordinate &obj) const;
+        Coordinate operator+(const Coordinate& obj) const;
 
-        bool operator==(const Coordinate &obj) const;
+        bool operator==(const Coordinate& obj) const;
 
-        Coordinate operator-(const Coordinate &obj) const;
+        Coordinate operator-(const Coordinate& obj) const;
 
         [[nodiscard]] Coordinate clone() const;
 

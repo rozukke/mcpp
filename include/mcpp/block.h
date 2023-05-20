@@ -11,7 +11,7 @@ public:
     * Watch out as this also compares the BlockType.id element of the block, so some equalities may behave in
     * somewhat unexpected ways e.g. rotated stairs
     */
-    bool operator==(const BlockType &other) const;
+    bool operator==(const BlockType& other) const;
 
     /**
     * Returns a new BlockType object with the specified data. Useful when providing a BlockType to a

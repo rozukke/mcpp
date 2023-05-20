@@ -10,22 +10,24 @@ using std::string, std::string_view;
 
 
 namespace mcpp {
-    SocketConnection::SocketConnection(string_view address_str, uint16_t port) : lastSent((string) "") {
+    SocketConnection::SocketConnection(const string& address_str, uint16_t port)
+            : lastSent((string) "") {
         asio::io_context io_context;
         asio::ip::tcp::endpoint endpoint(asio::ip::tcp::v4(), 0);
 
 
         socket = new tcp::socket(io_context, endpoint);
         tcp::resolver resolver(io_context);
-        asio::connect(*socket, resolver.resolve(address_str, std::to_string(port)));
+        asio::connect(*socket,
+                      resolver.resolve(address_str, std::to_string(port)));
 
     }
 
-    SocketConnection &SocketConnection::operator=(const SocketConnection &other) {
+    SocketConnection& SocketConnection::operator=(const SocketConnection& other) {
         return *this;
     }
 
-    void SocketConnection::send(const std::string &dataString) {
+    void SocketConnection::send(const std::string& dataString) {
         lastSent = dataString;
         socket->write_some(asio::buffer(dataString));
     }
@@ -36,7 +38,7 @@ namespace mcpp {
         asio::read_until(*socket, asio::dynamic_buffer(response), '\n');
 //        std::cout << response.data() << std::endl;
 
-        //remove trailing \n
+        // Remove trailing \n
         response.pop_back();
 
         if (checkCommandFailed(response)) {
@@ -47,7 +49,7 @@ namespace mcpp {
         return response;
     }
 
-    bool SocketConnection::checkCommandFailed(const std::string &result) const {
+    bool SocketConnection::checkCommandFailed(const std::string& result) const {
         return result == FailedCommandResponse;
     }
 

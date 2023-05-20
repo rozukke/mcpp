@@ -14,7 +14,7 @@ namespace mcpp {
         this->z = static_cast<int>(z);
     }
 
-    Coordinate Coordinate::operator+(const Coordinate &obj) const {
+    Coordinate Coordinate::operator+(const Coordinate& obj) const {
         Coordinate result;
         result.x = this->x + obj.x;
         result.y = this->y + obj.y;
@@ -22,11 +22,11 @@ namespace mcpp {
         return result;
     }
 
-    bool Coordinate::operator==(const Coordinate &obj) const {
+    bool Coordinate::operator==(const Coordinate& obj) const {
         return (this->x == obj.x) && (this->y == obj.y) && (this->z == obj.z);
     }
 
-    Coordinate Coordinate::operator-(const Coordinate &obj) const {
+    Coordinate Coordinate::operator-(const Coordinate& obj) const {
         Coordinate result;
         result.x = this->x - obj.x;
         result.y = this->y - obj.y;
