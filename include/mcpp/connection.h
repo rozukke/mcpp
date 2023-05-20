@@ -21,8 +21,8 @@ namespace mcpp {
         std::string lastSent;
 
     public:
-        explicit SocketConnection(const std::string& address_str = "localhost",
-                                  uint16_t port = 4711);
+        explicit SocketConnection(const std::string& address_str,
+                                  uint16_t port);
 
         void send(const std::string& dataString);
 
@@ -36,7 +36,7 @@ namespace mcpp {
          * @param args
          */
         template<typename... Types>
-        void sendCommand(const std::string& prefix, Types& ...args) {
+        void sendCommand(const std::string& prefix, const Types& ...args) {
             std::stringstream ss;
 
             ss << prefix << "(";
@@ -60,7 +60,7 @@ namespace mcpp {
          * @return
          */
         template<typename T, typename... Types>
-        std::string sendReceiveCommand(T& prefix, Types& ...args) {
+        std::string sendReceiveCommand(const T& prefix, const Types& ...args) {
             sendCommand(prefix, args...);
             auto result = recv();
             return result;

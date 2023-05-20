@@ -6,15 +6,15 @@
 
 
 //set to 1 if testing with joined player on server
-#define PLAYERTEST 1
+#define PLAYERTEST 0
 
 using std::string;
 using namespace std::string_literals;
 using namespace mcpp;
 
 
-SocketConnection tcp_conn;
-MinecraftConnection mc;
+SocketConnection tcp_conn("172.21.96.1", 4711);
+MinecraftConnection mc("172.21.96.1", 4711);
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
  * requirement stems from the fact that it's a pain in the ass to run a local TCP server just in order to test if the

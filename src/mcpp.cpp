@@ -11,7 +11,7 @@ using namespace mcpp;
 
 namespace mcpp {
 
-    void splitCommaStringToInts(const std::string &str, std::vector<int> &vec) {
+    void splitCommaStringToInts(const std::string& str, std::vector<int>& vec) {
         std::stringstream ss(str);
         std::string item;
         while (std::getline(ss, item, ',')) {
@@ -24,9 +24,9 @@ namespace mcpp {
      * @param address String address in IPV4 format, defaults to "localhost"
      * @param port Integer port to run on, defaults to 4711 as that is the port for ELCI
      */
-    MinecraftConnection::MinecraftConnection(const std::string& address, int port) {
-        SocketConnection newConnection(address, port);
-        conn = newConnection;
+    MinecraftConnection::MinecraftConnection(const std::string& address,
+                                             int port) {
+        conn = std::make_unique<SocketConnection>(address, port);
     }
 
     /**
@@ -34,11 +34,11 @@ namespace mcpp {
      * @param message
      */
     void MinecraftConnection::postToChat(const std::string& message) {
-        conn.sendCommand("chat.post", message);
+        conn->sendCommand("chat.post", message);
     }
 
     void MinecraftConnection::setSetting(const std::string& setting) {
-        conn.sendCommand("world.setting", setting);
+        conn->sendCommand("world.setting", setting);
     }
 
     /**
@@ -47,16 +47,16 @@ namespace mcpp {
      * @param command Command string in the in-game format (e.g. time set day)
      */
     void MinecraftConnection::doCommand(const std::string& command) {
-        conn.sendCommand("player.doCommand", command);
+        conn->sendCommand("player.doCommand", command);
     }
 
     void MinecraftConnection::setPlayerPosition(const Coordinate& pos) {
-        conn.sendCommand("player.setPos", pos.x, pos.y, pos.z);
+        conn->sendCommand("player.setPos", pos.x, pos.y, pos.z);
     }
 
     Coordinate MinecraftConnection::getPlayerPosition() {
         //TODO remove currently required empty string that ensures formatting
-        std::string returnString = conn.sendReceiveCommand("player.getPos", "");
+        std::string returnString = conn->sendReceiveCommand("player.getPos", "");
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
@@ -69,8 +69,10 @@ namespace mcpp {
      * @param loc
      * @param blockType
      */
-    void MinecraftConnection::setBlock(const Coordinate& loc, const BlockType& blockType) {
-        conn.sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id, blockType.data);
+    void MinecraftConnection::setBlock(const Coordinate& loc,
+                                       const BlockType& blockType) {
+        conn->sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id,
+                         blockType.data);
     }
 
     /**
@@ -80,10 +82,13 @@ namespace mcpp {
      * @param loc2
      * @param blockType
      */
-    void MinecraftConnection::setBlocks(const Coordinate& loc1, const Coordinate& loc2, const BlockType& blockType) {
+    void MinecraftConnection::setBlocks(const Coordinate& loc1,
+                                        const Coordinate& loc2,
+                                        const BlockType& blockType) {
         auto [x, y, z] = loc1;
         auto [x2, y2, z2] = loc2;
-        conn.sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id, blockType.data);
+        conn->sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id,
+                         blockType.data);
     }
 
     /**
@@ -93,7 +98,8 @@ namespace mcpp {
      * @return BlockType of the requested block
      */
     BlockType MinecraftConnection::getBlock(const Coordinate& loc) {
-        std::string returnValue = conn.sendReceiveCommand("world.getBlock", loc.x, loc.y, loc.z);
+        std::string returnValue = conn->sendReceiveCommand("world.getBlock",
+                                                          loc.x, loc.y, loc.z);
         return {std::stoi(returnValue)};
     }
 
@@ -103,7 +109,8 @@ namespace mcpp {
      * @return
      */
     BlockType MinecraftConnection::getBlockWithData(const Coordinate& loc) {
-        std::string returnString = conn.sendReceiveCommand("world.getBlockWithData", loc.x, loc.y, loc.z);
+        std::string returnString = conn->sendReceiveCommand(
+                "world.getBlockWithData", loc.x, loc.y, loc.z);
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
 
@@ -119,16 +126,20 @@ namespace mcpp {
      * @param loc2
      * @return Vector of BlockType's in the specified cuboid.
      */
-    std::vector<BlockType> MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) {
-        std::string returnValue = conn.sendReceiveCommand("world.getBlocks",
-                                                          loc1.x, loc1.y, loc1.z,
-                                                          loc2.x, loc2.y, loc2.z);
+    std::vector<BlockType>
+    MinecraftConnection::getBlocks(const Coordinate& loc1,
+                                   const Coordinate& loc2) {
+        std::string returnValue = conn->sendReceiveCommand("world.getBlocks",
+                                                          loc1.x, loc1.y,
+                                                          loc1.z,
+                                                          loc2.x, loc2.y,
+                                                          loc2.z);
         std::stringstream ss(returnValue);
         std::string container;
         std::vector<BlockType> returnVector;
 
         while (std::getline(ss, container, ',')) {
-            returnVector.emplace_back(BlockType(std::stoi(container)));
+            returnVector.emplace_back(std::stoi(container));
         }
 
         return returnVector;
@@ -142,9 +153,10 @@ namespace mcpp {
      */
     std::vector<BlockType> MinecraftConnection::getBlocksWithData(
             const Coordinate& loc1, const Coordinate& loc2) {
-        std::string returnValue = conn.sendReceiveCommand("world.getBlocksWithData",
-                                                          loc1.x, loc1.y, loc1.z,
-                                                          loc2.x, loc2.y, loc2.z);
+        std::string returnValue = conn->sendReceiveCommand(
+                "world.getBlocksWithData",
+                loc1.x, loc1.y, loc1.z,
+                loc2.x, loc2.y, loc2.z);
 
         // received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and data 2
         std::vector<BlockType> result;
@@ -177,7 +189,8 @@ namespace mcpp {
      * @return Returns the integer y-height at the requested coordinate.
      */
     int MinecraftConnection::getHeight(int x, int z) {
-        std::string returnValue = conn.sendReceiveCommand("world.getHeight", x, z);
+        std::string returnValue = conn->sendReceiveCommand("world.getHeight", x,
+                                                          z);
         return stoi(returnValue);
     }
 
@@ -188,8 +201,11 @@ namespace mcpp {
      * @param loc2
      * @return Returns a vector of integers representing the 2D area of heights.
      */
-    std::vector<int> MinecraftConnection::getHeights(const Coordinate& loc1, const Coordinate& loc2) {
-        std::string returnValue = conn.sendReceiveCommand("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
+    std::vector<int> MinecraftConnection::getHeights(const Coordinate& loc1,
+                                                     const Coordinate& loc2) {
+        std::string returnValue = conn->sendReceiveCommand("world.getHeights",
+                                                          loc1.x, loc1.z,
+                                                          loc2.x, loc2.z);
 
         // Returned in format "1,2,3,4,5"
         std::vector<int> returnVector;

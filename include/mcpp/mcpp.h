@@ -8,7 +8,7 @@
 namespace mcpp {
     class MinecraftConnection {
     private:
-        SocketConnection conn;
+        std::unique_ptr<SocketConnection> conn;
     public:
         explicit MinecraftConnection(const std::string& address = "localhost", int port = 4711);
 
