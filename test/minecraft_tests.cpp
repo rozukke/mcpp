@@ -13,8 +13,8 @@ using namespace std::string_literals;
 using namespace mcpp;
 
 
-SocketConnection tcp_conn("172.21.96.1", 4711);
-MinecraftConnection mc("172.21.96.1", 4711);
+SocketConnection tcp_conn("172.25.169.77", 4711);
+MinecraftConnection mc("172.25.169.77", 4711);
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
  * requirement stems from the fact that it's a pain in the ass to run a local TCP server just in order to test if the
@@ -169,4 +169,61 @@ TEST_CASE("Test blocks struct") {
     CHECK((mc.getBlock(testLoc) == Blocks::AIR));
     mc.setBlock(testLoc, Blocks::STONE);
     CHECK((mc.getBlock(testLoc) == Blocks::STONE));
+}
+
+
+TEST_CASE("Test array unflattening utils") {
+    Coordinate loc1(0,0,0);
+    Coordinate loc2(4, 4, 4);
+
+    //block util tests
+    mc.setBlocks(loc1, loc2, Blocks::DIRT);
+    SUBCASE("getBlocks") {
+        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
+            5,
+            std::vector<std::vector<BlockType>>(
+                5,
+                std::vector<BlockType>(
+                    5,
+                    Blocks::DIRT
+                )
+            )
+        );
+        std::vector<BlockType> blockArr = mc.getBlocks(loc1, loc2);
+        auto unFlattenedBlockArr = unFlattenBlocksArray(loc1, loc2, blockArr);
+        CHECK((unFlattenedBlockArr == expected));
+    }
+
+    SUBCASE("getBlocksWithData") {
+        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
+            5,
+            std::vector<std::vector<BlockType>>(
+                5,
+                std::vector<BlockType>(
+                    5,
+                    Blocks::DIRT
+                )
+            )
+        );
+        std::vector<BlockType> blockArrData = mc.getBlocksWithData(loc1, loc2);
+        auto unFlattenedBlockDataArr = unFlattenBlocksArray(loc1, loc2, blockArrData);
+        CHECK((unFlattenedBlockDataArr == expected));
+    }
+
+    SUBCASE("getHeights") {
+        Coordinate loc3(0,255,0);
+        //loc2 (4,4,4)
+        //loc1 (0,0,0)
+        mc.setBlocks(Coordinate(0,4,0),Coordinate(4,255,4), Blocks::AIR);
+        auto expected = std::vector<std::vector<int>>(
+            5,
+            std::vector<int>(
+                5,
+                3
+            )
+        );
+        auto heightArr = mc.getHeights(loc1, loc2);
+        auto unFlattenedHeightArr = unFlattenHeightsArray(loc1, loc2, heightArr);
+        CHECK((unFlattenedHeightArr == expected));
+    }
 }

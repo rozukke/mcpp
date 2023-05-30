@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+
+#include "block.h"
+
 namespace mcpp {
 /**
  * Represented using integers since sub-unit coordinates are not of particular relevance. Allows for
@@ -23,4 +27,10 @@ namespace mcpp {
         int y;
         int z;
     };
+
+    std::vector<std::vector<std::vector<BlockType>>>
+    unFlattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector);
+
+    std::vector<std::vector<int>>
+    unFlattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& inVector);
 }
