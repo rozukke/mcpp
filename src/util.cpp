@@ -42,7 +42,7 @@ namespace mcpp {
 
 
     std::vector<std::vector<std::vector<BlockType>>>
-    unFlattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector)
+    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector)
     {
         //initialise empty vector of correct size and shape
         int y_len = abs(loc2.y - loc1.y) + 1;
@@ -75,7 +75,7 @@ namespace mcpp {
     }
 
     std::vector<std::vector<int>>
-    unFlattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& inVector)
+    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& inVector)
     {
         //initialise empty vector of correct size and shape
         int x_len = abs(loc2.x - loc1.x) + 1;
