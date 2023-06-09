@@ -86,7 +86,7 @@ namespace mcpp {
     }
 
 
-    std::vector<BlockType>
+    std::vector<std::vector<std::vector<BlockType>>>
     MinecraftConnection::getBlocks(const Coordinate& loc1,
                                    const Coordinate& loc2) {
         std::string returnValue = conn->sendReceiveCommand("world.getBlocks",
@@ -102,11 +102,12 @@ namespace mcpp {
             returnVector.emplace_back(std::stoi(container));
         }
 
-        return returnVector;
+        return unflattenBlocksArray(loc1, loc2, returnVector);
     }
 
 
-    std::vector<BlockType> MinecraftConnection::getBlocksWithData(
+    std::vector<std::vector<std::vector<BlockType>>> 
+    MinecraftConnection::getBlocksWithData(
             const Coordinate& loc1, const Coordinate& loc2) {
         std::string returnValue = conn->sendReceiveCommand(
                 "world.getBlocksWithData",
@@ -134,7 +135,7 @@ namespace mcpp {
                 break;
             }
         }
-        return result;
+        return unflattenBlocksArray(loc1, loc2, result);
     }
 
 
@@ -145,7 +146,8 @@ namespace mcpp {
     }
 
 
-    std::vector<int> MinecraftConnection::getHeights(const Coordinate& loc1,
+    std::vector<std::vector<int>> 
+    MinecraftConnection::getHeights(const Coordinate& loc1,
                                                      const Coordinate& loc2) {
         std::string returnValue = conn->sendReceiveCommand("world.getHeights",
                                                           loc1.x, loc1.z,
@@ -155,7 +157,7 @@ namespace mcpp {
         std::vector<int> returnVector;
         splitCommaStringToInts(returnValue, returnVector);
 
-        return returnVector;
+        return unflattenHeightsArray(loc1, loc2, returnVector);
     }
 
 

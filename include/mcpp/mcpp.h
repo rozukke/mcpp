@@ -83,7 +83,7 @@ namespace mcpp {
          * @param loc2
          * @return Vector of BlockType's in the specified cuboid.
          */
-        std::vector<BlockType>
+        std::vector<std::vector<std::vector<BlockType>>>
         getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
         /**
@@ -92,7 +92,7 @@ namespace mcpp {
          * @param loc2
          * @return Vector of BlockType's at the requested cuboid.
          */
-        std::vector<BlockType>
+        std::vector<std::vector<std::vector<BlockType>>>
         getBlocksWithData(const Coordinate& loc1, const Coordinate& loc2);
 
         /**
@@ -112,7 +112,7 @@ namespace mcpp {
          * @param loc2
          * @return Returns a vector of integers representing the 2D area of heights.
          */
-        std::vector<int>
+        std::vector<std::vector<int>>
         getHeights(const Coordinate& loc1, const Coordinate& loc2);
 
     };
