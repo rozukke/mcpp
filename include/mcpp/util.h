@@ -27,10 +27,4 @@ namespace mcpp {
         int y;
         int z;
     };
-
-    std::vector<std::vector<std::vector<BlockType>>>
-    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector);
-
-    std::vector<std::vector<int>>
-    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& inVector);
 }
