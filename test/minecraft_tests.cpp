@@ -110,7 +110,14 @@ TEST_CASE("Test the main mcpp class") {
         //create even heights
         mc.setBlocks(platformCoord1, platformCoord2, Blocks::DIRT);
 
-        std::vector<int> expected(100, 100);
+        std::vector expected = std::vector<std::vector<int>>(
+            10,
+            std::vector<int>(
+                10,
+                100
+            )
+        );
+
         auto resultHeights = mc.getHeights(platformCoord1, platformCoord2);
         CHECK((resultHeights == expected));
     }
@@ -125,7 +132,18 @@ TEST_CASE("Test the main mcpp class") {
     SUBCASE("getBlocks") {
         mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
 
-        std::vector<BlockType> expected(125, BlockType(3));
+        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
+            5,
+            std::vector<std::vector<BlockType>>(
+                5,
+                std::vector<BlockType>(
+                    5,
+                    Blocks::DIRT
+                )
+            )
+        );
+
+
         std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
         CHECK((returnVector == expected));
     }
@@ -133,7 +151,17 @@ TEST_CASE("Test the main mcpp class") {
     SUBCASE("getBlocksWithData") {
         mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
 
-        std::vector<BlockType> expected(125, Blocks::GRANITE);
+        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
+            5,
+            std::vector<std::vector<BlockType>>(
+                5,
+                std::vector<BlockType>(
+                    5,
+                    Blocks::GRANITE
+                )
+            )
+        );
+
         std::vector returnVector = mc.getBlocksWithData(testLoc, testLoc2);
 
         CHECK((returnVector == expected));
@@ -171,60 +199,3 @@ TEST_CASE("Test blocks struct") {
     CHECK((mc.getBlock(testLoc) == Blocks::STONE));
 }
 
-
-TEST_CASE("Test array unflattening utils") {
-    Coordinate loc1(0,0,0);
-    Coordinate loc2(4, 4, 4);
-
-    //block util tests
-    mc.setBlocks(loc1, loc2, Blocks::DIRT);
-    SUBCASE("getBlocks") {
-        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5,
-            std::vector<std::vector<BlockType>>(
-                5,
-                std::vector<BlockType>(
-                    5,
-                    Blocks::DIRT
-                )
-            )
-        );
-        std::vector<BlockType> blockArr = mc.getBlocks(loc1, loc2);
-        auto unFlattenedBlockArr = unflattenBlocksArray(loc1, loc2, blockArr);
-        CHECK((unFlattenedBlockArr == expected));
-    }
-
-    SUBCASE("getBlocksWithData") {
-        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5,
-            std::vector<std::vector<BlockType>>(
-                5,
-                std::vector<BlockType>(
-                    5,
-                    Blocks::DIRT
-                )
-            )
-        );
-        std::vector<BlockType> blockArrData = mc.getBlocksWithData(loc1, loc2);
-        auto unFlattenedBlockDataArr = unflattenBlocksArray(loc1, loc2, blockArrData);
-        CHECK((unFlattenedBlockDataArr == expected));
-    }
-
-    SUBCASE("getHeights") {
-        Coordinate loc1(0,0,0);
-        Coordinate loc2(4,4,4);
-        Coordinate loc3(0,4,0);
-        Coordinate loc4(4,255,4);
-        mc.setBlocks(loc3, loc4, Blocks::AIR);
-        auto expected = std::vector<std::vector<int>>(
-            5,
-            std::vector<int>(
-                5,
-                3
-            )
-        );
-        auto heightArr = mc.getHeights(loc1, loc2);
-        auto unFlattenedHeightArr = unflattenHeightsArray(loc1, loc2, heightArr);
-        CHECK((unFlattenedHeightArr == expected));
-    }
-}
