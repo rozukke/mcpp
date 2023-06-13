@@ -1,13 +1,13 @@
 #include "doctest.h"
 #include "../include/mcpp/mcpp.h"
 
-// set to 1 if testing with joined player on server
+// Set to 1 if testing with joined player on server
 #define PLAYER_TEST 0
 
 using namespace std::string_literals;
 using namespace mcpp;
 
-// you may need to set the address to your $(hostname).local if running on WSL2.
+// You may need to set the address to your $(hostname).local if running on WSL2.
 SocketConnection tcp_conn("localhost", 4711);
 MinecraftConnection mc;
 
@@ -19,12 +19,12 @@ MinecraftConnection mc;
  * connection.
  */
 
-// run test_suite profile to perform tests in this file.
+// Run test_suite profile to perform tests in this file.
 TEST_CASE("Socket connection test")
 {
 
     SUBCASE("Test send") {
-        // more or less manual test case used more so to check for errors sending
+        // More or less manual test case used more so to check for errors sending
         tcp_conn.send("chat.post(test string)\n");
         tcp_conn.send("player.setTile(100,100,100)\n");
     }
@@ -81,7 +81,7 @@ TEST_CASE("Test the main mcpp class") {
         CHECK((mc.getBlock(testLoc) == BlockType(34)));
     }
 
-    // using values from the Blocks struct in block.h beyond this point
+    // Using values from the Blocks struct in block.h beyond this point
 
     SUBCASE("getBlockWithData") {
         mc.setBlock(testLoc, BlockType(5, 5));
@@ -102,7 +102,7 @@ TEST_CASE("Test the main mcpp class") {
         Coordinate platformCoord1(151, 100, 151);
         Coordinate platformCoord2(160, 100, 160);
 
-        //create even heights
+        // Create even heights
         mc.setBlocks(platformCoord1, platformCoord2, Blocks::DIRT);
 
         std::vector expected = std::vector<std::vector<int>>(
@@ -117,7 +117,7 @@ TEST_CASE("Test the main mcpp class") {
         CHECK((resultHeights == expected));
     }
 
-    // used for cuboid functions
+    // Used for cuboid functions
     Coordinate testLoc2(96, 96, 96);
 
     SUBCASE("setBlocks") {
@@ -162,7 +162,7 @@ TEST_CASE("Test the main mcpp class") {
     }
 }
 
-// requires player joined to server, will throw serverside if player is not joined and hang execution
+// Requires player joined to server, will throw serverside if player is not joined and hang execution
 #if PLAYER_TEST
 
 TEST_CASE("Player operations") {

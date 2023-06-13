@@ -24,7 +24,7 @@ namespace mcpp {
     };
 
 
-    //using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
+    // Using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
 
     /**
      * Struct of static block objects that allows for a "search" of sorts, callable using Blocks::TYPE
@@ -213,10 +213,8 @@ namespace mcpp {
         static constexpr BlockType COBBLESTONE_MONSTER_EGG = BlockType(97, 1);
         static constexpr BlockType STONE_BRICK_MONSTER_EGG = BlockType(97, 2);
         static constexpr BlockType MOSSY_STONE_BRICK_MONSTER_EGG = BlockType(97, 3);
-        static constexpr BlockType CRACKED_STONE_BRICK_MONSTER_EGG = BlockType(97,
-                                                                            4);
-        static constexpr BlockType CHISELED_STONE_BRICK_MONSTER_EGG = BlockType(97,
-                                                                                5);
+        static constexpr BlockType CRACKED_STONE_BRICK_MONSTER_EGG = BlockType(97, 4);
+        static constexpr BlockType CHISELED_STONE_BRICK_MONSTER_EGG = BlockType(97, 5);
         static constexpr BlockType STONE_BRICKS = BlockType(98);
         static constexpr BlockType MOSSY_STONE_BRICKS = BlockType(98, 1);
         static constexpr BlockType CRACKED_STONE_BRICKS = BlockType(98, 2);
@@ -313,14 +311,12 @@ namespace mcpp {
         static constexpr BlockType WHITE_STAINED_GLASS_PANE = BlockType(160);
         static constexpr BlockType ORANGE_STAINED_GLASS_PANE = BlockType(160, 1);
         static constexpr BlockType MAGENTA_STAINED_GLASS_PANE = BlockType(160, 2);
-        static constexpr BlockType LIGHT_BLUE_STAINED_GLASS_PANE = BlockType(160,
-                                                                            3);
+        static constexpr BlockType LIGHT_BLUE_STAINED_GLASS_PANE = BlockType(160, 3);
         static constexpr BlockType YELLOW_STAINED_GLASS_PANE = BlockType(160, 4);
         static constexpr BlockType LIME_STAINED_GLASS_PANE = BlockType(160, 5);
         static constexpr BlockType PINK_STAINED_GLASS_PANE = BlockType(160, 6);
         static constexpr BlockType GRAY_STAINED_GLASS_PANE = BlockType(160, 7);
-        static constexpr BlockType LIGHT_GRAY_STAINED_GLASS_PANE = BlockType(160,
-                                                                            8);
+        static constexpr BlockType LIGHT_GRAY_STAINED_GLASS_PANE = BlockType(160, 8);
         static constexpr BlockType CYAN_STAINED_GLASS_PANE = BlockType(160, 9);
         static constexpr BlockType PURPLE_STAINED_GLASS_PANE = BlockType(160, 10);
         static constexpr BlockType BLUE_STAINED_GLASS_PANE = BlockType(160, 11);

@@ -2,6 +2,7 @@
 
 #include <string_view>
 #include <memory>
+#include <vector>
 #include "connection.h"
 #include "block.h"
 #include "util.h"
@@ -20,6 +21,7 @@ namespace mcpp {
         unflattenHeightsArray(const Coordinate& loc1,
                               const Coordinate& loc2,
                               const std::vector<int>& inVector);
+
     public:
         /**
          * Represents the main endpoint for interaction with the minecraft world.
@@ -80,7 +82,7 @@ namespace mcpp {
          */
         BlockType getBlockWithData(const Coordinate& loc);
 
-        //TODO: specify the way to iterate through the returned list in correct order
+        // TODO: specify the way to iterate through the returned list in correct order
         /**
          * Returns a vector of the BlockTypes at the requested cuboid. Be careful with order of iteration when
          * parsing the returned data.

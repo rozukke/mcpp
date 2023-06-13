@@ -9,7 +9,7 @@ namespace mcpp {
         std::string lastSent;
         static const std::string FailedCommandResponse;
 
-        [[nodiscard]] static bool checkCommandFailed(const std::string& result) ;
+        [[nodiscard]] static bool checkCommandFailed(const std::string& result);
 
         static std::string resolveHostname(const std::string& hostname);
 
@@ -31,7 +31,7 @@ namespace mcpp {
 
             ss << prefix << "(";
 
-            // iterate over args pack
+            // Iterate over args pack
             ((ss << args << ','), ...);
             // Remove trailing comma
             ss.seekp(-1, std::ios_base::end);

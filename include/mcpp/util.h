@@ -1,9 +1,5 @@
 #pragma once
 
-#include <vector>
-
-#include "block.h"
-
 namespace mcpp {
 /**
  * Represented using integers since sub-unit coordinates are not of particular relevance. Allows for

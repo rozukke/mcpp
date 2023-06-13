@@ -1,16 +1,19 @@
 #pragma once
 
 #include <string>
+
 namespace mcpp {
     class Entity {
     public:
-        constexpr Entity(int id, const char* name = nullptr):id(id), name(name){};
-        bool operator==(Entity &other) const{
+        constexpr Entity(int id, const char *name = nullptr) : id(id), name(name) {};
+
+        bool operator==(Entity& other) const {
             return this->id == other.id;
         }
+
     private:
         int id;
-        const char* name;
+        const char *name;
     };
 
 

@@ -13,7 +13,7 @@ namespace mcpp {
                                        uint16_t port) {
         std::string ipAddress = resolveHostname(address_str);
 
-        // using std libs only to avoid dependency on socket lib
+        // Using std libs only to avoid dependency on socket lib
         socketHandle = socket(AF_INET, SOCK_STREAM, 0);
         if (socketHandle == -1) {
             throw std::runtime_error("Failed to create socket.");

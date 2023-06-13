@@ -1,7 +1,5 @@
 #include "../include/mcpp/util.h"
 
-#include <cstdlib>
-
 namespace mcpp {
 
     Coordinate::Coordinate(int x, int y, int z) {
