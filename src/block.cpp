@@ -2,10 +2,10 @@
 
 namespace mcpp {
     bool BlockType::operator==(const BlockType& other) const {
-        return this->id == other.id && this->data == other.data;
+        return this->id == other.id && this->mod == other.mod;
     }
 
-    BlockType BlockType::withData(int newData) const {
-        return {this->id, newData};
+    BlockType BlockType::withMod(int modifier) const {
+        return {this->id, modifier};
     }
 }

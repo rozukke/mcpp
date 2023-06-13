@@ -4,23 +4,22 @@ namespace mcpp {
     class BlockType {
     public:
         int id;
-        int data;
-    public:
-        constexpr BlockType(int id, int data = 0) : id(id), data(data) {};
+        int mod;
+
+        constexpr BlockType(int id, int modifier = 0) : id(id), mod(modifier) {};
 
         /**
-        * Watch out as this also compares the BlockType.id element of the block, so some equalities may behave in
-        * somewhat unexpected ways e.g. rotated stairs
+        * Watch out as this also compares the BlockType.mod element of the block, so some equalities may behave in
+        * unexpected ways e.g. rotated stairs
         */
         bool operator==(const BlockType& other) const;
 
         /**
-        * Returns a new BlockType object with the specified data. Useful when providing a BlockType to a
-        * function that accepts them to quickly modify.
-        * @param newData Integer representing the data for the BlockType
-        * @return New BlockType object with the specified data
+        * Returns a new BlockType with the same id and specified modifier, useful for rotations etc.
+        * @param modifier New modifier for the BlockType
+        * @return New BlockType object with the specified modifier
         */
-        [[nodiscard]] BlockType withData(int data) const;
+        [[nodiscard]] BlockType withMod(int modifier) const;
     };
 
 

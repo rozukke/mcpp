@@ -69,10 +69,10 @@ TEST_CASE("Test block class") {
         CHECK((testBlock == testBlockRHS));
     }
 
-    SUBCASE("Test withData") {
+    SUBCASE("Test withMod") {
         BlockType testBlock(10);
         BlockType testBlockRHS(10, 2);
-        CHECK((testBlock.withData(2) == testBlockRHS));
+        CHECK((testBlock.withMod(2) == testBlockRHS));
 
     }
 }

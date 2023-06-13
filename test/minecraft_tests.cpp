@@ -83,12 +83,12 @@ TEST_CASE("Test the main mcpp class") {
 
     // Using values from the Blocks struct in block.h beyond this point
 
-    SUBCASE("getBlockWithData") {
+    SUBCASE("getBlock with mod") {
         mc.setBlock(testLoc, BlockType(5, 5));
-        CHECK((mc.getBlockWithData(testLoc) == BlockType(5, 5)));
+        CHECK((mc.getBlock(testLoc) == BlockType(5, 5)));
 
         mc.setBlock(testLoc, Blocks::LIGHT_BLUE_CONCRETE);
-        CHECK((mc.getBlockWithData(testLoc) == Blocks::LIGHT_BLUE_CONCRETE));
+        CHECK((mc.getBlock(testLoc) == Blocks::LIGHT_BLUE_CONCRETE));
     }
 
     SUBCASE("getHeight") {
@@ -142,7 +142,7 @@ TEST_CASE("Test the main mcpp class") {
         CHECK((returnVector == expected));
     }
 
-    SUBCASE("getBlocksWithData") {
+    SUBCASE("getBlocks with mod") {
         mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
 
         auto expected = std::vector<std::vector<std::vector<BlockType>>>(
@@ -156,7 +156,7 @@ TEST_CASE("Test the main mcpp class") {
                 )
         );
 
-        std::vector returnVector = mc.getBlocksWithData(testLoc, testLoc2);
+        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
 
         CHECK((returnVector == expected));
     }
