@@ -2,14 +2,13 @@
 #include <iostream>
 #include <sstream>
 
+#define FAIL_RESPONSE "Fail"
+
 namespace mcpp {
     class SocketConnection {
     private:
         int socketHandle;
         std::string lastSent;
-        static const std::string FailedCommandResponse;
-
-        [[nodiscard]] static bool checkCommandFailed(const std::string& result);
 
         static std::string resolveHostname(const std::string& hostname);
 

@@ -7,8 +7,6 @@
 #include <netdb.h>
 
 namespace mcpp {
-    const std::string SocketConnection::FailedCommandResponse = "Fail";
-
     SocketConnection::SocketConnection(const std::string& address_str,
                                        uint16_t port) {
         std::string ipAddress = resolveHostname(address_str);
@@ -85,17 +83,11 @@ namespace mcpp {
             response.pop_back();
         }
 
-        // TODO: See checkCommandFailed()
-        if (checkCommandFailed(response)) {
+        if (response == FAIL_RESPONSE) {
             std::string errorMsg = "Server failed to execute command: ";
             errorMsg += lastSent;
             throw std::runtime_error(errorMsg);
         }
         return response;
-    }
-
-    // TODO: Refactor this into MinecraftConnection since socket should not be responsible for MC specific func
-    bool SocketConnection::checkCommandFailed(const std::string& result) {
-        return result == FailedCommandResponse;
     }
 }
