@@ -1,32 +1,22 @@
-#pragma once
-
 #include <string>
-#include <string_view>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <iostream>
-#include <arpa/inet.h>
-#include <stdexcept>
-#include <initializer_list>
-#include <memory>
-#include <utility>
-#include <boost/asio.hpp>
+#include <sstream>
 
 namespace mcpp {
-
     class SocketConnection {
     private:
-        boost::asio::ip::tcp::socket *socket;
-        const std::string FailedCommandResponse = "Fail";
+        int socketHandle;
         std::string lastSent;
+        static const std::string FailedCommandResponse;
+
+        [[nodiscard]] static bool checkCommandFailed(const std::string& result) ;
+
+        static std::string resolveHostname(const std::string& hostname);
 
     public:
-        explicit SocketConnection(const std::string& address_str,
-                                  uint16_t port);
+        SocketConnection(const std::string& address_str, uint16_t port);
 
         void send(const std::string& dataString);
-
-        [[nodiscard]] std::string recv() const;
 
         /**
          * Takes in parameters supporting std::stringstream conversion and a string prefix and transforms them into
@@ -66,9 +56,6 @@ namespace mcpp {
             return result;
         }
 
-        SocketConnection& operator=(const SocketConnection& other);
-
-    private:
-        [[nodiscard]] bool checkCommandFailed(const std::string& result) const;
+        [[nodiscard]] std::string recv() const;
     };
 }

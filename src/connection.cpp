@@ -1,46 +1,91 @@
-#include <string>
 #include "../include/mcpp/connection.h"
-#include <boost/asio.hpp>
-#include <boost/thread.hpp>
-#include <iostream>
-
-using boost::asio::ip::tcp;
-using namespace boost;
-using std::string, std::string_view;
-
+#include <stdexcept>
+#include <sstream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <netdb.h>
 
 namespace mcpp {
-    SocketConnection::SocketConnection(const string& address_str, uint16_t port)
-            : lastSent((string) "") {
-        asio::io_context io_context;
-        asio::ip::tcp::endpoint endpoint(asio::ip::tcp::v4(), 0);
+    const std::string SocketConnection::FailedCommandResponse = "Fail";
 
+    SocketConnection::SocketConnection(const std::string& address_str,
+                                       uint16_t port) {
+        std::string ipAddress = resolveHostname(address_str);
 
-        socket = new tcp::socket(io_context, endpoint);
-        tcp::resolver resolver(io_context);
-        asio::connect(*socket,
-                      resolver.resolve(address_str, std::to_string(port)));
+        // using std libs only to avoid dependency on socket lib
+        socketHandle = socket(AF_INET, SOCK_STREAM, 0);
+        if (socketHandle == -1) {
+            throw std::runtime_error("Failed to create socket.");
+        }
 
+        sockaddr_in serverAddress{};
+        serverAddress.sin_family = AF_INET;
+        serverAddress.sin_port = htons(port);
+
+        if (inet_pton(AF_INET, ipAddress.c_str(), &(serverAddress.sin_addr)) <=
+            0) {
+            throw std::runtime_error("Invalid address.");
+        }
+
+        if (connect(socketHandle, (struct sockaddr *) &serverAddress,
+                    sizeof(serverAddress)) < 0) {
+            throw std::runtime_error("Failed to connect to the server.");
+        }
     }
 
-    SocketConnection& SocketConnection::operator=(const SocketConnection& other) {
-        return *this;
+    std::string SocketConnection::resolveHostname(const std::string& hostname) {
+        struct addrinfo hints{};
+        struct addrinfo *result;
+
+        hints.ai_family = AF_INET;
+        hints.ai_socktype = SOCK_STREAM;
+
+        if (getaddrinfo(hostname.c_str(), nullptr, &hints, &result) != 0) {
+            throw std::runtime_error("Failed to resolve hostname.");
+        }
+
+        auto *address = reinterpret_cast<struct sockaddr_in *>(result->ai_addr);
+        char ipAddress[INET_ADDRSTRLEN];
+        inet_ntop(AF_INET, &(address->sin_addr), ipAddress, INET_ADDRSTRLEN);
+
+        std::string ipString(ipAddress);
+        freeaddrinfo(result);
+
+        return ipString;
     }
 
     void SocketConnection::send(const std::string& dataString) {
         lastSent = dataString;
-        socket->write_some(asio::buffer(dataString));
+        ssize_t result = write(socketHandle, dataString.c_str(),
+                               dataString.length());
+        if (result < 0) {
+            throw std::runtime_error("Failed to send data.");
+        }
     }
 
-    string SocketConnection::recv() const {
-//        std::cout << "Receiving message: ";
-        std::string response;
-        asio::read_until(*socket, asio::dynamic_buffer(response), '\n');
-//        std::cout << response.data() << std::endl;
+    std::string SocketConnection::recv() const {
+        std::stringstream responseStream;
+        char buffer[1024];
+
+        ssize_t bytesRead;
+        do {
+            bytesRead = read(socketHandle, buffer, sizeof(buffer));
+            if (bytesRead < 0) {
+                throw std::runtime_error("Failed to receive data.");
+            }
+
+            responseStream.write(buffer, bytesRead);
+        } while (bytesRead == sizeof(buffer));
+
+        std::string response = responseStream.str();
 
         // Remove trailing \n
-        response.pop_back();
+        if (!response.empty() && response[response.length() - 1] == '\n') {
+            response.pop_back();
+        }
 
+        // TODO: See checkCommandFailed()
         if (checkCommandFailed(response)) {
             std::string errorMsg = "Server failed to execute command: ";
             errorMsg += lastSent;
@@ -49,8 +94,8 @@ namespace mcpp {
         return response;
     }
 
-    bool SocketConnection::checkCommandFailed(const std::string& result) const {
+    // TODO: Refactor this into MinecraftConnection since socket should not be responsible for MC specific func
+    bool SocketConnection::checkCommandFailed(const std::string& result) {
         return result == FailedCommandResponse;
     }
-
 }
