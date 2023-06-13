@@ -162,9 +162,11 @@ namespace mcpp {
 
 
     std::vector<std::vector<std::vector<BlockType>>>
-    MinecraftConnection::unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector)
+    MinecraftConnection::unflattenBlocksArray(const Coordinate& loc1,
+                                              const Coordinate& loc2,
+                                              const std::vector<BlockType>& inVector)
     {
-        //initialise empty vector of correct size and shape
+        // initialise empty vector of correct size and shape
         int y_len = abs(loc2.y - loc1.y) + 1;
         int x_len = abs(loc2.x - loc1.x) + 1;
         int z_len = abs(loc2.z - loc1.z) + 1;
@@ -179,7 +181,6 @@ namespace mcpp {
             )
         );
 
-        //fill
         int index = 0;
         for (int y=0; y < y_len; y++) {
             for (int x=0; x < x_len; x++) {

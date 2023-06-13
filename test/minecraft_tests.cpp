@@ -15,6 +15,7 @@ using namespace mcpp;
 
 SocketConnection tcp_conn("172.21.96.1", 4711);
 MinecraftConnection mc("172.21.96.1", 4711);
+
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
  * requirement stems from the fact that it's a pain in the ass to run a local TCP server just in order to test if the
@@ -23,14 +24,12 @@ MinecraftConnection mc("172.21.96.1", 4711);
  * connection.
  */
 
-
-
-//Run test_suite profile to perform tests in this file.
+// run test_suite profile to perform tests in this file.
 TEST_CASE("Socket connection test")
 {
 
     SUBCASE("Test send") {
-        //more or less manual test case used more so to check for errors sending
+        // more or less manual test case used more so to check for errors sending
         tcp_conn.send("chat.post(test string)\n");
         tcp_conn.send("player.setTile(100,100,100)\n");
     }
@@ -56,7 +55,8 @@ TEST_CASE("Socket connection test")
     SUBCASE("Send receive command") {
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 30);
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 26);
-        auto result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
+        auto result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100,
+                                                  100);
         CHECK((result == "26"));
 
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 25);
@@ -86,7 +86,7 @@ TEST_CASE("Test the main mcpp class") {
         CHECK((mc.getBlock(testLoc) == BlockType(34)));
     }
 
-    //Using values from the Blocks struct in block.h beyond this point
+    // using values from the Blocks struct in block.h beyond this point
 
     SUBCASE("getBlockWithData") {
         mc.setBlock(testLoc, BlockType(5, 5));
@@ -111,11 +111,11 @@ TEST_CASE("Test the main mcpp class") {
         mc.setBlocks(platformCoord1, platformCoord2, Blocks::DIRT);
 
         std::vector expected = std::vector<std::vector<int>>(
-            10,
-            std::vector<int>(
                 10,
-                100
-            )
+                std::vector<int>(
+                        10,
+                        100
+                )
         );
 
         auto resultHeights = mc.getHeights(platformCoord1, platformCoord2);
@@ -133,16 +133,15 @@ TEST_CASE("Test the main mcpp class") {
         mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
 
         auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5,
-            std::vector<std::vector<BlockType>>(
                 5,
-                std::vector<BlockType>(
-                    5,
-                    Blocks::DIRT
+                std::vector<std::vector<BlockType>>(
+                        5,
+                        std::vector<BlockType>(
+                                5,
+                                Blocks::DIRT
+                        )
                 )
-            )
         );
-
 
         std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
         CHECK((returnVector == expected));
@@ -152,14 +151,14 @@ TEST_CASE("Test the main mcpp class") {
         mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
 
         auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5,
-            std::vector<std::vector<BlockType>>(
                 5,
-                std::vector<BlockType>(
-                    5,
-                    Blocks::GRANITE
+                std::vector<std::vector<BlockType>>(
+                        5,
+                        std::vector<BlockType>(
+                                5,
+                                Blocks::GRANITE
+                        )
                 )
-            )
         );
 
         std::vector returnVector = mc.getBlocksWithData(testLoc, testLoc2);
@@ -168,7 +167,7 @@ TEST_CASE("Test the main mcpp class") {
     }
 }
 
-//requires player joined to server, will throw serverside if player is not joined and hang execution
+// requires player joined to server, will throw serverside if player is not joined and hang execution
 #if PLAYERTEST
 
 TEST_CASE("Player operations") {

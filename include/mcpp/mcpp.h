@@ -10,11 +10,15 @@ namespace mcpp {
     private:
         std::unique_ptr<SocketConnection> conn;
 
-        std::vector<std::vector<std::vector<BlockType>>>
-        unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<BlockType>& inVector);
+        static std::vector<std::vector<std::vector<BlockType>>>
+        unflattenBlocksArray(const Coordinate& loc1,
+                             const Coordinate& loc2,
+                             const std::vector<BlockType>& inVector);
 
-        std::vector<std::vector<int>>
-        unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& inVector);
+        static std::vector<std::vector<int>>
+        unflattenHeightsArray(const Coordinate& loc1,
+                              const Coordinate& loc2,
+                              const std::vector<int>& inVector);
     public:
         /**
          * Represents the main endpoint for interaction with the minecraft world.
