@@ -1,20 +1,15 @@
 #include "doctest.h"
-#include "../include/mcpp/connection.h"
 #include "../include/mcpp/mcpp.h"
-#include "../include/mcpp/util.h"
-#include "../include/mcpp/block.h"
 
+// set to 1 if testing with joined player on server
+#define PLAYER_TEST 0
 
-//set to 1 if testing with joined player on server
-#define PLAYERTEST 0
-
-using std::string;
 using namespace std::string_literals;
 using namespace mcpp;
 
-
-SocketConnection tcp_conn("172.21.96.1", 4711);
-MinecraftConnection mc("172.21.96.1", 4711);
+// you may need to set the address to your $(hostname).local if running on WSL2.
+SocketConnection tcp_conn("localhost", 4711);
+MinecraftConnection mc;
 
 /*
  * All tests require a running instance of Spigot server with the ELCI Legacy plugin in order to run successfully. This
@@ -37,14 +32,14 @@ TEST_CASE("Socket connection test")
     SUBCASE("Test receive") {
         tcp_conn.send("world.setBlock(100,100,100,30)\n");
         tcp_conn.send("world.getBlock(100,100,100)\n");
-        string return_str = tcp_conn.recv();
+        std::string return_str = tcp_conn.recv();
         CHECK((return_str == "30"));
     }
 
     SUBCASE("Repeated receive") {
         tcp_conn.send("world.setBlock(100,100,100,29)\n");
         tcp_conn.send("world.getBlock(100,100,100)\n");
-        string return_str = tcp_conn.recv();
+        std::string return_str = tcp_conn.recv();
         CHECK((return_str == "29"));
     }
 
@@ -168,7 +163,7 @@ TEST_CASE("Test the main mcpp class") {
 }
 
 // requires player joined to server, will throw serverside if player is not joined and hang execution
-#if PLAYERTEST
+#if PLAYER_TEST
 
 TEST_CASE("Player operations") {
     Coordinate testLoc(110, 110, 110);
