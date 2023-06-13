@@ -68,39 +68,20 @@ namespace mcpp {
                        const BlockType& blockType);
 
         /**
-         * Returns BlockType object of the specified Coordinate loc location (this does not provide the
-         * block.data element)
+         * Returns BlockType object from the specified Coordinate loc with modifier
          * @param loc
          * @return BlockType of the requested block
          */
         BlockType getBlock(const Coordinate& loc);
 
         /**
-         * Same functionality as getBlockWithData but provides the Block.data element in the returned BlockType
-         * @param loc
-         * @return
-         */
-        BlockType getBlockWithData(const Coordinate& loc);
-
-        // TODO: specify the way to iterate through the returned list in correct order
-        /**
-         * Returns a vector of the BlockTypes at the requested cuboid. Be careful with order of iteration when
-         * parsing the returned data.
-         * @param loc1
-         * @param loc2
-         * @return Vector of BlockType's in the specified cuboid.
+         * Returns a 3D vector of the BlockTypes of the requested cuboid with modifiers
+         * @param loc1 1st corner of the cuboid
+         * @param loc2 2nd corner of the cuboid
+         * @return 3D vector of BlockType in the specified cuboid.
          */
         std::vector<std::vector<std::vector<BlockType>>>
         getBlocks(const Coordinate& loc1, const Coordinate& loc2);
-
-        /**
-         * Same functionality as getBlocks but with the additional BlockType.data element.
-         * @param loc1
-         * @param loc2
-         * @return Vector of BlockType's at the requested cuboid.
-         */
-        std::vector<std::vector<std::vector<BlockType>>>
-        getBlocksWithData(const Coordinate& loc1, const Coordinate& loc2);
 
         /**
          * IMPORTANT: DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW

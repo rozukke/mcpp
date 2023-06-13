@@ -8,7 +8,7 @@ running the [ELCI](https://github.com/rozukke/ELCI) plugin and using C++. It is 
 This library is based on [mcpi](https://github.com/martinohanlon/mcpi), which is a Python library with similar functionality. 
 
 In addition to C++ support, this library implements several new commands supported by [ELCI](https://github.com/rozukke/ELCI):
-- `getBlocksWithData` to get a cuboid of blocks with data in a performant manner,
+- `getBlocks` to get a cuboid of blocks with modifiers in a performant manner,
 - `getHeights` to get a 2D area of heights in a performant manner,
 - `doCommand` to perform an in-game minecraft command which allows for additional functionality.
 

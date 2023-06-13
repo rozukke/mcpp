@@ -51,7 +51,7 @@ namespace mcpp {
     void MinecraftConnection::setBlock(const Coordinate& loc,
                                        const BlockType& blockType) {
         conn->sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id,
-                          blockType.data);
+                          blockType.mod);
     }
 
 
@@ -61,57 +61,29 @@ namespace mcpp {
         auto [x, y, z] = loc1;
         auto [x2, y2, z2] = loc2;
         conn->sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id,
-                          blockType.data);
+                          blockType.mod);
     }
 
 
     BlockType MinecraftConnection::getBlock(const Coordinate& loc) {
-        std::string returnValue = conn->sendReceiveCommand("world.getBlock",
-                                                           loc.x, loc.y, loc.z);
-        return {std::stoi(returnValue)};
-    }
-
-
-    BlockType MinecraftConnection::getBlockWithData(const Coordinate& loc) {
         std::string returnString = conn->sendReceiveCommand(
                 "world.getBlockWithData", loc.x, loc.y, loc.z);
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
 
-        // Data and id
+        // Values are id and mod
         return {parsedInts[0], parsedInts[1]};
     }
 
-
     std::vector<std::vector<std::vector<BlockType>>>
-    MinecraftConnection::getBlocks(const Coordinate& loc1,
-                                   const Coordinate& loc2) {
-        std::string returnValue = conn->sendReceiveCommand("world.getBlocks",
-                                                           loc1.x, loc1.y,
-                                                           loc1.z,
-                                                           loc2.x, loc2.y,
-                                                           loc2.z);
-        std::stringstream ss(returnValue);
-        std::string container;
-        std::vector<BlockType> returnVector;
-
-        while (std::getline(ss, container, ',')) {
-            returnVector.emplace_back(std::stoi(container));
-        }
-
-        return unflattenBlocksArray(loc1, loc2, returnVector);
-    }
-
-
-    std::vector<std::vector<std::vector<BlockType>>>
-    MinecraftConnection::getBlocksWithData(
+    MinecraftConnection::getBlocks(
             const Coordinate& loc1, const Coordinate& loc2) {
         std::string returnValue = conn->sendReceiveCommand(
                 "world.getBlocksWithData",
                 loc1.x, loc1.y, loc1.z,
                 loc2.x, loc2.y, loc2.z);
 
-        // Received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and data 2
+        // Received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and mod 2
         std::vector<BlockType> result;
         std::stringstream stream(returnValue);
 
