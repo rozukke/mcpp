@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string_view>
+#include <memory>
 #include "connection.h"
 #include "block.h"
 #include "util.h"
