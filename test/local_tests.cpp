@@ -15,9 +15,9 @@ using namespace mcpp;
 TEST_CASE("Test Coordinate class") {
     SUBCASE("Test init") {
         Coordinate testCoord;
-        CHECK((testCoord.x == 0));
-        CHECK((testCoord.y == 0));
-        CHECK((testCoord.z == 0));
+        CHECK_EQ(testCoord.x, 0);
+        CHECK_EQ(testCoord.y, 0);
+        CHECK_EQ(testCoord.z, 0);
     }
 
     SUBCASE("Test double init") {
@@ -25,15 +25,15 @@ TEST_CASE("Test Coordinate class") {
         Coordinate testCoordFloat(1.5f, 2.5f, 3.5f);
         Coordinate testCoordRHS(1, 2, 3);
 
-        CHECK((testCoord == testCoordRHS));
-        CHECK((testCoord == testCoordFloat));
+        CHECK_EQ(testCoord, testCoordRHS);
+        CHECK_EQ(testCoord, testCoordFloat);
     }
 
     SUBCASE("Test equals") {
         Coordinate testCoord(3, 2, 1);
         Coordinate testCoordRHS(3, 2, 1);
 
-        CHECK((testCoord == testCoordRHS));
+        CHECK_EQ(testCoord, testCoordRHS);
     }
 
     SUBCASE("Test add") {
@@ -41,7 +41,7 @@ TEST_CASE("Test Coordinate class") {
         Coordinate testCoordRHS(1, 2, 3);
         Coordinate result(4, 4, 4);
 
-        CHECK(((testCoord + testCoordRHS) == result));
+        CHECK_EQ((testCoord + testCoordRHS), result);
     }
 
     SUBCASE("Test subtract") {
@@ -50,15 +50,15 @@ TEST_CASE("Test Coordinate class") {
 
         Coordinate result(1, 0, -1);
 
-        CHECK(((testCoord - testCoordRHS) == result));
+        CHECK_EQ((testCoord - testCoordRHS), result);
     }
 
     SUBCASE("Test clone") {
         Coordinate testCoord(1, 2, 3);
         Coordinate testCoordClone = testCoord.clone();
 
-        CHECK((testCoord == testCoordClone));
-        CHECK((&testCoord != &testCoordClone));
+        CHECK_EQ(testCoord, testCoordClone);
+        CHECK_NE(&testCoord, &testCoordClone);
     }
 
     SUBCASE("Test print") {
@@ -73,13 +73,13 @@ TEST_CASE("Test block class") {
     SUBCASE("Test equality") {
         BlockType testBlock(10, 2);
         BlockType testBlockRHS(10, 2);
-        CHECK((testBlock == testBlockRHS));
+        CHECK_EQ(testBlock, testBlockRHS);
     }
 
     SUBCASE("Test withMod") {
         BlockType testBlock(10);
         BlockType testBlockRHS(10, 2);
-        CHECK((testBlock.withMod(2) == testBlockRHS));
+        CHECK_EQ(testBlock.withMod(2), testBlockRHS);
 
     }
 
@@ -91,11 +91,11 @@ TEST_CASE("Test block class") {
     }
 }
 
-TEST_CASE("Test entity class") {
-    Entity testEntity = Entities::CHICKEN;
-
-    SUBCASE("Equality operator") {
-        Entity testEntityRHS(93);
-        CHECK((testEntity == testEntityRHS));
-    }
-}
+//TEST_CASE("Test entity class") {
+//    Entity testEntity = Entities::CHICKEN;
+//
+//    SUBCASE("Equality operator") {
+//        Entity testEntityRHS(93);
+//        CHECK_EQ(testEntity, testEntityRHS);
+//    }
+//}

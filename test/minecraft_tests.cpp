@@ -33,14 +33,14 @@ TEST_CASE("Socket connection test")
         tcp_conn.send("world.setBlock(100,100,100,30)\n");
         tcp_conn.send("world.getBlock(100,100,100)\n");
         std::string return_str = tcp_conn.recv();
-        CHECK((return_str == "30"));
+        CHECK_EQ(return_str, "30");
     }
 
     SUBCASE("Repeated receive") {
         tcp_conn.send("world.setBlock(100,100,100,29)\n");
         tcp_conn.send("world.getBlock(100,100,100)\n");
         std::string return_str = tcp_conn.recv();
-        CHECK((return_str == "29"));
+        CHECK_EQ(return_str, "29");
     }
 
     SUBCASE("Send command") {
@@ -52,11 +52,11 @@ TEST_CASE("Socket connection test")
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 26);
         auto result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100,
                                                   100);
-        CHECK((result == "26"));
+        CHECK_EQ(result, "26");
 
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 25);
         result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
-        CHECK((result == "25"));
+        CHECK_EQ(result, "25");
     }
 
     SUBCASE("Check fail condition") {
@@ -71,31 +71,30 @@ TEST_CASE("Test the main mcpp class") {
         mc.postToChat("test string");
     }
 
-
     SUBCASE("setBlock") {
         mc.setBlock(testLoc, BlockType(50));
     }
 
     SUBCASE("getBlock") {
         mc.setBlock(testLoc, BlockType(34));
-        CHECK((mc.getBlock(testLoc) == BlockType(34)));
+        CHECK_EQ(mc.getBlock(testLoc), BlockType(34));
     }
 
     // Using values from the Blocks struct in block.h beyond this point
 
     SUBCASE("getBlock with mod") {
         mc.setBlock(testLoc, BlockType(5, 5));
-        CHECK((mc.getBlock(testLoc) == BlockType(5, 5)));
+        CHECK_EQ(mc.getBlock(testLoc), BlockType(5, 5));
 
         mc.setBlock(testLoc, Blocks::LIGHT_BLUE_CONCRETE);
-        CHECK((mc.getBlock(testLoc) == Blocks::LIGHT_BLUE_CONCRETE));
+        CHECK_EQ(mc.getBlock(testLoc), Blocks::LIGHT_BLUE_CONCRETE);
     }
 
     SUBCASE("getHeight") {
         Coordinate heightTestLoc(200, 200, 200);
         mc.setBlock(heightTestLoc, Blocks::DIRT);
         auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
-        CHECK((height == heightTestLoc.y));
+        CHECK_EQ(height, heightTestLoc.y);
     }
 
     SUBCASE("getHeights") {
@@ -114,7 +113,7 @@ TEST_CASE("Test the main mcpp class") {
         );
 
         auto resultHeights = mc.getHeights(platformCoord1, platformCoord2);
-        CHECK((resultHeights == expected));
+        CHECK_EQ(resultHeights, expected);
     }
 
     // Used for cuboid functions
@@ -139,7 +138,7 @@ TEST_CASE("Test the main mcpp class") {
         );
 
         std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
-        CHECK((returnVector == expected));
+        CHECK_EQ(returnVector, expected);
     }
 
     SUBCASE("getBlocks with mod") {
@@ -158,7 +157,7 @@ TEST_CASE("Test the main mcpp class") {
 
         std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
 
-        CHECK((returnVector == expected));
+        CHECK_EQ(returnVector, expected);
     }
 }
 
@@ -188,8 +187,8 @@ TEST_CASE("Player operations") {
 TEST_CASE("Test blocks struct") {
     Coordinate testLoc;
     mc.setBlock(testLoc, Blocks::AIR);
-    CHECK((mc.getBlock(testLoc) == Blocks::AIR));
+    CHECK_EQ(mc.getBlock(testLoc), Blocks::AIR);
     mc.setBlock(testLoc, Blocks::STONE);
-    CHECK((mc.getBlock(testLoc) == Blocks::STONE));
+    CHECK_EQ(mc.getBlock(testLoc), Blocks::STONE);
 }
 
