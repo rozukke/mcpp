@@ -28,7 +28,7 @@ namespace mcpp {
 
         if (connect(socketHandle, (struct sockaddr *) &serverAddress,
                     sizeof(serverAddress)) < 0) {
-            throw std::runtime_error("Failed to connect to the server.");
+            throw std::runtime_error("Failed to connect to the server. Check if the server is running.");
         }
     }
 
