@@ -37,4 +37,9 @@ namespace mcpp {
     Coordinate Coordinate::clone() const {
         return Coordinate(this->x, this->y, this->z);
     }
+
+    std::ostream& operator<< (std::ostream& out, const Coordinate& coord) {
+        out << "(" << coord.x << ", " << coord.y << ", " << coord.z << ")";
+        return out;
+    }
 }

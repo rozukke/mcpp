@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 namespace mcpp {
 /**
  * Represented using integers since sub-unit coordinates are not of particular relevance. Allows for
@@ -18,6 +20,8 @@ namespace mcpp {
         Coordinate operator-(const Coordinate& obj) const;
 
         [[nodiscard]] Coordinate clone() const;
+
+        friend std::ostream& operator<< (std::ostream& out, const Coordinate& coord);
 
         int x;
         int y;

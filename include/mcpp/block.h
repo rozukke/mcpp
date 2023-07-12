@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 namespace mcpp {
     class BlockType {
     public:
@@ -14,6 +16,8 @@ namespace mcpp {
         */
         bool operator==(const BlockType& other) const;
 
+        friend std::ostream& operator<< (std::ostream& out, const BlockType& block);
+
         /**
         * Returns a new BlockType with the same id and specified modifier, useful for rotations etc.
         * @param modifier New modifier for the BlockType
@@ -21,6 +25,7 @@ namespace mcpp {
         */
         [[nodiscard]] BlockType withMod(int modifier) const;
     };
+
 
 
     // Using script to extract ids from https://minecraft-ids.grahamedgecombe.com/

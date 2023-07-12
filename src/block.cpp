@@ -8,4 +8,9 @@ namespace mcpp {
     BlockType BlockType::withMod(int modifier) const {
         return {this->id, modifier};
     }
+
+    std::ostream& operator<< (std::ostream& out, const BlockType& block) {
+        out << "[" << block.id << ", " << block.mod << "]";
+        return out;
+    }
 }

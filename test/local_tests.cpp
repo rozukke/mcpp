@@ -60,6 +60,13 @@ TEST_CASE("Test Coordinate class") {
         CHECK((testCoord == testCoordClone));
         CHECK((&testCoord != &testCoordClone));
     }
+
+    SUBCASE("Test print") {
+        Coordinate testCoord(1, 2, 3);
+        std::stringstream ss;
+        ss << testCoord;
+        CHECK_EQ(ss.str(), "(1, 2, 3)");
+    }
 }
 
 TEST_CASE("Test block class") {
@@ -74,6 +81,13 @@ TEST_CASE("Test block class") {
         BlockType testBlockRHS(10, 2);
         CHECK((testBlock.withMod(2) == testBlockRHS));
 
+    }
+
+    SUBCASE("Test print") {
+        BlockType testBlock(2, 3);
+        std::stringstream ss;
+        ss << testBlock;
+        CHECK_EQ(ss.str(), "[2, 3]");
     }
 }
 
