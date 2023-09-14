@@ -37,8 +37,6 @@ namespace mcpp {
          */
         void postToChat(const std::string& message);
 
-        void setSetting(const std::string& setting);
-
         /**
          * Performs an in-game minecraft command. Players have to exist on the server and
          * should be server operators (default with ELCI)
