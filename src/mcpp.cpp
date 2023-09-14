@@ -29,10 +29,6 @@ namespace mcpp {
         conn->sendCommand("chat.post", message);
     }
 
-    void MinecraftConnection::setSetting(const std::string& setting) {
-        conn->sendCommand("world.setting", setting);
-    }
-
     void MinecraftConnection::doCommand(const std::string& command) {
         conn->sendCommand("player.doCommand", command);
     }
