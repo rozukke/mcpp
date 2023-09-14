@@ -1,6 +1,7 @@
 #include "../include/mcpp/mcpp.h"
 #include <string>
 #include <vector>
+#include <cmath>
 
 using std::string_view;
 using namespace std::string_literals;
@@ -12,7 +13,10 @@ namespace mcpp {
         std::stringstream ss(str);
         std::string item;
         while (std::getline(ss, item, ',')) {
-            vec.push_back(std::stoi(item));
+            // Fixes flooring issue w/ negative coordinates
+            double itemDouble = std::stod(item);
+            int itemFloored = static_cast<int>(std::floor(itemDouble));
+            vec.push_back(itemFloored);
         }
     }
 
