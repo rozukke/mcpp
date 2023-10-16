@@ -84,7 +84,7 @@ namespace mcpp {
         /**
          * IMPORTANT: DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
          * USE getHeights() INSTEAD
-         * Gets the y-value of the highest non-air block at the specified (x, y) coordinate.
+         * Gets the y-value of the highest non-air block at the specified (x, z) coordinate.
          * @param x
          * @param z
          * @return Returns the integer y-height at the requested coordinate.
