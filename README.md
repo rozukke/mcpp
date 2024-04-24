@@ -1,6 +1,9 @@
 ![mcpp logo](/resources/mcpplogosmall.png)
-# mcpp (Minecraft++)
 
+
+# mcpp (Minecraft++)
+[![made-with-cpp](https://img.shields.io/badge/Made%20with-C++_17-1f425f.svg)](https://cplusplus.com/) [![made-by-rozukke](https://img.shields.io/badge/Creator-rozukke-f497af.svg)](https://github.com/rozukke) 
+[![GitHub license](https://img.shields.io/github/license/rozukke/mcpp.svg)](https://github.com/rozukke/mcpp/blob/main/LICENSE)\
 **mcpp** (Minecraft++) is a library built to interface with Minecraft through [Spigot server](https://www.spigotmc.org/) 
 running the [ELCI](https://github.com/rozukke/ELCI) plugin and using C++. It is currently limited to MacOS/Linux or Windows with WSL.
 
