@@ -1,6 +1,9 @@
 ![mcpp logo](/resources/mcpplogosmall.png)
-# mcpp (Minecraft++)
 
+
+# mcpp (Minecraft++)
+[![made-with-cpp](https://img.shields.io/badge/Made%20with-C++_17-1f425f.svg)](https://cplusplus.com/) [![made-by-rozukke](https://img.shields.io/badge/Creator-rozukke-f497af.svg)](https://github.com/rozukke) 
+[![GitHub license](https://img.shields.io/github/license/rozukke/mcpp.svg)](https://github.com/rozukke/mcpp/blob/main/LICENSE)\
 **mcpp** (Minecraft++) is a library built to interface with Minecraft through [Spigot server](https://www.spigotmc.org/) 
 running the [ELCI](https://github.com/rozukke/ELCI) plugin and using C++. It is currently limited to MacOS/Linux or Windows with WSL.
 
@@ -18,15 +21,15 @@ This C++ version was created for the Royal Melbourne Institute of Technology (RM
 (Programming Studio 2) course.
 
 ## Installation
-**The release is compiled using g++ and is intended for use with UNIX systems.**
 ### Windows
 Since the release is intended for UNIX systems and not tested on Windows, the options to run locally are as follows:
 - Build manually (there are included CMake build files)
 - Run with WSL, in which case follow the Linux instructions below. You may need to specify a connection address manually in `MinecraftConnection()` if you are running Spigot with ELCI on Windows, which you can find using `nslookup "$(hostname).local"` on your WSL terminal. The default port for ELCI is `4711`.
 
 ### Mac and Linux
-- Download the latest release, unzip and run `install_mcpp_lib.sh`. 
-- You may need to make it executable using `sudo chmod a+x install_mcpp_lib.sh` in your terminal. 
+- Install `g++`, `make`, `cmake` and any other build prerequisites
+- Clone this repository via `git clone https://github.com/rozukke/mcpp.git`
+- Install by running `cmake .` and `sudo make install` inside the cloned directory.
 - After doing this, the library should be accessible via a `#include <mcpp/mcpp.h>` directive. 
 - When compiling code using the library, use the flag `-lmcpp` for Makefiles or `target_link_libraries(your_executable mcpp)` for CMake.
 
