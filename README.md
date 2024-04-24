@@ -25,8 +25,9 @@ Since the release is intended for UNIX systems and not tested on Windows, the op
 - Run with WSL, in which case follow the Linux instructions below. You may need to specify a connection address manually in `MinecraftConnection()` if you are running Spigot with ELCI on Windows, which you can find using `nslookup "$(hostname).local"` on your WSL terminal. The default port for ELCI is `4711`.
 
 ### Mac and Linux
-- Download the latest release, unzip and run `install_mcpp_lib.sh`. 
-- You may need to make it executable using `sudo chmod a+x install_mcpp_lib.sh` in your terminal. 
+- Install `g++`, `make`, `cmake` and any other build prerequisites
+- Clone this repository via `git clone https://github.com/rozukke/mcpp.git`
+- Install by running `cmake .` and `sudo make install` inside the cloned directory.
 - After doing this, the library should be accessible via a `#include <mcpp/mcpp.h>` directive. 
 - When compiling code using the library, use the flag `-lmcpp` for Makefiles or `target_link_libraries(your_executable mcpp)` for CMake.
 
