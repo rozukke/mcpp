@@ -21,7 +21,6 @@ This C++ version was created for the Royal Melbourne Institute of Technology (RM
 (Programming Studio 2) course.
 
 ## Installation
-**The release is compiled using g++ and is intended for use with UNIX systems.**
 ### Windows
 Since the release is intended for UNIX systems and not tested on Windows, the options to run locally are as follows:
 - Build manually (there are included CMake build files)
