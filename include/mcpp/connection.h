@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <cstdint>
 
 #define FAIL_RESPONSE "Fail"
 
