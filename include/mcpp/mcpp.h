@@ -44,8 +44,16 @@ namespace mcpp {
          */
         void doCommand(const std::string& command);
 
+        /**
+         * Sets player pos (block pos of lower half of playermodel) to specified Coordinate
+         * @param pos Coordinate to set
+         */
         void setPlayerPosition(const Coordinate& pos);
 
+        /**
+         * Returns a coordinate representing player position (block pos of lower half of playermodel)
+         * @return Coordinate of location
+         */
         Coordinate getPlayerPosition();
 
         /**
