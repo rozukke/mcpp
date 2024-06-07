@@ -16,6 +16,7 @@ namespace mcpp {
         Coordinate operator+(const Coordinate& obj) const;
 
         bool operator==(const Coordinate& obj) const;
+        bool operator!=(const Coordinate& obj) const;
 
         Coordinate operator-(const Coordinate& obj) const;
 
