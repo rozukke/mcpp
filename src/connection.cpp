@@ -74,7 +74,7 @@ namespace mcpp {
             }
 
             responseStream.write(buffer, bytesRead);
-        } while (bytesRead == sizeof(buffer));
+        } while (buffer[bytesRead - 1] != '\n');
 
         std::string response = responseStream.str();
 
