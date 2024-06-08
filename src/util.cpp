@@ -26,6 +26,10 @@ namespace mcpp {
         return (this->x == obj.x) && (this->y == obj.y) && (this->z == obj.z);
     }
 
+    bool Coordinate::operator!=(const Coordinate& obj) const {
+        return !((*this) == obj);
+    }
+
     Coordinate Coordinate::operator-(const Coordinate& obj) const {
         Coordinate result;
         result.x = this->x - obj.x;

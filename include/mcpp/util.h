@@ -17,6 +17,8 @@ namespace mcpp {
 
         bool operator==(const Coordinate& obj) const;
 
+        bool operator!=(const Coordinate& obj) const;
+
         Coordinate operator-(const Coordinate& obj) const;
 
         [[nodiscard]] Coordinate clone() const;
@@ -28,3 +30,4 @@ namespace mcpp {
         int z;
     };
 }
+

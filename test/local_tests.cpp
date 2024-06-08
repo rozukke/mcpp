@@ -36,6 +36,14 @@ TEST_CASE("Test Coordinate class") {
         CHECK_EQ(testCoord, testCoordRHS);
     }
 
+    SUBCASE("Test not equals") {
+        Coordinate testCoord(3, 2, 1);
+        Coordinate testCoordRHS(2, 2, 1);
+
+        CHECK(testCoord != testCoordRHS);
+        CHECK_NE(testCoord, testCoordRHS);
+    }
+
     SUBCASE("Test add") {
         Coordinate testCoord(3, 2, 1);
         Coordinate testCoordRHS(1, 2, 3);
