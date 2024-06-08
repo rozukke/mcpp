@@ -59,6 +59,22 @@ TEST_CASE("Socket connection test")
         CHECK_EQ(result, "25");
     }
 
+    SUBCASE("Test receive when response size is divisible by buffer size") {
+        // Assuming buffer size is 1024 bytes
+        int expectedResponseSize = 4096;
+        
+        // Test coordinate 1
+        int x1 = 0, y1 = 0, z1 = 0;
+        // Test coordinate 2
+        int x2 = 31, y2 = 100, z2 = 31;
+
+        tcp_conn.sendCommand("world.setBlocks", x1, y1, z1, x2, y2, z2, Blocks::DIRT.id, Blocks::DIRT.mod);
+        std::string result = tcp_conn.sendReceiveCommand("world.getHeights",x1,z1,x2,z2);
+        int resultSize = result.size();
+        
+        CHECK_EQ(resultSize, expectedResponseSize - 1);
+    }
+ 
     SUBCASE("Check fail condition") {
         CHECK_THROWS(tcp_conn.sendReceiveCommand("failCommand", ""));
     }
