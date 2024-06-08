@@ -57,6 +57,18 @@ namespace mcpp {
         Coordinate getPlayerPosition();
 
         /**
+         * Sets tile variant of set player position
+         * @param pos Coordinate to set
+         */
+        void setTilePosition(const Coordinate& pos);
+
+        /**
+         * Returns a coordinate representing player tile position
+         * @return Coordinate of location
+         */
+        Coordinate getTilePosition();
+
+        /**
          * Sets block at Coordinate loc to the BlockType specified by blockType
          * @param loc
          * @param blockType
