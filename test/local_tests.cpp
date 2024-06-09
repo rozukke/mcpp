@@ -3,7 +3,6 @@
 #include "doctest.h"
 #include "../include/mcpp/util.h"
 #include "../include/mcpp/block.h"
-#include "../include/mcpp/entity.h"
 
 using namespace mcpp;
 
@@ -70,10 +69,29 @@ TEST_CASE("Test Coordinate class") {
 }
 
 TEST_CASE("Test block class") {
+
+    SUBCASE("Default ctor") {
+        BlockType def;
+        CHECK_EQ(def.id, 0);
+        CHECK_EQ(def.mod, 0);
+    }
+
     SUBCASE("Test equality") {
         BlockType testBlock(10, 2);
         BlockType testBlockRHS(10, 2);
         CHECK_EQ(testBlock, testBlockRHS);
+    }
+
+    SUBCASE("Test non equality") {
+        BlockType testBlock(10);
+        BlockType testBlockRHS(11);
+        CHECK(testBlock != testBlockRHS);
+        CHECK_NE(testBlock, testBlockRHS);
+
+        BlockType testBlockWithMod(10, 2);
+        BlockType testBlockWithModRHS(10, 3);
+        CHECK(testBlockWithMod != testBlockWithModRHS);
+        CHECK_NE(testBlockWithMod, testBlockWithModRHS);
     }
 
     SUBCASE("Test withMod") {
