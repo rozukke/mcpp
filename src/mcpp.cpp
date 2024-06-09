@@ -45,7 +45,6 @@ namespace mcpp {
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     }
 
-    //Added setTilePosition and getTilePosition
     void MinecraftConnection::setTilePosition(const Coordinate& tile){
         conn->sendCommand("player.setTile", tile.x, tile.y, tile.z);
     } 
