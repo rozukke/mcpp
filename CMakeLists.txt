@@ -10,6 +10,8 @@ set(MCPP_PUBLIC_INCLUDE_DIRECTORIES include/ )
 # Testing
 enable_testing()
 add_subdirectory(test)
+add_test(NAME local COMMAND local_tests)
+add_test(NAME full COMMAND test_suite)
 
 # Source files
 file(GLOB_RECURSE MCPP_INCLUDE_FILES "include/*.h")

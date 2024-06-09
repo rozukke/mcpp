@@ -1,14 +1,15 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "doctest.h"
-#include "../include/mcpp/util.h"
 #include "../include/mcpp/block.h"
+#include "../include/mcpp/util.h"
+#include "doctest.h"
 
 using namespace mcpp;
 
 /*
- * Used to test code that is not connection dependent such as the implementation of Coordinate and various other
- * utility functions as well as Block functionality.
+ * Used to test code that is not connection dependent such as the implementation
+ * of Coordinate and various other utility functions as well as Block
+ * functionality.
  */
 
 TEST_CASE("Test Coordinate class") {
@@ -77,7 +78,6 @@ TEST_CASE("Test Coordinate class") {
 }
 
 TEST_CASE("Test block class") {
-
     SUBCASE("Default ctor") {
         BlockType def;
         CHECK_EQ(def.id, 0);
@@ -106,7 +106,6 @@ TEST_CASE("Test block class") {
         BlockType testBlock(10);
         BlockType testBlockRHS(10, 2);
         CHECK_EQ(testBlock.withMod(2), testBlockRHS);
-
     }
 
     SUBCASE("Test print") {
@@ -116,12 +115,3 @@ TEST_CASE("Test block class") {
         CHECK_EQ(ss.str(), "[2, 3]");
     }
 }
-
-//TEST_CASE("Test entity class") {
-//    Entity testEntity = Entities::CHICKEN;
-//
-//    SUBCASE("Equality operator") {
-//        Entity testEntityRHS(93);
-//        CHECK_EQ(testEntity, testEntityRHS);
-//    }
-//}
