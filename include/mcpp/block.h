@@ -8,7 +8,7 @@ namespace mcpp {
         int id;
         int mod;
 
-        BlockType() = default;
+        BlockType();
         constexpr BlockType(int id, int modifier = 0) : id(id), mod(modifier) {};
 
         /**

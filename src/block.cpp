@@ -1,6 +1,8 @@
 #include "../include/mcpp/block.h"
 
 namespace mcpp {
+    BlockType::BlockType(): id(0), mod(0) {}
+    
     bool BlockType::operator==(const BlockType& other) const {
         return this->id == other.id && this->mod == other.mod;
     }
