@@ -5,6 +5,10 @@ namespace mcpp {
         return this->id == other.id && this->mod == other.mod;
     }
 
+    bool BlockType::operator!=(const BlockType& other) const {
+        return !(*this == other);
+    }
+
     BlockType BlockType::withMod(int modifier) const {
         return {this->id, modifier};
     }
