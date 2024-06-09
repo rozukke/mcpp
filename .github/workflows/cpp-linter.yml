@@ -1,0 +1,25 @@
+name: cpp-linter
+on:
+  pull_request:
+    branches: main
+    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+  push:
+    branches: main
+    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+
+jobs:
+  cpp-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          style: 'file'  # Use .clang-format config file. 
+          tidy-checks: '-*' # disable clang-tidy checks. 
+
+      - name: Fast fail
+        if: steps.linter.outputs.clang-format-checks-failed > 0
+        run: exit 1
