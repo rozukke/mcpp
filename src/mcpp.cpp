@@ -49,7 +49,7 @@ namespace mcpp {
         conn->sendCommand("player.setTile", tile.x, tile.y, tile.z);
     } 
 
-     Coordinate MinecraftConnection::getTilePosition(){
+    Coordinate MinecraftConnection::getTilePosition(){
         std::string returnString = conn->sendReceiveCommand("player.","");
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
