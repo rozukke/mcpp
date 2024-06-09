@@ -57,16 +57,16 @@ namespace mcpp {
         Coordinate getPlayerPosition();
 
         /**
-         * Sets player tile to specified Coordinate
+         * Sets player position to be one above specified tile (i.e. tile = block player is standing on)
          * @param tile Coordinate to set
          */
-        void setTilePosition(const Coordinate& tile);
+        void setPlayerTilePosition(const Coordinate& tile);
 
         /**
-         * Returns a coordinate representing player tile
+         * Returns the coordinate location of the block the player is standing on
          * @return Coordinate of location
          */
-        Coordinate getTilePosition();
+        Coordinate getPlayerTilePosition();
 
         /**
          * Sets block at Coordinate loc to the BlockType specified by blockType

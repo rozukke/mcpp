@@ -45,13 +45,11 @@ namespace mcpp {
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     }
 
-    //Added setTilePosition
-    void MinecraftConnection::setTilePosition(const Coordinate& tile){
+    void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile){
         conn->sendCommand("player.setTile", tile.x, tile.y, tile.z);
     } 
-    
-    //Added getTilePosition
-    Coordinate MinecraftConnection::getTilePosition(){
+
+    Coordinate MinecraftConnection::getPlayerTilePosition(){
         std::string returnString = conn->sendReceiveCommand("player.","");
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
