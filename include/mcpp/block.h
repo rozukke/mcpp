@@ -8,6 +8,7 @@ namespace mcpp {
         int id;
         int mod;
 
+        BlockType() = default;
         constexpr BlockType(int id, int modifier = 0) : id(id), mod(modifier) {};
 
         /**
@@ -15,6 +16,8 @@ namespace mcpp {
         * unexpected ways e.g. rotated stairs
         */
         bool operator==(const BlockType& other) const;
+
+        bool operator!=(const BlockType& other) const;
 
         friend std::ostream& operator<< (std::ostream& out, const BlockType& block);
 
