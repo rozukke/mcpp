@@ -44,18 +44,18 @@ namespace mcpp {
         splitCommaStringToInts(returnString, parsedInts);
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     }
-
-   /* void MinecraftConnection::setTilePosition(const Coordinate& tile){
+    
+    void MinecraftConnection::setTilePosition(const Coordinate& tile){
         conn->sendCommand("player.setTile", tile.x, tile.y, tile.z);
     } 
 
-    Coordinate MinecraftConnection::getTilePosition(){getTile
+     Coordinate MinecraftConnection::getTilePosition(){
         std::string returnString = conn->sendReceiveCommand("player.","");
         std::vector<int> parsedInts;
         splitCommaStringToInts(returnString, parsedInts);
         return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
     } 
-*/
+
     void MinecraftConnection::setBlock(const Coordinate& loc,
                                        const BlockType& blockType) {
         conn->sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id,
