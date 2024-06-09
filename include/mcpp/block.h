@@ -8,8 +8,7 @@ class BlockType {
     int id;
     int mod;
 
-    BlockType() = default;
-    constexpr BlockType(int id, int modifier = 0) : id(id), mod(modifier){};
+    constexpr BlockType(int id = 0, int modifier = 0) : id(id), mod(modifier){};
 
     /**
      * Watch out as this also compares the BlockType.mod element of the block,
