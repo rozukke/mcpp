@@ -91,7 +91,7 @@ namespace mcpp {
          * @return BlockType of the requested block
          */
         BlockType getBlock(const Coordinate& loc);
-        
+
         /**
          * Returns a 3D vector of the BlockTypes of the requested cuboid with modifiers
          * @param loc1 1st corner of the cuboid
