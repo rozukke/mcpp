@@ -57,6 +57,18 @@ namespace mcpp {
         Coordinate getPlayerPosition();
 
         /**
+         * Sets player tile to specified Coordinate
+         * @param tile Coordinate to set
+         */
+        void setTilePosition(const Coordinate& tile);
+
+        /**
+         * Returns a coordinate representing player tile
+         * @return Coordinate of location
+         */
+        Coordinate getTilePosition();
+
+        /**
          * Sets block at Coordinate loc to the BlockType specified by blockType
          * @param loc
          * @param blockType
@@ -79,7 +91,7 @@ namespace mcpp {
          * @return BlockType of the requested block
          */
         BlockType getBlock(const Coordinate& loc);
-
+        
         /**
          * Returns a 3D vector of the BlockTypes of the requested cuboid with modifiers
          * @param loc1 1st corner of the cuboid
