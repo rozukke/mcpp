@@ -153,6 +153,19 @@ TEST_CASE("Test the main mcpp class") {
 
         CHECK_EQ(returnVector, expected);
     }
+
+    SUBCASE("setPlayerTilePosition and getPlayerTilePosition") {
+        Coordinate testLoc1(180.6, 100.9, 154.7);
+        Coordinate testLoc2(testLoc1.x, testLoc1.y - 1, testLoc1.z);
+
+        mc.setBlock(testLoc2, Blocks::DIRT);
+        mc.setPlayerTilePosition(testLoc1);
+
+        Coordinate result = mc.getPlayerTilePosition();
+        Coordinate expected(180, 100, 154);
+
+        CHECK_EQ(result, expected);
+    }
 }
 
 // Requires player joined to server, will throw serverside if player is not
