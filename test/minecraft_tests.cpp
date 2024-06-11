@@ -126,33 +126,51 @@ TEST_CASE("Test the main mcpp class") {
         CHECK_EQ(resultHeights, expected);
     }
 
-    // Used for cuboid functions
-    Coordinate testLoc2(96, 96, 96);
+    SUBCASE("setBlocks") { 
+        Coordinate loc1{100, 100, 100};
+        Coordinate loc2{110, 110, 110};
+        mc.setBlocks(loc1, loc2, Blocks::STONE); }
 
-    SUBCASE("setBlocks") { mc.setBlocks(testLoc, testLoc2, Blocks::STONE); }
+}
 
-    SUBCASE("getBlocks") {
-        mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
+TEST_CASE("getBlocks and Chunk operations") {
+    // Setup
+    Coordinate loc1{100, 100, 100};
+    Coordinate loc2{110, 110, 110};
 
-        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5, std::vector<std::vector<BlockType>>(
-                   5, std::vector<BlockType>(5, Blocks::DIRT)));
+    // Reset blocks that existed before
+    mc.setBlocks(loc1, loc2, Blocks::AIR);
+    mc.setBlocks(loc1, loc2, Blocks::BRICKS);
+    mc.setBlock(loc1, Blocks::GOLD_BLOCK);
+    mc.setBlock(loc2, Blocks::DIAMOND_BLOCK);
+    mc.setBlock(loc1 + Coordinate{1, 2, 3}, Blocks::IRON_BLOCK);
+    Chunk res = mc.getBlocks(loc1, loc2);
 
-        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
-        CHECK_EQ(returnVector, expected);
+    SUBCASE("Block accessing returns correct block using get()") {
+        CHECK_EQ(res.get(0, 0, 0), Blocks::GOLD_BLOCK);
+        CHECK_EQ(res.get(1, 1, 1), Blocks::BRICKS);
+        CHECK_EQ(res.get(1, 2, 3), Blocks::IRON_BLOCK);
+        CHECK_EQ(res.get(10, 10, 10), Blocks::DIAMOND_BLOCK);
     }
 
-    SUBCASE("getBlocks with mod") {
-        mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
-
-        auto expected = std::vector<std::vector<std::vector<BlockType>>>(
-            5, std::vector<std::vector<BlockType>>(
-                   5, std::vector<BlockType>(5, Blocks::GRANITE)));
-
-        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
-
-        CHECK_EQ(returnVector, expected);
+    SUBCASE("Block accessing returns correct block using get_worldspace()") {
+        CHECK_EQ(res.get_worldspace(loc1), Blocks::GOLD_BLOCK);
+        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{ 1, 1, 1 }), Blocks::BRICKS);
+        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{ 1, 2, 3 }), Blocks::IRON_BLOCK);
+        CHECK_EQ(res.get_worldspace(loc2), Blocks::DIAMOND_BLOCK);
     }
+
+    SUBCASE("Access out of bounds correctly throws") {
+        CHECK_THROWS(res.get(11, 0, 0));
+        CHECK_THROWS(res.get(0, 11, 0));
+        CHECK_THROWS(res.get(0, 0, 11));
+        CHECK_THROWS(res.get(-1, 0, 0));
+        CHECK_THROWS(res.get(0, -1, 0));
+        CHECK_THROWS(res.get(0, 0, -1));
+        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{ -1, -1, -1 }));
+        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{ 11, 11, 11}));
+    }
+
 }
 
 // Requires player joined to server, will throw serverside if player is not
