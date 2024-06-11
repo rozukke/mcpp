@@ -126,11 +126,11 @@ TEST_CASE("Test the main mcpp class") {
         CHECK_EQ(resultHeights, expected);
     }
 
-    SUBCASE("setBlocks") { 
+    SUBCASE("setBlocks") {
         Coordinate loc1{100, 100, 100};
         Coordinate loc2{110, 110, 110};
-        mc.setBlocks(loc1, loc2, Blocks::STONE); }
-
+        mc.setBlocks(loc1, loc2, Blocks::STONE);
+    }
 }
 
 TEST_CASE("getBlocks and Chunk operations") {
@@ -155,8 +155,10 @@ TEST_CASE("getBlocks and Chunk operations") {
 
     SUBCASE("Block accessing returns correct block using get_worldspace()") {
         CHECK_EQ(res.get_worldspace(loc1), Blocks::GOLD_BLOCK);
-        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{ 1, 1, 1 }), Blocks::BRICKS);
-        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{ 1, 2, 3 }), Blocks::IRON_BLOCK);
+        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{1, 1, 1}),
+                 Blocks::BRICKS);
+        CHECK_EQ(res.get_worldspace(loc1 + Coordinate{1, 2, 3}),
+                 Blocks::IRON_BLOCK);
         CHECK_EQ(res.get_worldspace(loc2), Blocks::DIAMOND_BLOCK);
     }
 
@@ -167,10 +169,9 @@ TEST_CASE("getBlocks and Chunk operations") {
         CHECK_THROWS(res.get(-1, 0, 0));
         CHECK_THROWS(res.get(0, -1, 0));
         CHECK_THROWS(res.get(0, 0, -1));
-        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{ -1, -1, -1 }));
-        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{ 11, 11, 11}));
+        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{-1, -1, -1}));
+        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{11, 11, 11}));
     }
-
 }
 
 // Requires player joined to server, will throw serverside if player is not

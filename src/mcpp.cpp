@@ -80,7 +80,8 @@ BlockType MinecraftConnection::getBlock(const Coordinate& loc) {
     return {parsedInts[0], parsedInts[1]};
 }
 
-Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) {
+Chunk MinecraftConnection::getBlocks(const Coordinate& loc1,
+                                     const Coordinate& loc2) {
     std::string returnValue =
         conn->sendReceiveCommand("world.getBlocksWithData", loc1.x, loc1.y,
                                  loc1.z, loc2.x, loc2.y, loc2.z);
@@ -107,7 +108,7 @@ Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& l
         }
     }
 
-    return Chunk{ loc1, loc2, result };
+    return Chunk{loc1, loc2, result};
 }
 
 int MinecraftConnection::getHeight(int x, int z) {

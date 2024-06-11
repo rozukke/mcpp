@@ -32,7 +32,6 @@ class Coordinate {
     int z;
 };
 
-
 /**
  * Stores a 3D cuboid of BlockTypes while preserving their relative location to
  * the base point they were gathered at and each other.
@@ -41,22 +40,23 @@ struct Chunk {
     /**
      * Initialized by copying from a flat vector of blocks
      */
-    Chunk(const Coordinate& loc1, 
-          const Coordinate& loc2, 
+    Chunk(const Coordinate& loc1, const Coordinate& loc2,
           const std::vector<BlockType>& block_list);
 
     ~Chunk();
 
     /**
-     * Accesses the Minecraft block at absolute position pos and returns its BlockType
-     * if it is in the included area.
-     * @param pos: Abolute position in the Minecraft world to query BlockType for
+     * Accesses the Minecraft block at absolute position pos and returns its
+     * BlockType if it is in the included area.
+     * @param pos: Abolute position in the Minecraft world to query BlockType
+     * for
      * @return BlockType at specified location
      */
     BlockType get_worldspace(const Coordinate& pos);
 
     /**
-     * Local equivalent of get_worldspace, equivalent to a 3D array access of the internal data.
+     * Local equivalent of get_worldspace, equivalent to a 3D array access of
+     * the internal data.
      * @param x: x element of array access
      * @param y: y element of array access
      * @param z: z element of array access
