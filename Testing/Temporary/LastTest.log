@@ -1,0 +1,35 @@
+Start testing: Jun 12 00:06 AEST
+----------------------------------------------------------
+Unable to find executable: /mnt/c/Users/yeefh/documents/mcpp/test/local_tests
+1/2 Testing: local
+1/2 Test: local
+Command: ""
+Directory: /mnt/c/Users/yeefh/documents/mcpp
+"local" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"local" end time: Jun 12 00:06 AEST
+"local" time elapsed: 00:00:00
+----------------------------------------------------------
+
+Unable to find executable: /mnt/c/Users/yeefh/documents/mcpp/test/test_suite
+2/2 Testing: full
+2/2 Test: full
+Command: ""
+Directory: /mnt/c/Users/yeefh/documents/mcpp
+"full" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"full" end time: Jun 12 00:06 AEST
+"full" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 12 00:06 AEST
