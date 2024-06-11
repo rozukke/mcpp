@@ -80,8 +80,7 @@ BlockType MinecraftConnection::getBlock(const Coordinate& loc) {
     return {parsedInts[0], parsedInts[1]};
 }
 
-std::vector<std::vector<std::vector<BlockType>>>
-MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) {
+Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) {
     std::string returnValue =
         conn->sendReceiveCommand("world.getBlocksWithData", loc1.x, loc1.y,
                                  loc1.z, loc2.x, loc2.y, loc2.z);
@@ -107,7 +106,8 @@ MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) {
             break;
         }
     }
-    return unflattenBlocksArray(loc1, loc2, result);
+
+    return Chunk{ loc1, loc2, result };
 }
 
 int MinecraftConnection::getHeight(int x, int z) {
@@ -126,31 +126,6 @@ MinecraftConnection::getHeights(const Coordinate& loc1,
     splitCommaStringToInts(returnValue, returnVector);
 
     return unflattenHeightsArray(loc1, loc2, returnVector);
-}
-
-std::vector<std::vector<std::vector<BlockType>>>
-MinecraftConnection::unflattenBlocksArray(
-    const Coordinate& loc1, const Coordinate& loc2,
-    const std::vector<BlockType>& inVector) {
-    // Initialise empty vector of correct size and shape
-    int y_len = abs(loc2.y - loc1.y) + 1;
-    int x_len = abs(loc2.x - loc1.x) + 1;
-    int z_len = abs(loc2.z - loc1.z) + 1;
-    std::vector<std::vector<std::vector<BlockType>>> returnVector(
-        y_len, std::vector<std::vector<BlockType>>(
-                   x_len, std::vector<BlockType>(z_len, BlockType(0))));
-
-    int index = 0;
-    for (int y = 0; y < y_len; y++) {
-        for (int x = 0; x < x_len; x++) {
-            for (int z = 0; z < z_len; z++) {
-                returnVector[y][x][z] = inVector[index];
-                index++;
-            }
-        }
-    }
-
-    return returnVector;
 }
 
 std::vector<std::vector<int>>
