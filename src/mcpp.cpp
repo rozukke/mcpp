@@ -49,7 +49,7 @@ void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile) {
 }
 
 Coordinate MinecraftConnection::getPlayerTilePosition() {
-    std::string returnString = conn->sendReceiveCommand("player.", "");
+    std::string returnString = conn->sendReceiveCommand("player.getTile", "");
     std::vector<int> parsedInts;
     splitCommaStringToInts(returnString, parsedInts);
     return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
