@@ -178,7 +178,7 @@ TEST_CASE("Player operations") {
         mc.doCommand("tp -2 100 -2");
         CHECK_EQ(mc.getPlayerPosition(), negativeLoc);
     }
-    
+
     SUBCASE("setPlayerTilePosition and getPlayerTilePosition") {
         Coordinate testLoc1(180.6, 100.9, 154.7);
         Coordinate testLoc2(testLoc1.x, testLoc1.y - 1, testLoc1.z);
