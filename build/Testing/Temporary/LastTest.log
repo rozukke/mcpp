@@ -1,4 +1,4 @@
-Start testing: Jun 12 00:07 AEST
+Start testing: Jun 12 00:39 AEST
 ----------------------------------------------------------
 Unable to find executable: /mnt/c/Users/yeefh/documents/mcpp/build/test/local_tests
 1/2 Testing: local
@@ -12,7 +12,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"local" end time: Jun 12 00:07 AEST
+"local" end time: Jun 12 00:39 AEST
 "local" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -20,7 +20,7 @@ Test Passed.
 2/2 Test: full
 Command: "/mnt/c/Users/yeefh/documents/mcpp/build/test/test_suite"
 Directory: /mnt/c/Users/yeefh/documents/mcpp/build
-"full" start time: Jun 12 00:07 AEST
+"full" start time: Jun 12 00:39 AEST
 Output:
 ----------------------------------------------------------
 [doctest] doctest version is "2.4.9"
@@ -33,8 +33,8 @@ Output:
 Test time =   0.92 sec
 ----------------------------------------------------------
 Test Passed.
-"full" end time: Jun 12 00:07 AEST
+"full" end time: Jun 12 00:39 AEST
 "full" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jun 12 00:07 AEST
+End testing: Jun 12 00:39 AEST
