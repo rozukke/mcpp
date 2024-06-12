@@ -45,14 +45,15 @@ Coordinate MinecraftConnection::getPlayerPosition() {
 }
 
 void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile) {
-    conn->sendCommand("player.setTile", tile.x, tile.y, tile.z);
+    Coordinate newTile = tile;
+    newTile.y++;
+    setPlayerPosition(newTile);
 }
 
 Coordinate MinecraftConnection::getPlayerTilePosition() {
-    std::string returnString = conn->sendReceiveCommand("player.getTile", "");
-    std::vector<int> parsedInts;
-    splitCommaStringToInts(returnString, parsedInts);
-    return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
+    Coordinate playerTile = getPlayerPosition();
+    playerTile.y--;
+    return playerTile;
 }
 
 void MinecraftConnection::setBlock(const Coordinate& loc,
