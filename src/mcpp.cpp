@@ -47,7 +47,7 @@ Coordinate MinecraftConnection::getPlayerPosition() {
 void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile) {
     Coordinate newTile = tile;
     newTile.y++;
-    conn->sendCommand("player.setTile", newTile.x, newTile.y, newTile.z);
+    setPlayerPosition(newTile);
 }
 
 Coordinate MinecraftConnection::getPlayerTilePosition() {
