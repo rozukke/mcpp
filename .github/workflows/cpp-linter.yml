@@ -7,6 +7,11 @@ on:
     branches: main
     paths: ['**.cpp', '**.h', '**CMakeLists.txt']
 
+permissions:
+    contents: write
+    pull-requests: write
+    actions: write
+
 jobs:
   cpp-linter:
     runs-on: ubuntu-latest
@@ -19,7 +24,9 @@ jobs:
         with:
           style: 'file'  # Use .clang-format config file. 
           tidy-checks: '-*' # disable clang-tidy checks. 
+          thread-comments: true
+          format-review: true
 
-      - name: Fast fail
+      - name: Run clang-format
         if: steps.linter.outputs.clang-format-checks-failed > 0
         run: exit 1
