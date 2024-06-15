@@ -31,10 +31,6 @@ jobs:
             - name: Build file
               run: cmake -Bbuild
 
-            - name: Run  local_tests
+            - name: Run test suite
               working-directory: ./build
-              run: make local_tests && ./test/local_tests
-
-            - name: Run test_suite
-              working-directory: ./build
-              run: make test_suite && ./test/test_suite
+              run: make test_suite && ctest -R full
