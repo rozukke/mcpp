@@ -3,17 +3,38 @@ name: CD
 on:
     push:
         branches: main
+        paths: ['**.cpp', '**.h', '**CMakeLists.txt'] 
+    pull_request:
+        branches: main
+        paths: ['**.cpp', '**.h', '**CMakeLists.txt']
 
 jobs:
-    build:
+    deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - name: build
+            - name: Install Java
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'oracle' # See 'Supported distributions' for available options
+                java-version: '17'
+            
+            - name: Clone Minecraft_Tools
+              run: git clone https://github.com/nhatdongdang/Minecraft_Tools
+
+            - name: Start Spigot Server
+              working-directory: ./Minecraft_Tools/server
+              run: nohup java -Xms512M -Xmx1024M -jar -DIReallyKnowWhatIAmDoingISwear spigot-1.19.4.jar nogui -o true & sleep 45
+
+            - name: Clone mcpp
+              uses: actions/checkout@v4
+
+            - name: Build file
               run: cmake -Bbuild
-            - name:  local_tests
+
+            - name: Run  local_tests
               working-directory: ./build
               run: make local_tests && ./test/local_tests
-            - name: test_suite
+
+            - name: Run test_suite
               working-directory: ./build
-              run: make local_tests && ./test/local_tests
+              run: make test_suite && ./test/test_suite
