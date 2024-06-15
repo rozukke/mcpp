@@ -127,7 +127,7 @@ TEST_CASE("Test the main mcpp class") {
     }
 
     // Used for cuboid functions
-    Coordinate testLoc2(96, 96, 96);
+    Coordinate testLoc2(97, 96, 96);
 
     SUBCASE("setBlocks") { mc.setBlocks(testLoc, testLoc2, Blocks::STONE); }
 
