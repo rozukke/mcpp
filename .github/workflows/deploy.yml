@@ -1,0 +1,19 @@
+name: CD
+
+on:
+    push:
+        branches: main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: build
+              run: cmake -Bbuild
+            - name:  local_tests
+              working-directory: ./build
+              run: make local_tests && ./test/local_tests
+            - name: test_suite
+              working-directory: ./build
+              run: make local_tests && ./test/local_tests
