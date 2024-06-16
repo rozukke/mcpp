@@ -25,7 +25,11 @@ jobs:
               working-directory: ./Minecraft_Tools/server
               run: nohup java -Xms512M -Xmx1024M -jar -DIReallyKnowWhatIAmDoingISwear spigot-1.19.4.jar nogui -o true & sleep 45
 
-            - name: Clone mcpp
+            - name: Join Spigot Server
+              working-directory: ./Minecraft_Tools/MinecraftClient
+              run: ./MinecraftClient & sleep 5
+
+            - name: Checkout mcpp
               uses: actions/checkout@v4
 
             - name: Build file
