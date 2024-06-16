@@ -25,7 +25,7 @@ jobs:
 
             # Start the Spigot server using terminal commands
             - name: Start Spigot Server
-              working-directory: ./Minecraft_Tools/server 
+              working-directory: ./Minecraft_Tools/server
               run: nohup java -Xms512M -Xmx1024M -jar -DIReallyKnowWhatIAmDoingISwear spigot-1.19.4.jar nogui -o true & sleep 45
 
             # Join the Spigot server using the precompiled Minecraft-Console-Client (https://github.com/MCCTeam/Minecraft-Console-Client). 
