@@ -27,7 +27,7 @@ jobs:
 
             - name: Join Spigot Server
               working-directory: ./Minecraft_Tools/MinecraftClient
-              run: ./MinecraftClient & sleep 5
+              run: ./MinecraftClient &
 
             - name: Checkout mcpp
               uses: actions/checkout@v4
