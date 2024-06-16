@@ -2,7 +2,7 @@
 #include "doctest.h"
 
 // Set to 1 if testing with joined player on server
-#define PLAYER_TEST 0
+#define PLAYER_TEST 1
 
 using namespace std::string_literals;
 using namespace mcpp;
