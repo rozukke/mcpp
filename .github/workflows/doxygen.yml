@@ -1,4 +1,4 @@
-name: Doxygen-doc
+name: doxygen
 
 on:
   pull_request:
