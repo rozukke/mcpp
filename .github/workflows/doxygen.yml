@@ -3,10 +3,10 @@ name: Doxygen-doc
 on:
   pull_request:
     branches: add/doxygen
-    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+    paths: ['Doxyfile']
   push:
     branches: add/doxygen
-    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+    paths: ['Doxyfile']
 
 jobs:
   build:
