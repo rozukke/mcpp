@@ -1,10 +1,11 @@
 name: Doxygen-doc
+
 on:
   pull_request:
-    branches: main
+    branches: add/doxygen
     paths: ['**.cpp', '**.h', '**CMakeLists.txt']
   push:
-    branches: main
+    branches: add/doxygen
     paths: ['**.cpp', '**.h', '**CMakeLists.txt']
 
 jobs:
@@ -23,7 +24,7 @@ jobs:
         working-directory: "."
     
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         #Doxyfile build html path
