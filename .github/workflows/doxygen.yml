@@ -1,0 +1,31 @@
+name: Doxygen-doc
+on:
+  pull_request:
+    branches: main
+    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+  push:
+    branches: main
+    paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4
+        
+    - name: Doxygen Action
+      uses: mattnotmitt/doxygen-action@v1.9.5
+      with:
+        # Path to Doxyfile
+        doxyfile-path: "./Doxyfile" # default is ./Doxyfile
+        # Working directory
+        working-directory: "."
+    
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        #Doxyfile build html path
+        publish_dir: ./html
+
