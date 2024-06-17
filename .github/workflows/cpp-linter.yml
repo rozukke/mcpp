@@ -1,10 +1,10 @@
 name: cpp-linter
 on:
   pull_request:
-    branches: main
+    branches: add/doxygen
     paths: ['**.cpp', '**.h', '**CMakeLists.txt']
   push:
-    branches: main
+    branches: add/doxygen
     paths: ['**.cpp', '**.h', '**CMakeLists.txt']
 
 permissions:

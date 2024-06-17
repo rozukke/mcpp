@@ -18,7 +18,7 @@ class SocketConnection {
 
   public:
     SocketConnection(const std::string& address_str, uint16_t port);
-
+ 
     void send(const std::string& dataString);
 
     /**
