@@ -32,13 +32,16 @@ class Coordinate {
 };
 
 /**
- * Represents a 2D area of the world with the y coordinates of the highest non-air blocks at each (x,z)
+ * Represents a 2D area of the world with the y coordinates of the highest
+ * non-air blocks at each (x,z)
  */
 struct HeightMap {
-    HeightMap(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int>& heights);
+    HeightMap(const Coordinate& loc1, const Coordinate& loc2,
+              const std::vector<int>& heights);
 
     /**
-     * Get the height using an offset from the origin/base point of the heights area
+     * Get the height using an offset from the origin/base point of the heights
+     * area
      * @param x: x offset to access underlying array
      * @param z: z offset to access underlying array
      * @return: height at specified offset
@@ -53,7 +56,8 @@ struct HeightMap {
     int get_worldspace(const Coordinate& loc) const;
 
     /**
-     * Fill a coordinate inplace with the highest y coordinate at the `loc`'s x and z components.
+     * Fill a coordinate inplace with the highest y coordinate at the `loc`'s x
+     * and z components.
      * @param loc: Coordinate to fill y value for
      */
     void fill_coord(Coordinate& out);
