@@ -146,15 +146,17 @@ TEST_CASE("Test the main mcpp class") {
 
 TEST_CASE("HeightMap functionality") {
     // 319 is the build limit in 1.19
-    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 319, 210}, Blocks::AIR);
-    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 300, 210}, Blocks::STONE);
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 319, 210},
+                 Blocks::AIR);
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 300, 210},
+                 Blocks::STONE);
     mc.setBlock(Coordinate{200, 301, 200}, Blocks::STONE);
     mc.setBlock(Coordinate{210, 301, 210}, Blocks::STONE);
     mc.setBlock(Coordinate{201, 301, 202}, Blocks::STONE);
 
-
     SUBCASE("get") {
-        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        HeightMap data =
+            mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
         CHECK_EQ(data.get(0, 0), 301);
         CHECK_EQ(data.get(1, 1), 300);
         CHECK_EQ(data.get(10, 10), 301);
@@ -162,7 +164,8 @@ TEST_CASE("HeightMap functionality") {
     }
 
     SUBCASE("get_worldspace") {
-        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        HeightMap data =
+            mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
         CHECK_EQ(data.get_worldspace(Coordinate{200, 0, 200}), 301);
         CHECK_EQ(data.get_worldspace(Coordinate{201, 0, 201}), 300);
         CHECK_EQ(data.get_worldspace(Coordinate{210, 0, 210}), 301);
@@ -170,7 +173,8 @@ TEST_CASE("HeightMap functionality") {
     }
 
     SUBCASE("fill_coord") {
-        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        HeightMap data =
+            mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
 
         Coordinate to_fill{200, 0, 200};
         data.fill_coord(to_fill);
@@ -178,7 +182,8 @@ TEST_CASE("HeightMap functionality") {
     }
 
     SUBCASE("Bounds checking") {
-        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        HeightMap data =
+            mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
         CHECK_THROWS(data.get(-1, 0));
         CHECK_THROWS(data.get(0, -1));
         CHECK_THROWS(data.get(11, 0));
@@ -194,14 +199,16 @@ TEST_CASE("HeightMap functionality") {
     }
 
     SUBCASE("Negative coord") {
-        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
-        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210},
+                     Blocks::AIR);
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210},
+                     Blocks::STONE);
         mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
         mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
         mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
 
-
-        HeightMap data = mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+        HeightMap data =
+            mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
         CHECK_EQ(data.get_worldspace(Coordinate{-200, 0, -200}), 301);
         CHECK_EQ(data.get_worldspace(Coordinate{-201, 0, -201}), 300);
         CHECK_EQ(data.get_worldspace(Coordinate{-210, 0, -210}), 301);
@@ -209,7 +216,8 @@ TEST_CASE("HeightMap functionality") {
     }
 
     // Clean up
-    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210}, Blocks::AIR);
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210},
+                 Blocks::AIR);
 }
 // Requires player joined to server, will throw serverside if player is not
 // joined and hang execution

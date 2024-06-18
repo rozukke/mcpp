@@ -117,7 +117,7 @@ int MinecraftConnection::getHeight(int x, int z) {
 }
 
 const HeightMap MinecraftConnection::getHeights(const Coordinate& loc1,
-                                const Coordinate& loc2) {
+                                                const Coordinate& loc2) {
     std::string returnValue = conn->sendReceiveCommand(
         "world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
