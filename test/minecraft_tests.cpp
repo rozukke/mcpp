@@ -106,24 +106,13 @@ TEST_CASE("Test the main mcpp class") {
     }
 
     SUBCASE("getHeight") {
-        Coordinate heightTestLoc(200, 200, 200);
+        Coordinate heightTestLoc(300, 200, 300);
         mc.setBlock(heightTestLoc, Blocks::DIRT);
         auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
         CHECK_EQ(height, heightTestLoc.y);
-    }
 
-    SUBCASE("getHeights") {
-        Coordinate platformCoord1(151, 100, 151);
-        Coordinate platformCoord2(160, 100, 160);
-
-        // Create even heights
-        mc.setBlocks(platformCoord1, platformCoord2, Blocks::DIRT);
-
-        std::vector expected =
-            std::vector<std::vector<int>>(10, std::vector<int>(10, 100));
-
-        auto resultHeights = mc.getHeights(platformCoord1, platformCoord2);
-        CHECK_EQ(resultHeights, expected);
+        // Clean up
+        mc.setBlock(heightTestLoc, Blocks::AIR);
     }
 
     // Used for cuboid functions
@@ -155,6 +144,73 @@ TEST_CASE("Test the main mcpp class") {
     }
 }
 
+TEST_CASE("HeightMap functionality") {
+    // 319 is the build limit in 1.19
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 319, 210}, Blocks::AIR);
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 300, 210}, Blocks::STONE);
+    mc.setBlock(Coordinate{200, 301, 200}, Blocks::STONE);
+    mc.setBlock(Coordinate{210, 301, 210}, Blocks::STONE);
+    mc.setBlock(Coordinate{201, 301, 202}, Blocks::STONE);
+
+
+    SUBCASE("get") {
+        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        CHECK_EQ(data.get(0, 0), 301);
+        CHECK_EQ(data.get(1, 1), 300);
+        CHECK_EQ(data.get(10, 10), 301);
+        CHECK_EQ(data.get(1, 2), 301);
+    }
+
+    SUBCASE("get_worldspace") {
+        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        CHECK_EQ(data.get_worldspace(Coordinate{200, 0, 200}), 301);
+        CHECK_EQ(data.get_worldspace(Coordinate{201, 0, 201}), 300);
+        CHECK_EQ(data.get_worldspace(Coordinate{210, 0, 210}), 301);
+        CHECK_EQ(data.get_worldspace(Coordinate{201, 0, 202}), 301);
+    }
+
+    SUBCASE("fill_coord") {
+        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+
+        Coordinate to_fill{200, 0, 200};
+        data.fill_coord(to_fill);
+        CHECK_EQ(to_fill.y, 301);
+    }
+
+    SUBCASE("Bounds checking") {
+        HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+        CHECK_THROWS(data.get(-1, 0));
+        CHECK_THROWS(data.get(0, -1));
+        CHECK_THROWS(data.get(11, 0));
+        CHECK_THROWS(data.get(0, 11));
+
+        CHECK_THROWS(data.get_worldspace(Coordinate{199, 0, 200}));
+        CHECK_THROWS(data.get_worldspace(Coordinate{200, 0, 199}));
+        CHECK_THROWS(data.get_worldspace(Coordinate{211, 0, 200}));
+        CHECK_THROWS(data.get_worldspace(Coordinate{200, 0, 211}));
+
+        Coordinate to_fill{199, 0, 211};
+        CHECK_THROWS(data.fill_coord(to_fill));
+    }
+
+    SUBCASE("Negative coord") {
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
+        mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
+        mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
+        mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+
+
+        HeightMap data = mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+        CHECK_EQ(data.get_worldspace(Coordinate{-200, 0, -200}), 301);
+        CHECK_EQ(data.get_worldspace(Coordinate{-201, 0, -201}), 300);
+        CHECK_EQ(data.get_worldspace(Coordinate{-210, 0, -210}), 301);
+        CHECK_EQ(data.get_worldspace(Coordinate{-201, 0, -202}), 301);
+    }
+
+    // Clean up
+    mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210}, Blocks::AIR);
+}
 // Requires player joined to server, will throw serverside if player is not
 // joined and hang execution
 #if PLAYER_TEST
