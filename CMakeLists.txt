@@ -9,6 +9,8 @@ set(MCPP_INC_DIR include/mcpp)
 
 # Testing
 add_subdirectory(test)
+add_test(NAME local COMMAND local_tests)
+add_test(NAME full COMMAND test_suite)
 
 # Source files
 file(GLOB_RECURSE MCPP_INCLUDE_FILES ${MCPP_INC_DIR}/*.h)

@@ -1,0 +1,30 @@
+name: CI
+
+on:
+    push:
+        branches: main
+        paths: ['**.cpp', '**.h', '**CMakeLists.txt'] 
+    pull_request:
+        branches: main
+        paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            # Start and join the Spigot Server
+            - name: Set up Minecraft testing environment
+              uses: nhatdongdang/mc-env-setup@v1
+
+            # Checkout the mcpp repository for building and testing
+            - name: Checkout mcpp
+              uses: actions/checkout@v4
+
+            # Build files using CMake
+            - name: Build file
+              run: cmake -Bbuild
+
+            # Run the test suite using ctest
+            - name: Run test suite
+              working-directory: ./build
+              run: make test_suite && ctest -R full -V

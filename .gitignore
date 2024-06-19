@@ -1,4 +1,6 @@
 # Build artifacts
+build
+.cache
 test/test_suite
 test/local_tests
 
