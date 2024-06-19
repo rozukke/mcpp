@@ -23,6 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           style: 'file'  # Use .clang-format config file. 
+          version: 18
           tidy-checks: '-*' # disable clang-tidy checks. 
           thread-comments: true
           format-review: true
