@@ -12,10 +12,6 @@ class MinecraftConnection {
   private:
     std::unique_ptr<SocketConnection> conn;
 
-    static std::vector<std::vector<std::vector<BlockType>>>
-    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
-                         const std::vector<BlockType>& inVector);
-
     static std::vector<std::vector<int>>
     unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2,
                           const std::vector<int>& inVector);
@@ -99,10 +95,9 @@ class MinecraftConnection {
      * modifiers
      * @param loc1 1st corner of the cuboid
      * @param loc2 2nd corner of the cuboid
-     * @return 3D vector of BlockType in the specified cuboid.
+     * @return Chunk containing the blocks in the specified area.
      */
-    std::vector<std::vector<std::vector<BlockType>>>
-    getBlocks(const Coordinate& loc1, const Coordinate& loc2);
+    Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
     /**
      * IMPORTANT: DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
