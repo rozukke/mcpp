@@ -12,27 +12,9 @@ jobs:
     build-and-test:
         runs-on: ubuntu-latest
         steps:
-            # Install Oracle Java 17 using the setup-java GitHub Action
-            - name: Install Java
-              uses: actions/setup-java@v4
-              with:
-                distribution: 'oracle' # Specify the distribution of Java
-                java-version: '17' # Specify the version of Java to install
-            
-            # Clone the Minecraft_Tools repository from GitHub, which includes all necessary tools for the Spigot server and player joining
-            - name: Clone Minecraft_Tools
-              run: git clone https://github.com/nhatdongdang/Minecraft_Tools
-
-            # Start the Spigot server using terminal commands
-            - name: Start Spigot Server
-              working-directory: ./Minecraft_Tools/server
-              run: nohup java -Xms512M -Xmx1024M -jar -DIReallyKnowWhatIAmDoingISwear spigot-1.19.4.jar nogui -o true & sleep 45
-
-            # Join the Spigot server using the precompiled Minecraft-Console-Client (https://github.com/MCCTeam/Minecraft-Console-Client). 
-            # The config file: https://github.com/nhatdongdang/Minecraft_Tools/blob/main/MinecraftClient/MinecraftClient.ini
-            - name: Join Spigot Server
-              working-directory: ./Minecraft_Tools/MinecraftClient
-              run: ./MinecraftClient &
+            # Start and join the Spigot Server
+            - name: Set up Minecraft testing environment
+              uses: nhatdongdang/mc-env-setup@v1
 
             # Checkout the mcpp repository for building and testing
             - name: Checkout mcpp
