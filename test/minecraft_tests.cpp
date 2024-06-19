@@ -152,7 +152,7 @@ TEST_CASE("Test the main mcpp class") {
     }
 }
 
-// Requires player joined to server, will throw serverside if player is not 
+// Requires player joined to server, will throw serverside if player is not
 // joined
 #ifdef PLAYER_TEST
 
