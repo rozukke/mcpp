@@ -116,9 +116,8 @@ int MinecraftConnection::getHeight(int x, int z) {
     return stoi(returnValue);
 }
 
-std::vector<std::vector<int>>
-MinecraftConnection::getHeights(const Coordinate& loc1,
-                                const Coordinate& loc2) {
+const HeightMap MinecraftConnection::getHeights(const Coordinate& loc1,
+                                                const Coordinate& loc2) {
     std::string returnValue = conn->sendReceiveCommand(
         "world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
@@ -126,7 +125,7 @@ MinecraftConnection::getHeights(const Coordinate& loc1,
     std::vector<int> returnVector;
     splitCommaStringToInts(returnValue, returnVector);
 
-    return unflattenHeightsArray(loc1, loc2, returnVector);
+    return HeightMap(loc1, loc2, returnVector);
 }
 
 std::vector<std::vector<std::vector<BlockType>>>
@@ -154,25 +153,4 @@ MinecraftConnection::unflattenBlocksArray(
     return returnVector;
 }
 
-std::vector<std::vector<int>>
-MinecraftConnection::unflattenHeightsArray(const Coordinate& loc1,
-                                           const Coordinate& loc2,
-                                           const std::vector<int>& inVector) {
-    // Initialise empty vector of correct size and shape
-    int x_len = abs(loc2.x - loc1.x) + 1;
-    int z_len = abs(loc2.z - loc1.z) + 1;
-
-    std::vector<std::vector<int>> returnVector(x_len,
-                                               std::vector<int>(z_len, 0));
-
-    int index = 0;
-    for (int x = 0; x < x_len; x++) {
-        for (int z = 0; z < z_len; z++) {
-            returnVector[x][z] = inVector[index];
-            index++;
-        }
-    }
-
-    return returnVector;
-}
 } // namespace mcpp

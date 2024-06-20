@@ -16,10 +16,6 @@ class MinecraftConnection {
     unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
                          const std::vector<BlockType>& inVector);
 
-    static std::vector<std::vector<int>>
-    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2,
-                          const std::vector<int>& inVector);
-
   public:
     /**
      * Represents the main endpoint for interaction with the minecraft world.
@@ -122,7 +118,6 @@ class MinecraftConnection {
      * @param loc2
      * @return Returns a vector of integers representing the 2D area of heights.
      */
-    std::vector<std::vector<int>> getHeights(const Coordinate& loc1,
-                                             const Coordinate& loc2);
+    const HeightMap getHeights(const Coordinate& loc1, const Coordinate& loc2);
 };
 } // namespace mcpp
