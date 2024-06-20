@@ -37,10 +37,7 @@ jobs:
 
           # Sync the new documentation
           rsync -av --delete ../html/ ./
-
-          # Ensure we have the latest changes from gh-pages
-          git pull origin gh-pages --allow-unrelated-histories
-
+          
           # Add, commit, and push the changes
           git add .
           git commit -m "Deploy updated docs"
