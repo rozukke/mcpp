@@ -30,10 +30,17 @@ jobs:
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/add/doxygen'
         run: |
+          # Clone the gh-pages branch
           git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages
-          rsync -av --delete ./html/ gh-pages/
           cd gh-pages
+
+          # Sync the new documentation
+          rsync -av --delete ../html/ ./
+
+          # Ensure we have the latest changes from gh-pages
           git pull origin gh-pages
+
+          # Add, commit and push the changes
           git add .
           git commit -m "Deploy updated docs"
           git push origin gh-pages
