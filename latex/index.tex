@@ -1,0 +1,39 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+
+
+\hypertarget{index_autotoc_md0}{}\doxysection{mcpp (\+Minecraft++)}\label{index_autotoc_md0}
+\href{https://cplusplus.com/}{\texttt{ }} \href{https://github.com/rozukke}{\texttt{ }} \href{https://github.com/rozukke/mcpp/blob/main/LICENSE}{\texttt{ }}\textbackslash{} {\bfseries{mcpp}} (Minecraft++) is a library built to interface with Minecraft through \href{https://www.spigotmc.org/}{\texttt{ Spigot server}} running the \href{https://github.com/rozukke/ELCI}{\texttt{ ELCI}} plugin and using C++. It is currently limited to Mac\+OS/\+Linux or Windows with WSL.
+
+➡ For more details on the broad strokes of {\bfseries{mcpp}}, refer to the \href{https://github.com/rozukke/mcpp/wiki/Index}{\texttt{ wiki}}!\hypertarget{index_autotoc_md1}{}\doxysubsection{History}\label{index_autotoc_md1}
+This library is based on \href{https://github.com/martinohanlon/mcpi}{\texttt{ mcpi}}, which is a Python library with similar functionality.
+
+In addition to C++ support, this library implements several new commands supported by \href{https://github.com/rozukke/ELCI}{\texttt{ ELCI}}\+:
+\begin{DoxyItemize}
+\item {\ttfamily get\+Blocks} to get a cuboid of blocks with modifiers in a performant manner,
+\item {\ttfamily get\+Heights} to get a 2D area of heights in a performant manner,
+\item {\ttfamily do\+Command} to perform an in-\/game minecraft command which allows for additional functionality.
+\end{DoxyItemize}
+
+This C++ version was created for the Royal Melbourne Institute of Technology (RMIT) to supplement the COSC2084 (Programming Studio 2) course.\hypertarget{index_autotoc_md2}{}\doxysubsection{Installation}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsubsection{Windows}\label{index_autotoc_md3}
+Since the release is intended for UNIX systems and not tested on Windows, the options to run locally are as follows\+:
+\begin{DoxyItemize}
+\item Build manually (there are included CMake build files)
+\item Run with WSL, in which case follow the Linux instructions below. You may need to specify a connection address manually in {\ttfamily Minecraft\+Connection()} if you are running Spigot with ELCI on Windows, which you can find using {\ttfamily nslookup \char`\"{}\$(hostname).\+local\char`\"{}} on your WSL terminal. The default port for ELCI is {\ttfamily 4711}.
+\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysubsubsection{Mac and Linux}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item Install {\ttfamily g++}, {\ttfamily make}, {\ttfamily cmake} and any other build prerequisites
+\item Clone this repository via {\ttfamily git clone \href{https://github.com/rozukke/mcpp.git}{\texttt{ https\+://github.\+com/rozukke/mcpp.\+git}}}
+\item Install by running {\ttfamily cmake .} and {\ttfamily sudo make install} inside the cloned directory.
+\item After doing this, the library should be accessible via a {\ttfamily \#include $<$\mbox{\hyperlink{mcpp_8h}{mcpp/mcpp.\+h}}$>$} directive.
+\item When compiling code using the library, use the flag {\ttfamily -\/lmcpp} for Makefiles or {\ttfamily target\+\_\+link\+\_\+libraries(your\+\_\+executable mcpp)} for CMake.
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{License}\label{index_autotoc_md5}
+{\bfseries{The following applies to all code\+:}}
+
+Copyright 2024 Artemis Rosman
+
+Licensed under the Apache License, Version 2.\+0 (the \char`\"{}\+License\char`\"{}); you may not use this file except in compliance with the License. You may obtain a copy of the License at \begin{DoxyVerb}http://www.apache.org/licenses/LICENSE-2.0
+\end{DoxyVerb}
+ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \char`\"{}\+AS IS\char`\"{} BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. 

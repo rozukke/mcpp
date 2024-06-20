@@ -1,0 +1,264 @@
+\hypertarget{classmcpp_1_1MinecraftConnection}{}\doxysection{mcpp\+::Minecraft\+Connection Class Reference}
+\label{classmcpp_1_1MinecraftConnection}\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a7e3cbbcb4c8ff461f01d40eebf3876f3}{Minecraft\+Connection}} (const std\+::string \&address=\char`\"{}localhost\char`\"{}, int port=4711)
+\begin{DoxyCompactList}\small\item\em Represents the main endpoint for interaction with the minecraft world. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a7f489b281f16ac1bf4e75c6070589130}{post\+To\+Chat}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Sends a message to the in-\/game chat, does not require a joined player. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a706ee80a08b33fc44512f4e483cec416}{do\+Command}} (const std\+::string \&command)
+\begin{DoxyCompactList}\small\item\em Performs an in-\/game minecraft command. Players have to exist on the server and should be server operators (default with ELCI) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a35965000d661f13f19cee02a676780f2}{set\+Player\+Position}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&pos)
+\begin{DoxyCompactList}\small\item\em Sets player pos (block pos of lower half of playermodel) to specified \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a4b93037053816737e8f3db934605e100}{get\+Player\+Position}} ()
+\begin{DoxyCompactList}\small\item\em Returns a coordinate representing player position (block pos of lower half of playermodel) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a0c54cfc5da2741d4abff1115e8acef33}{set\+Player\+Tile\+Position}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&tile)
+\begin{DoxyCompactList}\small\item\em Sets player position to be one above specified tile (i.\+e. tile = block player is standing on) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a33cf4eeb6d430fefce7aba6f83c0d14a}{get\+Player\+Tile\+Position}} ()
+\begin{DoxyCompactList}\small\item\em Returns the coordinate location of the block the player is standing on. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a432bb051a995a13d7ee18eb3f674ea6d}{set\+Block}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc, const \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} \&block\+Type)
+\begin{DoxyCompactList}\small\item\em Sets block at \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc to the \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} specified by block\+Type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a1acddab5bfe80892d7fd12794470530e}{set\+Blocks}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc1, const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc2, const \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} \&block\+Type)
+\begin{DoxyCompactList}\small\item\em Sets a cuboid of blocks to the specified \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} block\+Type, with the corners of the cuboid provided by the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc1 and loc2. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a47a354e1f25169e4c56dbd05d1f36853}{get\+Block}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc)
+\begin{DoxyCompactList}\small\item\em Returns \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} object from the specified \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc with modifier. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} $>$ $>$ $>$ \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a0811c8d4ff163aec588f36e83cc6b082}{get\+Blocks}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc1, const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc2)
+\begin{DoxyCompactList}\small\item\em Returns a 3D vector of the Block\+Types of the requested cuboid with modifiers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a59c49a956e3686ee4949823d8d5ae632}{get\+Height}} (int x, int z)
+\begin{DoxyCompactList}\small\item\em Returns the height of the specific provided x and y coordinate. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a1453d42e9ebe9b01394a047d7db851c4}{get\+Heights}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc1, const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&loc2)
+\begin{DoxyCompactList}\small\item\em Provides a scaled option of the get\+Height call to allow for considerable performance gains. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a7e3cbbcb4c8ff461f01d40eebf3876f3}\label{classmcpp_1_1MinecraftConnection_a7e3cbbcb4c8ff461f01d40eebf3876f3}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!MinecraftConnection@{MinecraftConnection}}
+\index{MinecraftConnection@{MinecraftConnection}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{MinecraftConnection()}{MinecraftConnection()}}
+{\footnotesize\ttfamily mcpp\+::\+Minecraft\+Connection\+::\+Minecraft\+Connection (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{address = {\ttfamily \char`\"{}localhost\char`\"{}},  }\item[{int}]{port = {\ttfamily 4711} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Represents the main endpoint for interaction with the minecraft world. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & String address in IPV4 format, defaults to \char`\"{}localhost\char`\"{} \\
+\hline
+{\em port} & Integer port to run on, defaults to 4711 as that is the port for ELCI \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a706ee80a08b33fc44512f4e483cec416}\label{classmcpp_1_1MinecraftConnection_a706ee80a08b33fc44512f4e483cec416}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!doCommand@{doCommand}}
+\index{doCommand@{doCommand}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{doCommand()}{doCommand()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::do\+Command (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{command }\end{DoxyParamCaption})}
+
+
+
+Performs an in-\/game minecraft command. Players have to exist on the server and should be server operators (default with ELCI) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command string in the in-\/game format (e.\+g. \char`\"{}time set day\char`\"{}) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a47a354e1f25169e4c56dbd05d1f36853}\label{classmcpp_1_1MinecraftConnection_a47a354e1f25169e4c56dbd05d1f36853}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getBlock@{getBlock}}
+\index{getBlock@{getBlock}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getBlock()}{getBlock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} mcpp\+::\+Minecraft\+Connection\+::get\+Block (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc }\end{DoxyParamCaption})}
+
+
+
+Returns \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} object from the specified \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc with modifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} of the requested block 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a0811c8d4ff163aec588f36e83cc6b082}\label{classmcpp_1_1MinecraftConnection_a0811c8d4ff163aec588f36e83cc6b082}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getBlocks@{getBlocks}}
+\index{getBlocks@{getBlocks}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getBlocks()}{getBlocks()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}}$>$ $>$ $>$ mcpp\+::\+Minecraft\+Connection\+::get\+Blocks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc1,  }\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc2 }\end{DoxyParamCaption})}
+
+
+
+Returns a 3D vector of the Block\+Types of the requested cuboid with modifiers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc1} & 1st corner of the cuboid \\
+\hline
+{\em loc2} & 2nd corner of the cuboid \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3D vector of \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} in the specified cuboid. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a59c49a956e3686ee4949823d8d5ae632}\label{classmcpp_1_1MinecraftConnection_a59c49a956e3686ee4949823d8d5ae632}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily int mcpp\+::\+Minecraft\+Connection\+::get\+Height (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{z }\end{DoxyParamCaption})}
+
+
+
+Returns the height of the specific provided x and y coordinate. 
+
+{\itshape {\bfseries{IMPORTANT\+:}}} DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW USE \mbox{\hyperlink{classmcpp_1_1MinecraftConnection_a1453d42e9ebe9b01394a047d7db851c4}{get\+Heights()}} INSTEAD
+
+Gets the y-\/value of the highest non-\/air block at the specified (x, z) coordinate. 
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+{\em z} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the integer y-\/height at the requested coordinate. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a1453d42e9ebe9b01394a047d7db851c4}\label{classmcpp_1_1MinecraftConnection_a1453d42e9ebe9b01394a047d7db851c4}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getHeights@{getHeights}}
+\index{getHeights@{getHeights}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getHeights()}{getHeights()}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$int$>$ $>$ mcpp\+::\+Minecraft\+Connection\+::get\+Heights (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc1,  }\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc2 }\end{DoxyParamCaption})}
+
+
+
+Provides a scaled option of the get\+Height call to allow for considerable performance gains. 
+
+\begin{DoxyParagraph}{USE THIS instead of get\+Height in a for loop.}
+
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em loc1} & \\
+\hline
+{\em loc2} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a vector of integers representing the 2D area of heights. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a4b93037053816737e8f3db934605e100}\label{classmcpp_1_1MinecraftConnection_a4b93037053816737e8f3db934605e100}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getPlayerPosition@{getPlayerPosition}}
+\index{getPlayerPosition@{getPlayerPosition}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getPlayerPosition()}{getPlayerPosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} mcpp\+::\+Minecraft\+Connection\+::get\+Player\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns a coordinate representing player position (block pos of lower half of playermodel) 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} of location 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a33cf4eeb6d430fefce7aba6f83c0d14a}\label{classmcpp_1_1MinecraftConnection_a33cf4eeb6d430fefce7aba6f83c0d14a}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!getPlayerTilePosition@{getPlayerTilePosition}}
+\index{getPlayerTilePosition@{getPlayerTilePosition}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{getPlayerTilePosition()}{getPlayerTilePosition()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} mcpp\+::\+Minecraft\+Connection\+::get\+Player\+Tile\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the coordinate location of the block the player is standing on. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} of location 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a7f489b281f16ac1bf4e75c6070589130}\label{classmcpp_1_1MinecraftConnection_a7f489b281f16ac1bf4e75c6070589130}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!postToChat@{postToChat}}
+\index{postToChat@{postToChat}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{postToChat()}{postToChat()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::post\+To\+Chat (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})}
+
+
+
+Sends a message to the in-\/game chat, does not require a joined player. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a432bb051a995a13d7ee18eb3f674ea6d}\label{classmcpp_1_1MinecraftConnection_a432bb051a995a13d7ee18eb3f674ea6d}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!setBlock@{setBlock}}
+\index{setBlock@{setBlock}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{setBlock()}{setBlock()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::set\+Block (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc,  }\item[{const \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} \&}]{block\+Type }\end{DoxyParamCaption})}
+
+
+
+Sets block at \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc to the \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} specified by block\+Type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc} & \\
+\hline
+{\em block\+Type} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a1acddab5bfe80892d7fd12794470530e}\label{classmcpp_1_1MinecraftConnection_a1acddab5bfe80892d7fd12794470530e}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!setBlocks@{setBlocks}}
+\index{setBlocks@{setBlocks}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{setBlocks()}{setBlocks()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::set\+Blocks (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc1,  }\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{loc2,  }\item[{const \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} \&}]{block\+Type }\end{DoxyParamCaption})}
+
+
+
+Sets a cuboid of blocks to the specified \mbox{\hyperlink{classmcpp_1_1BlockType}{Block\+Type}} block\+Type, with the corners of the cuboid provided by the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} loc1 and loc2. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em loc1} & \\
+\hline
+{\em loc2} & \\
+\hline
+{\em block\+Type} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a35965000d661f13f19cee02a676780f2}\label{classmcpp_1_1MinecraftConnection_a35965000d661f13f19cee02a676780f2}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!setPlayerPosition@{setPlayerPosition}}
+\index{setPlayerPosition@{setPlayerPosition}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{setPlayerPosition()}{setPlayerPosition()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::set\+Player\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{pos }\end{DoxyParamCaption})}
+
+
+
+Sets player pos (block pos of lower half of playermodel) to specified \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1MinecraftConnection_a0c54cfc5da2741d4abff1115e8acef33}\label{classmcpp_1_1MinecraftConnection_a0c54cfc5da2741d4abff1115e8acef33}} 
+\index{mcpp::MinecraftConnection@{mcpp::MinecraftConnection}!setPlayerTilePosition@{setPlayerTilePosition}}
+\index{setPlayerTilePosition@{setPlayerTilePosition}!mcpp::MinecraftConnection@{mcpp::MinecraftConnection}}
+\doxysubsubsection{\texorpdfstring{setPlayerTilePosition()}{setPlayerTilePosition()}}
+{\footnotesize\ttfamily void mcpp\+::\+Minecraft\+Connection\+::set\+Player\+Tile\+Position (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{tile }\end{DoxyParamCaption})}
+
+
+
+Sets player position to be one above specified tile (i.\+e. tile = block player is standing on) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile} & \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} to set \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/mcpp/\mbox{\hyperlink{mcpp_8h}{mcpp.\+h}}\end{DoxyCompactItemize}

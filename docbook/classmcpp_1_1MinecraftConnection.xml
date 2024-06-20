@@ -1,0 +1,507 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classmcpp_1_1MinecraftConnection" xml:lang="en-US">
+<title>mcpp::MinecraftConnection Class Reference</title>
+<indexterm><primary>mcpp::MinecraftConnection</primary></indexterm>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_classmcpp_1_1MinecraftConnection_1a7e3cbbcb4c8ff461f01d40eebf3876f3">MinecraftConnection</link> (const std::string &amp;address=&quot;localhost&quot;, int port=4711)</para>
+
+<para>Represents the main endpoint for interaction with the minecraft world. </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a7f489b281f16ac1bf4e75c6070589130">postToChat</link> (const std::string &amp;message)</para>
+
+<para>Sends a message to the in-game chat, does not require a joined player. </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a706ee80a08b33fc44512f4e483cec416">doCommand</link> (const std::string &amp;command)</para>
+
+<para>Performs an in-game minecraft command. Players have to exist on the server and should be server operators (default with ELCI) </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a35965000d661f13f19cee02a676780f2">setPlayerPosition</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;pos)</para>
+
+<para>Sets player pos (block pos of lower half of playermodel) to specified <link linkend="_classmcpp_1_1Coordinate">Coordinate</link>. </para>
+</listitem>
+            <listitem><para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> <link linkend="_classmcpp_1_1MinecraftConnection_1a4b93037053816737e8f3db934605e100">getPlayerPosition</link> ()</para>
+
+<para>Returns a coordinate representing player position (block pos of lower half of playermodel) </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a0c54cfc5da2741d4abff1115e8acef33">setPlayerTilePosition</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;tile)</para>
+
+<para>Sets player position to be one above specified tile (i.e. tile = block player is standing on) </para>
+</listitem>
+            <listitem><para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> <link linkend="_classmcpp_1_1MinecraftConnection_1a33cf4eeb6d430fefce7aba6f83c0d14a">getPlayerTilePosition</link> ()</para>
+
+<para>Returns the coordinate location of the block the player is standing on. </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a432bb051a995a13d7ee18eb3f674ea6d">setBlock</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc, const <link linkend="_classmcpp_1_1BlockType">BlockType</link> &amp;blockType)</para>
+
+<para>Sets block at <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc to the <link linkend="_classmcpp_1_1BlockType">BlockType</link> specified by blockType. </para>
+</listitem>
+            <listitem><para>void <link linkend="_classmcpp_1_1MinecraftConnection_1a1acddab5bfe80892d7fd12794470530e">setBlocks</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc2, const <link linkend="_classmcpp_1_1BlockType">BlockType</link> &amp;blockType)</para>
+
+<para>Sets a cuboid of blocks to the specified <link linkend="_classmcpp_1_1BlockType">BlockType</link> blockType, with the corners of the cuboid provided by the <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc1 and loc2. </para>
+</listitem>
+            <listitem><para><link linkend="_classmcpp_1_1BlockType">BlockType</link> <link linkend="_classmcpp_1_1MinecraftConnection_1a47a354e1f25169e4c56dbd05d1f36853">getBlock</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc)</para>
+
+<para>Returns <link linkend="_classmcpp_1_1BlockType">BlockType</link> object from the specified <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc with modifier. </para>
+</listitem>
+            <listitem><para>std::vector&lt; std::vector&lt; std::vector&lt; <link linkend="_classmcpp_1_1BlockType">BlockType</link> &gt; &gt; &gt; <link linkend="_classmcpp_1_1MinecraftConnection_1a0811c8d4ff163aec588f36e83cc6b082">getBlocks</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc2)</para>
+
+<para>Returns a 3D vector of the BlockTypes of the requested cuboid with modifiers. </para>
+</listitem>
+            <listitem><para>int <link linkend="_classmcpp_1_1MinecraftConnection_1a59c49a956e3686ee4949823d8d5ae632">getHeight</link> (int x, int z)</para>
+
+<para>Returns the height of the specific provided x and y coordinate. </para>
+</listitem>
+            <listitem><para>std::vector&lt; std::vector&lt; int &gt; &gt; <link linkend="_classmcpp_1_1MinecraftConnection_1a1453d42e9ebe9b01394a047d7db851c4">getHeights</link> (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp;loc2)</para>
+
+<para>Provides a scaled option of the getHeight call to allow for considerable performance gains. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_classmcpp_1_1MinecraftConnection_1a7e3cbbcb4c8ff461f01d40eebf3876f3"/>    <section>
+    <title>MinecraftConnection()</title>
+<indexterm><primary>MinecraftConnection</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>MinecraftConnection</secondary></indexterm>
+<para><computeroutput>mcpp::MinecraftConnection::MinecraftConnection (const std::string &amp; address = <computeroutput>&quot;localhost&quot;</computeroutput>
+, int port = <computeroutput>4711</computeroutput>
+)<computeroutput>[explicit]</computeroutput></computeroutput></para><para>
+
+<para>Represents the main endpoint for interaction with the minecraft world. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>address</entry>
+                                <entry>
+<para>String address in IPV4 format, defaults to &quot;localhost&quot; </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>port</entry>
+                                <entry>
+<para>Integer port to run on, defaults to 4711 as that is the port for ELCI </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classmcpp_1_1MinecraftConnection_1a706ee80a08b33fc44512f4e483cec416"/>    <section>
+    <title>doCommand()</title>
+<indexterm><primary>doCommand</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>doCommand</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::doCommand (const std::string &amp; command)</computeroutput></para><para>
+
+<para>Performs an in-game minecraft command. Players have to exist on the server and should be server operators (default with ELCI) </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>command</entry>
+                                <entry>
+<para>Command string in the in-game format (e.g. &quot;time set day&quot;) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a47a354e1f25169e4c56dbd05d1f36853"/>    <section>
+    <title>getBlock()</title>
+<indexterm><primary>getBlock</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getBlock</secondary></indexterm>
+<para><computeroutput><link linkend="_classmcpp_1_1BlockType">BlockType</link> mcpp::MinecraftConnection::getBlock (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc)</computeroutput></para><para>
+
+<para>Returns <link linkend="_classmcpp_1_1BlockType">BlockType</link> object from the specified <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc with modifier. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_classmcpp_1_1BlockType">BlockType</link> of the requested block </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a0811c8d4ff163aec588f36e83cc6b082"/>    <section>
+    <title>getBlocks()</title>
+<indexterm><primary>getBlocks</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getBlocks</secondary></indexterm>
+<para><computeroutput>std::vector&lt;std::vector&lt;std::vector&lt;<link linkend="_classmcpp_1_1BlockType">BlockType</link>&gt; &gt; &gt; mcpp::MinecraftConnection::getBlocks (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc2)</computeroutput></para><para>
+
+<para>Returns a 3D vector of the BlockTypes of the requested cuboid with modifiers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc1</entry>
+                                <entry>
+<para>1st corner of the cuboid </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>loc2</entry>
+                                <entry>
+<para>2nd corner of the cuboid </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>3D vector of <link linkend="_classmcpp_1_1BlockType">BlockType</link> in the specified cuboid. </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a59c49a956e3686ee4949823d8d5ae632"/>    <section>
+    <title>getHeight()</title>
+<indexterm><primary>getHeight</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getHeight</secondary></indexterm>
+<para><computeroutput>int mcpp::MinecraftConnection::getHeight (int x, int z)</computeroutput></para><para>
+
+<para>Returns the height of the specific provided x and y coordinate. </para>
+</para>
+
+<para><emphasis><emphasis role="bold">IMPORTANT:</emphasis></emphasis> DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW USE <link linkend="_classmcpp_1_1MinecraftConnection_1a1453d42e9ebe9b01394a047d7db851c4">getHeights()</link> INSTEAD</para>
+
+<para>Gets the y-value of the highest non-air block at the specified (x, z) coordinate. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>z</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Returns the integer y-height at the requested coordinate. </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a1453d42e9ebe9b01394a047d7db851c4"/>    <section>
+    <title>getHeights()</title>
+<indexterm><primary>getHeights</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getHeights</secondary></indexterm>
+<para><computeroutput>std::vector&lt;std::vector&lt;int&gt; &gt; mcpp::MinecraftConnection::getHeights (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc2)</computeroutput></para><para>
+
+<para>Provides a scaled option of the getHeight call to allow for considerable performance gains. </para>
+</para>
+
+<para><formalpara>
+<title>USE THIS instead of getHeight in a for loop.</title>
+<para></para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc1</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>loc2</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Returns a vector of integers representing the 2D area of heights. </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a4b93037053816737e8f3db934605e100"/>    <section>
+    <title>getPlayerPosition()</title>
+<indexterm><primary>getPlayerPosition</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getPlayerPosition</secondary></indexterm>
+<para><computeroutput><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> mcpp::MinecraftConnection::getPlayerPosition ( )</computeroutput></para><para>
+
+<para>Returns a coordinate representing player position (block pos of lower half of playermodel) </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> of location </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a33cf4eeb6d430fefce7aba6f83c0d14a"/>    <section>
+    <title>getPlayerTilePosition()</title>
+<indexterm><primary>getPlayerTilePosition</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>getPlayerTilePosition</secondary></indexterm>
+<para><computeroutput><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> mcpp::MinecraftConnection::getPlayerTilePosition ( )</computeroutput></para><para>
+
+<para>Returns the coordinate location of the block the player is standing on. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> of location </para>
+</formalpara>
+</para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a7f489b281f16ac1bf4e75c6070589130"/>    <section>
+    <title>postToChat()</title>
+<indexterm><primary>postToChat</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>postToChat</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::postToChat (const std::string &amp; message)</computeroutput></para><para>
+
+<para>Sends a message to the in-game chat, does not require a joined player. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>message</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a432bb051a995a13d7ee18eb3f674ea6d"/>    <section>
+    <title>setBlock()</title>
+<indexterm><primary>setBlock</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>setBlock</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::setBlock (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc, const <link linkend="_classmcpp_1_1BlockType">BlockType</link> &amp; blockType)</computeroutput></para><para>
+
+<para>Sets block at <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc to the <link linkend="_classmcpp_1_1BlockType">BlockType</link> specified by blockType. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>blockType</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a1acddab5bfe80892d7fd12794470530e"/>    <section>
+    <title>setBlocks()</title>
+<indexterm><primary>setBlocks</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>setBlocks</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::setBlocks (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc1, const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; loc2, const <link linkend="_classmcpp_1_1BlockType">BlockType</link> &amp; blockType)</computeroutput></para><para>
+
+<para>Sets a cuboid of blocks to the specified <link linkend="_classmcpp_1_1BlockType">BlockType</link> blockType, with the corners of the cuboid provided by the <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> loc1 and loc2. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc1</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>loc2</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>blockType</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a35965000d661f13f19cee02a676780f2"/>    <section>
+    <title>setPlayerPosition()</title>
+<indexterm><primary>setPlayerPosition</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>setPlayerPosition</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::setPlayerPosition (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; pos)</computeroutput></para><para>
+
+<para>Sets player pos (block pos of lower half of playermodel) to specified <link linkend="_classmcpp_1_1Coordinate">Coordinate</link>. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>pos</entry>
+                                <entry>
+<para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> to set </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1MinecraftConnection_1a0c54cfc5da2741d4abff1115e8acef33"/>    <section>
+    <title>setPlayerTilePosition()</title>
+<indexterm><primary>setPlayerTilePosition</primary><secondary>mcpp::MinecraftConnection</secondary></indexterm>
+<indexterm><primary>mcpp::MinecraftConnection</primary><secondary>setPlayerTilePosition</secondary></indexterm>
+<para><computeroutput>void mcpp::MinecraftConnection::setPlayerTilePosition (const <link linkend="_classmcpp_1_1Coordinate">Coordinate</link> &amp; tile)</computeroutput></para><para>
+
+<para>Sets player position to be one above specified tile (i.e. tile = block player is standing on) </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>tile</entry>
+                                <entry>
+<para><link linkend="_classmcpp_1_1Coordinate">Coordinate</link> to set </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+include/mcpp/<link linkend="_mcpp_8h">mcpp.h</link></section>
+</section>

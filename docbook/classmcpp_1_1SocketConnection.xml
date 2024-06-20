@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classmcpp_1_1SocketConnection" xml:lang="en-US">
+<title>mcpp::SocketConnection Class Reference</title>
+<indexterm><primary>mcpp::SocketConnection</primary></indexterm>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><anchor xml:id="_classmcpp_1_1SocketConnection_1a0a78b961f5f920b11be5c74d6a90c9a4"/><emphasis role="strong">SocketConnection</emphasis> (const std::string &amp;address_str, uint16_t port)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classmcpp_1_1SocketConnection_1aa5d2c733af1543ec1deceaff4e8d0c00"/>void <emphasis role="strong">send</emphasis> (const std::string &amp;dataString)</para>
+</listitem>
+            <listitem><para>template&lt;typename... Types&gt; </para><para>void <link linkend="_classmcpp_1_1SocketConnection_1a60c3e23feabe91006e3496d6d588c6c4">sendCommand</link> (const std::string &amp;prefix, const Types &amp;... args)</para>
+</listitem>
+            <listitem><para>template&lt;typename T , typename... Types&gt; </para><para>std::string <link linkend="_classmcpp_1_1SocketConnection_1aa4fb2b9977fa03765f9792b046059979">sendReceiveCommand</link> (const T &amp;prefix, const Types &amp;... args)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classmcpp_1_1SocketConnection_1a100f6622cfcd0bca30b075678a0d3d21"/>std::string <emphasis role="strong">recv</emphasis> () const</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_classmcpp_1_1SocketConnection_1a60c3e23feabe91006e3496d6d588c6c4"/>    <section>
+    <title>sendCommand()</title>
+<indexterm><primary>sendCommand</primary><secondary>mcpp::SocketConnection</secondary></indexterm>
+<indexterm><primary>mcpp::SocketConnection</primary><secondary>sendCommand</secondary></indexterm>
+<computeroutput>template&lt;typename... Types&gt; </computeroutput><para><computeroutput>void mcpp::SocketConnection::sendCommand (const std::string &amp; prefix, const Types &amp;... args)<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Takes in parameters supporting std::stringstream conversion and a string prefix and transforms them into format &quot;prefix(arg1,arg2,arg3)\n&quot; (e.g. &quot;chat.post(test)\n&quot;) and sends command to the server.</para>
+
+<para>
+                <formalpara>
+                    <title>
+Template Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>Types</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>prefix</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>args</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+    </section><anchor xml:id="_classmcpp_1_1SocketConnection_1aa4fb2b9977fa03765f9792b046059979"/>    <section>
+    <title>sendReceiveCommand()</title>
+<indexterm><primary>sendReceiveCommand</primary><secondary>mcpp::SocketConnection</secondary></indexterm>
+<indexterm><primary>mcpp::SocketConnection</primary><secondary>sendReceiveCommand</secondary></indexterm>
+<computeroutput>template&lt;typename T , typename... Types&gt; </computeroutput><para><computeroutput>std::string mcpp::SocketConnection::sendReceiveCommand (const T &amp; prefix, const Types &amp;... args)<computeroutput>[inline]</computeroutput></computeroutput></para>
+<para>Sends via <link linkend="_classmcpp_1_1SocketConnection_1a60c3e23feabe91006e3496d6d588c6c4">sendCommand()</link> and returns the result from endpoint</para>
+
+<para>
+                <formalpara>
+                    <title>
+Template Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>T</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Types</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>prefix</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>args</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+include/mcpp/<link linkend="_connection_8h">connection.h</link></section>
+</section>

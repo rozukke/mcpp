@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_namespacemcpp" xml:lang="en-US">
+<title>mcpp Namespace Reference</title>
+<indexterm><primary>mcpp</primary></indexterm>
+<para>
+
+<para>Namespace containing all the the mcpp library classes. </para>
+ 
+</para>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_classmcpp_1_1BlockType">BlockType</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structmcpp_1_1Blocks">Blocks</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_classmcpp_1_1SocketConnection">SocketConnection</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_classmcpp_1_1MinecraftConnection">MinecraftConnection</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_classmcpp_1_1Coordinate">Coordinate</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Namespace containing all the the mcpp library classes. </para>
+
+<para>The mcpp namespace includes classes and functions designed to facilitate interaction with the Minecraft world through various server commands and data manipulations. </para>
+</section>
+</section>

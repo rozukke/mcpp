@@ -1,0 +1,200 @@
+\hypertarget{classmcpp_1_1Coordinate}{}\doxysection{mcpp\+::Coordinate Class Reference}
+\label{classmcpp_1_1Coordinate}\index{mcpp::Coordinate@{mcpp::Coordinate}}
+
+
+{\ttfamily \#include $<$util.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate_aff4ff630ed0339920f6b2a8aec4cc1f6}{Coordinate}} (int x=0, int y=0, int z=0)
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object with integer values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate_a34576700734a152d519f3f9d56062899}{Coordinate}} (double x, double y, double z)
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object with double values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \mbox{\hyperlink{classmcpp_1_1Coordinate_a00d47c3ceaa12d83ebf3fd970963ae0b}{operator+}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&obj) const
+\begin{DoxyCompactList}\small\item\em Adds two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmcpp_1_1Coordinate_aea212ae040336d2e0b46c82e605fada6}{operator==}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&obj) const
+\begin{DoxyCompactList}\small\item\em Checks if two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects are equal. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classmcpp_1_1Coordinate_a7642ebe18537052edfbe717bfd2e31ad}{operator!=}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&obj) const
+\begin{DoxyCompactList}\small\item\em Checks if two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects are not equal. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \mbox{\hyperlink{classmcpp_1_1Coordinate_a51ef2fc83cf330cb0cea41ffb08c7169}{operator-\/}} (const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&obj) const
+\begin{DoxyCompactList}\small\item\em Subtracts one \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object from another. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \mbox{\hyperlink{classmcpp_1_1Coordinate_a815583c0aa75db7f00505f451267a684}{clone}} () const
+\begin{DoxyCompactList}\small\item\em Creates a copy of the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_af2639ac79be2a9c59a7eb0afe4ea7681}\label{classmcpp_1_1Coordinate_af2639ac79be2a9c59a7eb0afe4ea7681}} 
+int {\bfseries x}
+\item 
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a42df473fa613ffb3718d9dc38845b0a8}\label{classmcpp_1_1Coordinate_a42df473fa613ffb3718d9dc38845b0a8}} 
+int {\bfseries y}
+\item 
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a57ec8f7c3ed4be2eacc3364eb578eca5}\label{classmcpp_1_1Coordinate_a57ec8f7c3ed4be2eacc3364eb578eca5}} 
+int {\bfseries z}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classmcpp_1_1Coordinate_a8f16cf7216f2a8143e01c389e11e2a68}{operator$<$$<$}} (std\+::ostream \&out, const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&coord)
+\begin{DoxyCompactList}\small\item\em Outputs the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to an ostream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represented using integers since sub-\/unit coordinates are not of particular relevance. Allows for operations such as addition between coordinates. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_aff4ff630ed0339920f6b2a8aec4cc1f6}\label{classmcpp_1_1Coordinate_aff4ff630ed0339920f6b2a8aec4cc1f6}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!Coordinate@{Coordinate}}
+\index{Coordinate@{Coordinate}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{Coordinate()}{Coordinate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily mcpp\+::\+Coordinate\+::\+Coordinate (\begin{DoxyParamCaption}\item[{int}]{x = {\ttfamily 0},  }\item[{int}]{y = {\ttfamily 0},  }\item[{int}]{z = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs a \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object with integer values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/coordinate. Default is 0. \\
+\hline
+{\em y} & The y-\/coordinate. Default is 0. \\
+\hline
+{\em z} & The z-\/coordinate. Default is 0. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a34576700734a152d519f3f9d56062899}\label{classmcpp_1_1Coordinate_a34576700734a152d519f3f9d56062899}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!Coordinate@{Coordinate}}
+\index{Coordinate@{Coordinate}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{Coordinate()}{Coordinate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily mcpp\+::\+Coordinate\+::\+Coordinate (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{z }\end{DoxyParamCaption})}
+
+
+
+Constructs a \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object with double values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/coordinate as a double. \\
+\hline
+{\em y} & The y-\/coordinate as a double. \\
+\hline
+{\em z} & The z-\/coordinate as a double. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a815583c0aa75db7f00505f451267a684}\label{classmcpp_1_1Coordinate_a815583c0aa75db7f00505f451267a684}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!clone@{clone}}
+\index{clone@{clone}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} mcpp\+::\+Coordinate\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Creates a copy of the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object. 
+
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object that is a copy of the current object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a7642ebe18537052edfbe717bfd2e31ad}\label{classmcpp_1_1Coordinate_a7642ebe18537052edfbe717bfd2e31ad}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool mcpp\+::\+Coordinate\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{obj }\end{DoxyParamCaption}) const}
+
+
+
+Checks if two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects are not equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the coordinates are not equal, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a00d47c3ceaa12d83ebf3fd970963ae0b}\label{classmcpp_1_1Coordinate_a00d47c3ceaa12d83ebf3fd970963ae0b}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!operator+@{operator+}}
+\index{operator+@{operator+}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} mcpp\+::\+Coordinate\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{obj }\end{DoxyParamCaption}) const}
+
+
+
+Adds two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to add. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object representing the sum of the two coordinates. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a51ef2fc83cf330cb0cea41ffb08c7169}\label{classmcpp_1_1Coordinate_a51ef2fc83cf330cb0cea41ffb08c7169}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} mcpp\+::\+Coordinate\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{obj }\end{DoxyParamCaption}) const}
+
+
+
+Subtracts one \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object from another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to subtract. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object representing the difference between the two coordinates. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_aea212ae040336d2e0b46c82e605fada6}\label{classmcpp_1_1Coordinate_aea212ae040336d2e0b46c82e605fada6}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!operator==@{operator==}}
+\index{operator==@{operator==}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool mcpp\+::\+Coordinate\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{obj }\end{DoxyParamCaption}) const}
+
+
+
+Checks if two \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} objects are equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the coordinates are equal, false otherwise. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classmcpp_1_1Coordinate_a8f16cf7216f2a8143e01c389e11e2a68}\label{classmcpp_1_1Coordinate_a8f16cf7216f2a8143e01c389e11e2a68}} 
+\index{mcpp::Coordinate@{mcpp::Coordinate}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mcpp::Coordinate@{mcpp::Coordinate}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} \&}]{coord }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Outputs the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to an ostream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & The output stream. \\
+\hline
+{\em coord} & The \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object to output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream with the \mbox{\hyperlink{classmcpp_1_1Coordinate}{Coordinate}} object\textquotesingle{}s values. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/mcpp/\mbox{\hyperlink{util_8h}{util.\+h}}\end{DoxyCompactItemize}

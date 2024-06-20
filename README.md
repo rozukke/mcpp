@@ -1,11 +1,5 @@
-<!-- If statement for both doxygen and github to load the logo -->
-\if DOXYGEN_DOCS
-![mcpp logo](resources/mcpplogosmall.png)
-
-\else
 ![mcpp logo](../resources/mcpplogosmall.png)
 
-\endif
 
 # mcpp (Minecraft++)
 [![made-with-cpp](https://img.shields.io/badge/Made%20with-C++_17-1f425f.svg)](https://cplusplus.com/) [![made-by-rozukke](https://img.shields.io/badge/Creator-rozukke-f497af.svg)](https://github.com/rozukke) 

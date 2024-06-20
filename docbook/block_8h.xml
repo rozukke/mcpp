@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_block_8h" xml:lang="en-US">
+<title>include/mcpp/block.h File Reference</title>
+<indexterm><primary>include/mcpp/block.h</primary></indexterm>
+<para>
+
+<para>BlockType class. </para>
+ 
+</para>
+<programlisting>#include &lt;ostream&gt;
+</programlisting>Include dependency graph for block.h:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="block_8h__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+This graph shows which files directly or indirectly include this file:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="block_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_classmcpp_1_1BlockType">mcpp::BlockType</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structmcpp_1_1Blocks">mcpp::Blocks</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para> <link linkend="_namespacemcpp">mcpp</link></para>
+
+<para>Namespace containing all the the mcpp library classes. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>BlockType class. </para>
+</section>
+</section>
