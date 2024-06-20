@@ -4,10 +4,6 @@
     <title>MCPP</title>
     </info>
 <chapter>
-    <title>Main Page</title>
-    <xi:include href="mainpage.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-</chapter>
-<chapter>
     <title>Namespace Documentation</title>
 <xi:include href="namespacemcpp.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 </chapter>

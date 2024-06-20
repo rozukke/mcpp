@@ -1,4 +1,4 @@
-![mcpp logo](../resources/mcpplogosmall.png)
+![mcpp logo](/resources/mcpplogosmall.png)
 
 
 # mcpp (Minecraft++)

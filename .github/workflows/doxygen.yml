@@ -22,6 +22,17 @@ jobs:
       - name: Run Doxygen
         run: doxygen ./Doxyfile
 
+      - name: Ensure gh-pages branch exists
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages; then
+            git checkout --orphan gh-pages
+            git reset --hard
+            echo "gh-pages branch created" > README.md
+            git add README.md
+            git commit -m "Initial gh-pages commit"
+            git push origin gh-pages
+          fi
+
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/add/doxygen'
         run: |

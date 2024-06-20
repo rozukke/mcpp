@@ -60,50 +60,11 @@ $(function() {
 </iframe>
 </div>
 
-<div class="PageDoc"><div class="header">
+<div class="header">
   <div class="headertitle">
 <div class="title">MCPP Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p><img src="../resources/mcpplogosmall.png" alt="mcpp logo" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md0"></a>
-mcpp (Minecraft++)</h1>
-<p><a href="https://cplusplus.com/"><img src="https://img.shields.io/badge/Made%20with-C++_17-1f425f.svg" alt="made-with-cpp" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rozukke"><img src="https://img.shields.io/badge/Creator-rozukke-f497af.svg" alt="made-by-rozukke" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rozukke/mcpp/blob/main/LICENSE"><img src="https://img.shields.io/github/license/rozukke/mcpp.svg" alt="GitHub license" style="pointer-events: none;" class="inline"/></a>\ <b>mcpp</b> (Minecraft++) is a library built to interface with Minecraft through <a href="https://www.spigotmc.org/">Spigot server</a> running the <a href="https://github.com/rozukke/ELCI">ELCI</a> plugin and using C++. It is currently limited to MacOS/Linux or Windows with WSL.</p>
-<p>➡ For more details on the broad strokes of <b>mcpp</b>, refer to the <a href="https://github.com/rozukke/mcpp/wiki/Index">wiki</a>!</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
-History</h2>
-<p>This library is based on <a href="https://github.com/martinohanlon/mcpi">mcpi</a>, which is a Python library with similar functionality.</p>
-<p>In addition to C++ support, this library implements several new commands supported by <a href="https://github.com/rozukke/ELCI">ELCI</a>:</p><ul>
-<li><code>getBlocks</code> to get a cuboid of blocks with modifiers in a performant manner,</li>
-<li><code>getHeights</code> to get a 2D area of heights in a performant manner,</li>
-<li><code>doCommand</code> to perform an in-game minecraft command which allows for additional functionality.</li>
-</ul>
-<p>This C++ version was created for the Royal Melbourne Institute of Technology (RMIT) to supplement the COSC2084 (Programming Studio 2) course.</p>
-<h2><a class="anchor" id="autotoc_md2"></a>
-Installation</h2>
-<h3><a class="anchor" id="autotoc_md3"></a>
-Windows</h3>
-<p>Since the release is intended for UNIX systems and not tested on Windows, the options to run locally are as follows:</p><ul>
-<li>Build manually (there are included CMake build files)</li>
-<li>Run with WSL, in which case follow the Linux instructions below. You may need to specify a connection address manually in <code>MinecraftConnection()</code> if you are running Spigot with ELCI on Windows, which you can find using <code>nslookup "$(hostname).local"</code> on your WSL terminal. The default port for ELCI is <code>4711</code>.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md4"></a>
-Mac and Linux</h3>
-<ul>
-<li>Install <code>g++</code>, <code>make</code>, <code>cmake</code> and any other build prerequisites</li>
-<li>Clone this repository via <code>git clone <a href="https://github.com/rozukke/mcpp.git">https://github.com/rozukke/mcpp.git</a></code></li>
-<li>Install by running <code>cmake .</code> and <code>sudo make install</code> inside the cloned directory.</li>
-<li>After doing this, the library should be accessible via a <code>#include &lt;<a class="el" href="mcpp_8h.html" title="MinecraftConnection class.">mcpp/mcpp.h</a>&gt;</code> directive.</li>
-<li>When compiling code using the library, use the flag <code>-lmcpp</code> for Makefiles or <code>target_link_libraries(your_executable mcpp)</code> for CMake.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md5"></a>
-License</h2>
-<p><b>The following applies to all code:</b></p>
-<p>Copyright 2024 Artemis Rosman</p>
-<p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at </p><pre class="fragment">http://www.apache.org/licenses/LICENSE-2.0
-</pre><p> Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. </p>
-</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
