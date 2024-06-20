@@ -24,6 +24,7 @@ jobs:
 
       - name: Ensure gh-pages branch exists
         run: |
+          git fetch origin
           if ! git ls-remote --exit-code --heads origin gh-pages; then
             git checkout --orphan gh-pages
             git reset --hard
@@ -31,6 +32,8 @@ jobs:
             git add README.md
             git commit -m "Initial gh-pages commit"
             git push origin gh-pages
+          else
+            git checkout gh-pages
           fi
 
       - name: Deploy to GitHub Pages
