@@ -9,6 +9,7 @@ set(MCPP_INC_DIR include/mcpp)
 
 # Testing
 add_subdirectory(test)
+enable_testing()
 add_test(NAME local COMMAND local_tests)
 add_test(NAME full COMMAND test_suite)
 
