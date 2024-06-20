@@ -5,7 +5,7 @@ on:
     branches: add/doxygen
   push:
     branches: add/doxygen
-#test
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,20 +22,6 @@ jobs:
       - name: Run Doxygen
         run: doxygen ./Doxyfile
 
-      - name: Ensure gh-pages branch exists
-        run: |
-          git fetch origin
-          if ! git ls-remote --exit-code --heads origin gh-pages; then
-            git checkout --orphan gh-pages
-            git reset --hard
-            echo "gh-pages branch created" > README.md
-            git add README.md
-            git commit -m "Initial gh-pages commit"
-            git push origin gh-pages
-          else
-            git checkout gh-pages
-          fi
-
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/add/doxygen'
         run: |
@@ -47,3 +33,4 @@ jobs:
           git add .
           git commit -m "Deploy updated docs"
           git push origin gh-pages
+#test
