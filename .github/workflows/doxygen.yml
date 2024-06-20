@@ -39,7 +39,11 @@ jobs:
           rsync -av --delete ../html/ ./
 
           # Ensure we have the latest changes from gh-pages
-          git pull origin gh-pages --allow-unrelated-histories
+          git pull origin gh-pages --allow-unrelated-histories || true
+
+          # Resolve any merge conflicts by choosing the local version
+          git checkout --ours Doxyfile
+          git add Doxyfile
 
           # Add, commit, and push the changes
           git add .
