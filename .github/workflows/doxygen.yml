@@ -33,23 +33,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Cloning the repository and checking out the gh-pages branch..."
+          # Clone the repository and checkout the gh-pages branch
           git clone --branch=gh-pages https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} gh-pages
           cd gh-pages
 
-          echo "Cleaning up the old files..."
+          # Remove all files to ensure clean directory (keeping .git)
           find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
 
-          echo "Copying the new documentation..."
+          # Copy generated documentation to gh-pages branch
           cp -r ../doc/html/* .
 
-          echo "Adding changes..."
+          # Add and commit changes
           git add .
-          git status
-
-          echo "Committing changes..."
           git commit -m "Deploy updated documentation"
 
-          echo "Pushing changes to gh-pages branch..."
+          # Push changes to gh-pages branch
           git push origin gh-pages --force
-
