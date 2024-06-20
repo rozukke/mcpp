@@ -42,8 +42,7 @@ jobs:
           git pull origin gh-pages --allow-unrelated-histories || true
 
           # Resolve any merge conflicts by choosing the local version
-          git checkout --ours Doxyfile
-          git add Doxyfile
+          git ls-files -u | awk '{print $4}' | xargs git add -f
 
           # Add, commit, and push the changes
           git add .
