@@ -1,0 +1,35 @@
+name: doxygen
+
+on:
+  pull_request:
+    branches: add/doxygen
+  push:
+    branches: add/doxygen
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen
+
+      - name: Run Doxygen
+        run: doxygen ./Doxyfile
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/add/doxygen'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages
+          rsync -av --delete ./html/ gh-pages/
+          cd gh-pages
+          git add .
+          git commit -m "Deploy updated docs"
+          git push origin gh-pages
