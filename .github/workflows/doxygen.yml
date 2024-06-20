@@ -34,9 +34,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Clone the gh-pages branch or create it if it doesn't exist
-          git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages || git clone --depth 1 https://github.com/${{ github.repository }} gh-pages
+          # Clone the repository and create gh-pages branch if it doesn't exist
+          git clone https://github.com/${{ github.repository }} gh-pages
           cd gh-pages
+          git checkout --orphan gh-pages
 
           # Sync the new documentation
           rsync -av --delete ../doc/html/ ./
@@ -44,4 +45,4 @@ jobs:
           # Add, commit, and push the changes
           git add .
           git commit -m "Deploy updated docs"
-          git push origin gh-pages --force
+          git push --set-upstream origin gh-pages --force
