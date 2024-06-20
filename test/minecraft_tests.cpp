@@ -215,9 +215,8 @@ TEST_CASE("Player operations") {
         CHECK_EQ(p_result, p_expected);
     }
 
-    //Cleanup
+    // Cleanup
     mc.setBlock(test_loc, Blocks::AIR);
 }
 
 #endif
-
