@@ -1,47 +1,51 @@
-name: doxygen
+name: Deploy Doxygen Documentation
 
 on:
-  pull_request:
-    branches: add/doxygen
   push:
-    branches: add/doxygen
+    branches:
+      - add/doxygen
+  pull_request:
+    branches:
+      - add/doxygen
 
 jobs:
-  build-documentation:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Install Doxygen
       - name: Set up Doxygen
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen
+          sudo apt-get install -y doxygen graphviz
 
-      # Build the HTML documentation
       - name: Generate Documentation
         run: doxygen ./Doxyfile
 
-      # Configure Git
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      # Deploy the HTML documentation to GitHub Pages manually
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Clone the gh-pages branch
-          git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages
+          # Clone the repository and checkout the gh-pages branch
+          git clone --branch=gh-pages https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} gh-pages
           cd gh-pages
 
-          # Sync the new documentation
-          rsync -av --delete ../doc/html/ ./
+          # Remove all files to ensure clean directory (keeping .git)
+          find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
 
-          # Add, commit, and push the changes
+          # Copy generated documentation to gh-pages branch
+          cp -r ../doc/html/* .
+
+          # Add and commit changes
           git add .
-          git commit -m "Deploy updated docs"
+          git commit -m "Deploy updated documentation"
+
+          # Push changes to gh-pages branch
           git push origin gh-pages --force
