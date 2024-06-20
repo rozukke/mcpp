@@ -5,28 +5,43 @@ on:
     branches: add/doxygen
   push:
     branches: add/doxygen
-#test
+
 jobs:
   build-documentation:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
-    # Build the HTML documentation
-    - name: Doxygen Action
-      uses: mattnotmitt/doxygen-action@v1.1.0
-      with:
-          doxyfile-path: ./Doxyfile
-          working-directory: .
-    
-    # Deploy the HTML documentation to GitHub Pages
-    - name: GH Pages Deployment
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./doc/html/
-        enable_jekyll: false
-        allow_empty_commit: false
-        force_orphan: true
-        publish_branch: gh-pages
+      - uses: actions/checkout@v2
+
+      # Install Doxygen
+      - name: Set up Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen
+
+      # Build the HTML documentation
+      - name: Generate Documentation
+        run: doxygen ./Doxyfile
+
+      # Configure Git
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      # Deploy the HTML documentation to GitHub Pages manually
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Clone the gh-pages branch or create it if it doesn't exist
+          git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages || git clone --depth 1 https://github.com/${{ github.repository }} gh-pages
+          cd gh-pages
+
+          # Sync the new documentation
+          rsync -av --delete ../doc/html/ ./
+
+          # Add, commit, and push the changes
+          git add .
+          git commit -m "Deploy updated docs"
+          git push origin gh-pages --force
