@@ -25,34 +25,5 @@ jobs:
       - name: Generate Documentation
         run: doxygen ./Doxyfile
 
-      - name: Configure Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Deploy to GitHub Pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Cloning the repository and checking out the gh-pages branch..."
-          git clone --branch=gh-pages https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} gh-pages
-          cd gh-pages
-
-          echo "Cleaning up the old files..."
-          find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
-
-          echo "Copying the new documentation..."
-          cp -r ../doc/html/* .
-
-          echo "Adding changes..."
-          git add .
-          if git diff-index --quiet HEAD; then
-            echo "No changes to commit."
-            exit 0
-          fi
-
-          echo "Committing changes..."
-          git commit -m "Deploy updated documentation"
-
-          echo "Pushing changes to gh-pages branch..."
-          git push origin gh-pages --force
+      - name: Deploying to Gh-pages
+        uses: jinxto/doxygen-env-setup@v1
