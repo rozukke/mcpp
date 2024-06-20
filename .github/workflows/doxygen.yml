@@ -26,7 +26,6 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git config --global pull.rebase false  # Set the pull strategy to merge
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/add/doxygen'
@@ -39,9 +38,10 @@ jobs:
           rsync -av --delete ../html/ ./
 
           # Ensure we have the latest changes from gh-pages
+          git config --global pull.rebase false
           git pull origin gh-pages
-
-          # Add, commit, and push the changes
+          
+          # Add, commit and push the changes
           git add .
           git commit -m "Deploy updated docs"
           git push origin gh-pages
