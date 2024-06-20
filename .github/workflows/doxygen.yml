@@ -22,15 +22,18 @@ jobs:
       - name: Run Doxygen
         run: doxygen ./Doxyfile
 
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/add/doxygen'
+      - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/add/doxygen'
+        run: |
           git clone --depth 1 --branch gh-pages https://github.com/${{ github.repository }} gh-pages
           rsync -av --delete ./html/ gh-pages/
           cd gh-pages
+          git pull origin gh-pages
           git add .
           git commit -m "Deploy updated docs"
           git push origin gh-pages
-#test
