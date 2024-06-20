@@ -42,7 +42,8 @@ jobs:
           git pull origin gh-pages --allow-unrelated-histories || true
 
           # Resolve any merge conflicts by choosing the local version
-          git ls-files -u | awk '{print $4}' | xargs git add -f
+          git ls-files -u | awk '{print $4}' | xargs -I {} git checkout --ours {}
+          git ls-files -u | awk '{print $4}' | xargs git add
 
           # Add, commit, and push the changes
           git add .
