@@ -1,9 +1,6 @@
 #include "../include/mcpp/mcpp.h"
 #include "doctest.h"
 
-// Set to 1 if testing with joined player on server
-#define PLAYER_TEST 1
-
 using namespace std::string_literals;
 using namespace mcpp;
 
@@ -156,8 +153,8 @@ TEST_CASE("Test the main mcpp class") {
 }
 
 // Requires player joined to server, will throw serverside if player is not
-// joined and hang execution
-#if PLAYER_TEST
+// joined
+#ifdef PLAYER_TEST
 
 TEST_CASE("Player operations") {
     Coordinate testLoc(110, 110, 110);

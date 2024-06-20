@@ -4,23 +4,20 @@ project(mcpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(PROJECT_SOURCE_DIR src)
-set(MCPP_PUBLIC_INCLUDE_DIRECTORIES include/ )
+set(MCPP_SRC_DIR src)
+set(MCPP_INC_DIR include/mcpp)
 
 # Testing
-enable_testing()
 add_subdirectory(test)
 add_test(NAME local COMMAND local_tests)
 add_test(NAME full COMMAND test_suite)
 
 # Source files
-file(GLOB_RECURSE MCPP_INCLUDE_FILES "include/*.h")
-file(GLOB_RECURSE MCPP_SOURCE_FILES "src/*.cpp")
+file(GLOB_RECURSE MCPP_INCLUDE_FILES ${MCPP_INC_DIR}/*.h)
+file(GLOB_RECURSE MCPP_SOURCE_FILES ${MCPP_SRC_DIR}/*.cpp)
 
 # Library build
-add_library(${PROJECT_NAME} STATIC ${MCPP_INCLUDE_FILES} ${MCPP_SOURCE_FILES})
-
-target_include_directories(${PROJECT_NAME} PUBLIC ${MCPP_PUBLIC_INCLUDE_DIRECTORIES})
+add_library(${PROJECT_NAME} SHARED ${MCPP_INCLUDE_FILES} ${MCPP_SOURCE_FILES})
 
 set_target_properties(${PROJECT_NAME}
         PROPERTIES
