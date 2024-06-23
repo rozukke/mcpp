@@ -2,6 +2,10 @@
 
 #include <ostream>
 
+/**
+ * @file
+ * @brief BlockType class
+ */
 namespace mcpp {
 class BlockType {
   public:
@@ -11,18 +15,45 @@ class BlockType {
     constexpr BlockType(int id = 0, int modifier = 0) : id(id), mod(modifier){};
 
     /**
+     * @brief Equality comparison operator.
+     *
      * Watch out as this also compares the BlockType.mod element of the block,
      * so some equalities may behave in unexpected ways e.g. rotated stairs
+     *
+     * @param other The BlockType to compare with the current instance.
+     *
+     * @return True if the two BlockType instances are not equal, false
+     * otherwise.
      */
     bool operator==(const BlockType& other) const;
 
+    /**
+     * @brief Inequality comparison operator.
+     *
+     * Watch out as this also compares the BlockType.mod element of the block,
+     * so some equalities may behave in unexpected ways e.g. rotated stairs
+     *
+     * @param other The BlockType to compare with the current instance.
+     * @return True if the two BlockType instances are not equal, false
+     * otherwise.
+     */
     bool operator!=(const BlockType& other) const;
 
+    /**
+     * @brief Stream insertion operator for outputting the BlockType to an
+     * output stream.
+     *
+     * @param out The output stream to write to.
+     * @param block The BlockType instance to output.
+     * @return A reference to the output stream after the block information has
+     * been inserted.
+     */
     friend std::ostream& operator<<(std::ostream& out, const BlockType& block);
 
     /**
      * Returns a new BlockType with the same id and specified modifier, useful
      * for rotations etc.
+     *
      * @param modifier New modifier for the BlockType
      * @return New BlockType object with the specified modifier
      */
@@ -32,6 +63,7 @@ class BlockType {
 // Using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
 
 /**
+ * @struct Blocks
  * Struct of static block objects that allows for a "search" of sorts, callable
  * using Blocks::TYPE after importing <block.h>
  */
