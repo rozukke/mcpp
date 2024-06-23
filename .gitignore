@@ -45,3 +45,6 @@ CMakeFiles
 *.app
 /cmake-build-debug-coverage/
 /cmake-build-release-coverage/
+
+#doxygen-folders
+doc/
