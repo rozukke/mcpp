@@ -1,4 +1,4 @@
-name: Deploy Doxygen Documentation
+name: deploy-doxygen
 
 on:
   push:
