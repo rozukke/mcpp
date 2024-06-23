@@ -47,6 +47,4 @@ CMakeFiles
 /cmake-build-release-coverage/
 
 #doxygen-folders
-html/
-latex/
-docbook/
+doc/
