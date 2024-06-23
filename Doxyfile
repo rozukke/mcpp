@@ -74,7 +74,7 @@ CREATE_SUBDIRS         = NO
 # characters to appear in the names of generated files. If set to NO, non-ASCII
 # characters will be escaped, for example _xE3_x81_x84 will be used for Unicode
 # U+3044.
-# The default value is: NO.
+# The default value is: NO.s
 
 ALLOW_UNICODE_NAMES    = NO
 
