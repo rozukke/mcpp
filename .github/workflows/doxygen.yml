@@ -3,7 +3,7 @@ name: Deploy Doxygen Documentation
 on:
   push:
     branches:
-      - add/doxygen
+      - main
   pull_request:
     branches:
       - main
