@@ -1,7 +1,7 @@
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "MCPP"
+PROJECT_NAME           = "mcpp" 
 PROJECT_NUMBER         = 
-PROJECT_BRIEF          =
+PROJECT_BRIEF          = "mcpp is a library that lets you interact with Minecraft using C++"
 PROJECT_LOGO           = 
 OUTPUT_DIRECTORY       = ./doc/
 CREATE_SUBDIRS         = NO
@@ -104,7 +104,9 @@ WARN_NO_PARAMDOC       = NO
 WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
-INPUT                  = ./include/mcpp
+INPUT                  = include/mcpp \
+                         README.md
+
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \
@@ -164,7 +166,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE = 
+USE_MDFILE_AS_MAINPAGE = README.md
 SOURCE_BROWSER         = NO
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
