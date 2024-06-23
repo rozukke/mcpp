@@ -8,7 +8,7 @@
 #include <vector>
 /** @file
  * @brief MinecraftConnection class.
- * 
+ *
  */
 
 /**
@@ -21,20 +21,25 @@
 namespace mcpp {
 class MinecraftConnection {
   private:
-    std::unique_ptr<SocketConnection> conn; ///< Handle to the socket connection.
+    std::unique_ptr<SocketConnection>
+        conn; ///< Handle to the socket connection.
 
     static std::vector<std::vector<std::vector<BlockType>>>
-    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
-                         const std::vector<BlockType>& inVector); ///< Helper function to convert flat block array to 3D.
+    unflattenBlocksArray(
+        const Coordinate& loc1, const Coordinate& loc2,
+        const std::vector<BlockType>&
+            inVector); ///< Helper function to convert flat block array to 3D.
 
-    static std::vector<std::vector<int>>
-    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2,
-                          const std::vector<int>& inVector); ///< Helper function to convert flat height array to 2D.
+    static std::vector<std::vector<int>> unflattenHeightsArray(
+        const Coordinate& loc1, const Coordinate& loc2,
+        const std::vector<int>&
+            inVector); ///< Helper function to convert flat height array to 2D.
 
   public:
     /**
-     * @brief Represents the main endpoint for interaction with the minecraft world.
-     * 
+     * @brief Represents the main endpoint for interaction with the minecraft
+     * world.
+     *
      * @param address String address in IPV4 format, defaults to "localhost"
      * @param port Integer port to run on, defaults to 4711 as that is the port
      * for ELCI
@@ -43,63 +48,66 @@ class MinecraftConnection {
                                  int port = 4711);
 
     /**
-     * @brief Sends a message to the in-game chat, does not require a joined player
-     * 
+     * @brief Sends a message to the in-game chat, does not require a joined
+     * player
+     *
      * @param message
      */
     void postToChat(const std::string& message);
 
     /**
-     * @brief Performs an in-game minecraft command. Players have to exist on the
-     * server and should be server operators (default with ELCI)
-     * 
+     * @brief Performs an in-game minecraft command. Players have to exist on
+     * the server and should be server operators (default with ELCI)
+     *
      * @param command Command string in the in-game format (e.g. "time set day")
      */
     void doCommand(const std::string& command);
 
     /**
-     * @brief Sets player pos (block pos of lower half of playermodel) to specified
-     * Coordinate
-     * 
+     * @brief Sets player pos (block pos of lower half of playermodel) to
+     * specified Coordinate
+     *
      * @param pos Coordinate to set
      */
     void setPlayerPosition(const Coordinate& pos);
 
     /**
-     * @brief Returns a coordinate representing player position (block pos of lower
-     * half of playermodel)
-     * 
+     * @brief Returns a coordinate representing player position (block pos of
+     * lower half of playermodel)
+     *
      * @return Coordinate of location
      */
     Coordinate getPlayerPosition();
 
     /**
-     * @brief Sets player position to be one above specified tile (i.e. tile = block
-     * player is standing on)
-     * 
+     * @brief Sets player position to be one above specified tile (i.e. tile =
+     * block player is standing on)
+     *
      * @param tile Coordinate to set
      */
     void setPlayerTilePosition(const Coordinate& tile);
 
     /**
-     * @brief Returns the coordinate location of the block the player is standing on
-     * 
+     * @brief Returns the coordinate location of the block the player is
+     * standing on
+     *
      * @return Coordinate of location
      */
     Coordinate getPlayerTilePosition();
 
     /**
-     * @brief Sets block at Coordinate loc to the BlockType specified by blockType
-     * 
+     * @brief Sets block at Coordinate loc to the BlockType specified by
+     * blockType
+     *
      * @param loc
      * @param blockType
      */
     void setBlock(const Coordinate& loc, const BlockType& blockType);
 
     /**
-     * @brief Sets a cuboid of blocks to the specified BlockType blockType, with the
-     * corners of the cuboid provided by the Coordinate loc1 and loc2
-     * 
+     * @brief Sets a cuboid of blocks to the specified BlockType blockType, with
+     * the corners of the cuboid provided by the Coordinate loc1 and loc2
+     *
      * @param loc1
      * @param loc2
      * @param blockType
@@ -108,8 +116,9 @@ class MinecraftConnection {
                    const BlockType& blockType);
 
     /**
-     * @brief Returns BlockType object from the specified Coordinate loc with modifier
-     * 
+     * @brief Returns BlockType object from the specified Coordinate loc with
+     * modifier
+     *
      * @param loc
      * @return BlockType of the requested block
      */
@@ -118,7 +127,7 @@ class MinecraftConnection {
     /**
      * @brief Returns a 3D vector of the BlockTypes of the requested cuboid with
      * modifiers
-     * 
+     *
      * @param loc1 1st corner of the cuboid
      * @param loc2 2nd corner of the cuboid
      * @return 3D vector of BlockType in the specified cuboid.
@@ -128,11 +137,11 @@ class MinecraftConnection {
 
     /**
      * @brief Returns the height of the specific provided x and y coordinate
-     * 
+     *
      * ***IMPORTANT:***
      * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
      * USE getHeights() INSTEAD
-     * 
+     *
      * Gets the y-value of the highest non-air block at the specified (x, z)
      * coordinate.
      * @param x
@@ -142,11 +151,11 @@ class MinecraftConnection {
     int getHeight(int x, int z);
 
     /**
-     * @brief Provides a scaled option of the getHeight call to allow for considerable
-     * performance gains. 
-     * 
+     * @brief Provides a scaled option of the getHeight call to allow for
+     * considerable performance gains.
+     *
      * \par USE THIS instead of getHeight in a for loop.
-     * 
+     *
      * @param loc1
      * @param loc2
      * @return Returns a vector of integers representing the 2D area of heights.

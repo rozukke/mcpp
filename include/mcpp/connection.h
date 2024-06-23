@@ -6,7 +6,7 @@
 #define FAIL_RESPONSE "Fail"
 /** @file
  * @brief SocketConnection class.
- * 
+ *
  */
 namespace mcpp {
 class SocketConnection {
@@ -25,7 +25,7 @@ class SocketConnection {
      * Takes in parameters supporting std::stringstream conversion and a string
      * prefix and transforms them into format "prefix(arg1,arg2,arg3)\n" (e.g.
      * "chat.post(test)\n") and sends command to the server.
-     * 
+     *
      * @tparam Types
      * @param prefix
      * @param args
@@ -48,7 +48,7 @@ class SocketConnection {
 
     /**
      * Sends via sendCommand() and returns the result from endpoint
-     * 
+     *
      * @tparam T
      * @tparam Types
      * @param prefix
