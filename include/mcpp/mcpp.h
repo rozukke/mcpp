@@ -6,6 +6,7 @@
 #include <memory>
 #include <string_view>
 #include <vector>
+
 /** @file
  * @brief MinecraftConnection class.
  *
@@ -21,19 +22,32 @@
 namespace mcpp {
 class MinecraftConnection {
   private:
-    std::unique_ptr<SocketConnection>
-        conn; ///< Handle to the socket connection.
+    /// Handle to the socket connection.
+    std::unique_ptr<SocketConnection> conn;
 
+    /**
+     * @brief Helper function to convert flat block array to 3D.
+     *
+     * @param loc1 The first coordinate.
+     * @param loc2 The second coordinate.
+     * @param inVector The input flat block array.
+     * @return A 3D vector representing the blocks.
+     */
     static std::vector<std::vector<std::vector<BlockType>>>
-    unflattenBlocksArray(
-        const Coordinate& loc1, const Coordinate& loc2,
-        const std::vector<BlockType>&
-            inVector); ///< Helper function to convert flat block array to 3D.
+    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
+                         const std::vector<BlockType>& inVector);
 
-    static std::vector<std::vector<int>> unflattenHeightsArray(
-        const Coordinate& loc1, const Coordinate& loc2,
-        const std::vector<int>&
-            inVector); ///< Helper function to convert flat height array to 2D.
+    /**
+     * @brief Helper function to convert flat height array to 2D.
+     *
+     * @param loc1 The first coordinate.
+     * @param loc2 The second coordinate.
+     * @param inVector The input flat height array.
+     * @return A 2D vector representing the heights.
+     */
+    static std::vector<std::vector<int>>
+    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2,
+                          const std::vector<int>& inVector);
 
   public:
     /**

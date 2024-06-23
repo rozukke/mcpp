@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+
 /**
  * @file
  * @brief BlockType class

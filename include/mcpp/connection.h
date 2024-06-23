@@ -4,6 +4,7 @@
 #include <string>
 
 #define FAIL_RESPONSE "Fail"
+
 /** @file
  * @brief SocketConnection class.
  *
