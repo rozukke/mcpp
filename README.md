@@ -3,7 +3,8 @@
 
 # mcpp (Minecraft++)
 [![made-with-cpp](https://img.shields.io/badge/Made%20with-C++_17-1f425f.svg)](https://cplusplus.com/) [![made-by-rozukke](https://img.shields.io/badge/Creator-rozukke-f497af.svg)](https://github.com/rozukke) 
-[![GitHub license](https://img.shields.io/github/license/rozukke/mcpp.svg)](https://github.com/rozukke/mcpp/blob/main/LICENSE)\
+[![GitHub license](https://img.shields.io/github/license/rozukke/mcpp.svg)](https://github.com/rozukke/mcpp/blob/main/LICENSE)
+[![Build status](https://github.com/rozukke/mcpp/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/rozukke/mcpp/actions/workflows/ci.yml)\
 **mcpp** (Minecraft++) is a library built to interface with Minecraft through [Spigot server](https://www.spigotmc.org/) 
 running the [ELCI](https://github.com/rozukke/ELCI) plugin and using C++. It is currently limited to MacOS/Linux or Windows with WSL.
 
@@ -33,10 +34,16 @@ Since the release is intended for UNIX systems and not tested on Windows, the op
 - After doing this, the library should be accessible via a `#include <mcpp/mcpp.h>` directive. 
 - When compiling code using the library, use the flag `-lmcpp` for Makefiles or `target_link_libraries(your_executable mcpp)` for CMake.
 
+## Contributors
+
+<a href="https://github.com/rozukke/mcpp/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=rozukke/mcpp" />
+</a>
+
 ## License
 **The following applies to all code:**
 
-Copyright 2024 Artemis Rosman
+Copyright 2024 Artemis Rosman and contributors
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

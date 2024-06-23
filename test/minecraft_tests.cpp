@@ -1,9 +1,6 @@
 #include "../include/mcpp/mcpp.h"
 #include "doctest.h"
 
-// Set to 1 if testing with joined player on server
-#define PLAYER_TEST 1
-
 using namespace std::string_literals;
 using namespace mcpp;
 
@@ -27,7 +24,6 @@ TEST_CASE("Socket connection test") {
         // More or less manual test case used more so to check for errors
         // sending
         tcp_conn.send("chat.post(test string)\n");
-        tcp_conn.send("player.setTile(100,100,100)\n");
     }
 
     SUBCASE("Test receive") {
@@ -35,6 +31,7 @@ TEST_CASE("Socket connection test") {
         tcp_conn.send("world.getBlock(100,100,100)\n");
         std::string return_str = tcp_conn.recv();
         CHECK_EQ(return_str, "30");
+        tcp_conn.send("world.setBlock(100,100,100,0)\n");
     }
 
     SUBCASE("Repeated receive") {
@@ -42,6 +39,7 @@ TEST_CASE("Socket connection test") {
         tcp_conn.send("world.getBlock(100,100,100)\n");
         std::string return_str = tcp_conn.recv();
         CHECK_EQ(return_str, "29");
+        tcp_conn.send("world.setBlock(100,100,100,0)\n");
     }
 
     SUBCASE("Send command") {
@@ -49,7 +47,6 @@ TEST_CASE("Socket connection test") {
     }
 
     SUBCASE("Send receive command") {
-        tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 30);
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 26);
         auto result =
             tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
@@ -58,24 +55,32 @@ TEST_CASE("Socket connection test") {
         tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 25);
         result = tcp_conn.sendReceiveCommand("world.getBlock", 100, 100, 100);
         CHECK_EQ(result, "25");
+        tcp_conn.sendCommand("world.setBlock", 100, 100, 100, 0);
     }
 
+    /*
+     * Validates non-existence of a rare bug where specific response sizes
+     * would hang execution.
+     */
     SUBCASE("Test receive when response size is divisible by buffer size") {
         // Assuming buffer size is 1024 bytes
-        int expectedResponseSize = 4096;
+        int expected_size = 4096;
 
-        // Test coordinate 1
         int x1 = 0, y1 = 0, z1 = 0;
-        // Test coordinate 2
         int x2 = 31, y2 = 100, z2 = 31;
 
         tcp_conn.sendCommand("world.setBlocks", x1, y1, z1, x2, y2, z2,
                              Blocks::DIRT.id, Blocks::DIRT.mod);
         std::string result =
             tcp_conn.sendReceiveCommand("world.getHeights", x1, z1, x2, z2);
-        int resultSize = result.size();
+        int real_size = result.size();
 
-        CHECK_EQ(resultSize, expectedResponseSize - 1);
+        // -1 because newline is removed
+        CHECK_EQ(real_size, expected_size - 1);
+
+        // Cleanup
+        tcp_conn.sendCommand("world.setBlocks", x1, y1, z1, x2, y2, z2,
+                             Blocks::AIR.id, Blocks::AIR.mod);
     }
 
     SUBCASE("Check fail condition") {
@@ -84,32 +89,34 @@ TEST_CASE("Socket connection test") {
 }
 
 TEST_CASE("Test the main mcpp class") {
-    Coordinate testLoc(100, 100, 100);
+    Coordinate test_loc(100, 100, 100);
 
     SUBCASE("postToChat") { mc.postToChat("test string"); }
 
-    SUBCASE("setBlock") { mc.setBlock(testLoc, BlockType(50)); }
+    SUBCASE("setBlock") { mc.setBlock(test_loc, BlockType(50)); }
 
     SUBCASE("getBlock") {
-        mc.setBlock(testLoc, BlockType(34));
-        CHECK_EQ(mc.getBlock(testLoc), BlockType(34));
+        mc.setBlock(test_loc, BlockType(34));
+        CHECK_EQ(mc.getBlock(test_loc), BlockType(34));
     }
 
     // Using values from the Blocks struct in block.h beyond this point
-
     SUBCASE("getBlock with mod") {
-        mc.setBlock(testLoc, BlockType(5, 5));
-        CHECK_EQ(mc.getBlock(testLoc), BlockType(5, 5));
+        mc.setBlock(test_loc, BlockType(5, 5));
+        CHECK_EQ(mc.getBlock(test_loc), BlockType(5, 5));
 
-        mc.setBlock(testLoc, Blocks::LIGHT_BLUE_CONCRETE);
-        CHECK_EQ(mc.getBlock(testLoc), Blocks::LIGHT_BLUE_CONCRETE);
+        mc.setBlock(test_loc, Blocks::LIGHT_BLUE_CONCRETE);
+        CHECK_EQ(mc.getBlock(test_loc), Blocks::LIGHT_BLUE_CONCRETE);
     }
 
     SUBCASE("getHeight") {
-        Coordinate heightTestLoc(200, 200, 200);
-        mc.setBlock(heightTestLoc, Blocks::DIRT);
-        auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
-        CHECK_EQ(height, heightTestLoc.y);
+        Coordinate height_test_loc(200, 200, 200);
+        mc.setBlock(height_test_loc, Blocks::DIRT);
+        int height = mc.getHeight(height_test_loc.x, height_test_loc.z);
+        CHECK_EQ(height, height_test_loc.y);
+
+        // Cleanup
+        mc.setBlock(height_test_loc, Blocks::AIR);
     }
 
     SUBCASE("getHeights") {
@@ -129,71 +136,33 @@ TEST_CASE("Test the main mcpp class") {
     // Used for cuboid functions
     Coordinate testLoc2(96, 96, 96);
 
-    SUBCASE("setBlocks") { mc.setBlocks(testLoc, testLoc2, Blocks::STONE); }
+    SUBCASE("setBlocks") { mc.setBlocks(test_loc, testLoc2, Blocks::STONE); }
 
     SUBCASE("getBlocks") {
-        mc.setBlocks(testLoc, testLoc2, Blocks::DIRT);
+        mc.setBlocks(test_loc, testLoc2, Blocks::DIRT);
 
         auto expected = std::vector<std::vector<std::vector<BlockType>>>(
             5, std::vector<std::vector<BlockType>>(
                    5, std::vector<BlockType>(5, Blocks::DIRT)));
 
-        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
+        std::vector returnVector = mc.getBlocks(test_loc, testLoc2);
         CHECK_EQ(returnVector, expected);
     }
 
     SUBCASE("getBlocks with mod") {
-        mc.setBlocks(testLoc, testLoc2, Blocks::GRANITE);
+        mc.setBlocks(test_loc, testLoc2, Blocks::GRANITE);
 
         auto expected = std::vector<std::vector<std::vector<BlockType>>>(
             5, std::vector<std::vector<BlockType>>(
                    5, std::vector<BlockType>(5, Blocks::GRANITE)));
 
-        std::vector returnVector = mc.getBlocks(testLoc, testLoc2);
+        std::vector returnVector = mc.getBlocks(test_loc, testLoc2);
 
         CHECK_EQ(returnVector, expected);
     }
+
+    mc.setBlock(test_loc, BlockType(0));
 }
-
-// Requires player joined to server, will throw serverside if player is not
-// joined and hang execution
-#if PLAYER_TEST
-
-TEST_CASE("Player operations") {
-    Coordinate testLoc(110, 110, 110);
-    mc.setBlock(testLoc, Blocks::DIRT);
-    SUBCASE("Execute command") { mc.doCommand("time set noon"); }
-
-    SUBCASE("Set position") {
-        mc.setPlayerPosition(testLoc + Coordinate(0, 1, 0));
-    }
-
-    SUBCASE("Get position") {
-        Coordinate playerLoc = mc.getPlayerPosition();
-        CHECK((playerLoc == (testLoc + Coordinate(0, 1, 0))));
-    }
-
-    SUBCASE("Check correct flooring") {
-        Coordinate negativeLoc(-2, 100, -2);
-        mc.doCommand("tp -2 100 -2");
-        CHECK_EQ(mc.getPlayerPosition(), negativeLoc);
-    }
-
-    SUBCASE("setPlayerTilePosition and getPlayerTilePosition") {
-        Coordinate testLoc1(180.6, 100.9, 154.7);
-        Coordinate testLoc2(testLoc1.x, testLoc1.y - 1, testLoc1.z);
-
-        mc.setBlock(testLoc2, Blocks::DIRT);
-        mc.setPlayerTilePosition(testLoc1);
-
-        Coordinate result = mc.getPlayerTilePosition();
-        Coordinate expected(180, 100, 154);
-
-        CHECK_EQ(result, expected);
-    }
-}
-
-#endif
 
 TEST_CASE("Test blocks struct") {
     Coordinate testLoc;
@@ -202,3 +171,52 @@ TEST_CASE("Test blocks struct") {
     mc.setBlock(testLoc, Blocks::STONE);
     CHECK_EQ(mc.getBlock(testLoc), Blocks::STONE);
 }
+
+// Requires player joined to server, will throw serverside if player is not
+// joined
+#ifdef PLAYER_TEST
+
+TEST_CASE("Player operations") {
+    Coordinate test_loc{110, 110, 110};
+    mc.setBlock(test_loc, Blocks::DIRT);
+
+    SUBCASE("Execute command") { mc.doCommand("time set noon"); }
+
+    SUBCASE("Set position") {
+        mc.setPlayerPosition(test_loc + Coordinate(0, 1, 0));
+    }
+
+    SUBCASE("Get position") {
+        mc.setPlayerPosition(Coordinate(0, 0, 0));
+        mc.setPlayerPosition(test_loc + Coordinate(0, 1, 0));
+        Coordinate player_loc = mc.getPlayerPosition();
+        CHECK((player_loc == (test_loc + Coordinate(0, 1, 0))));
+    }
+
+    SUBCASE("Check correct flooring") {
+        Coordinate negative_loc(-2, 100, -2);
+        mc.doCommand("tp -2 100 -2");
+        CHECK_EQ(mc.getPlayerPosition(), negative_loc);
+    }
+
+    SUBCASE("setPlayerTilePosition and getPlayerTilePosition") {
+        mc.setPlayerPosition(Coordinate(0, 0, 0));
+
+        mc.setPlayerTilePosition(test_loc);
+
+        Coordinate result = mc.getPlayerTilePosition();
+        Coordinate expected = test_loc;
+
+        CHECK_EQ(result, expected);
+
+        Coordinate p_result = mc.getPlayerPosition();
+        Coordinate p_expected = test_loc + Coordinate(0, 1, 0);
+
+        CHECK_EQ(p_result, p_expected);
+    }
+
+    // Cleanup
+    mc.setBlock(test_loc, Blocks::AIR);
+}
+
+#endif
