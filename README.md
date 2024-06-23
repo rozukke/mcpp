@@ -8,7 +8,7 @@
 **mcpp** (Minecraft++) is a library built to interface with Minecraft through [Spigot server](https://www.spigotmc.org/) 
 running the [ELCI](https://github.com/rozukke/ELCI) plugin and using C++. It is currently limited to MacOS/Linux or Windows with WSL.
 
-➡ For more details on the broad strokes of **mcpp**, refer to the [wiki](https://github.com/rozukke/mcpp/wiki/Index) or to the [documentation](INSERT_YOUR_URL/classes.html)
+➡ For more details on the broad strokes of **mcpp**, refer to the [wiki](https://github.com/rozukke/mcpp/wiki/Index) or to the [documentation](INSERT_YOUR_URL/classes.html)!
 
 ## History
 This library is based on [mcpi](https://github.com/martinohanlon/mcpi), which is a Python library with similar functionality. 
