@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['wallmounted_5fbanner_449',['WALLMOUNTED_BANNER',['../structmcpp_1_1Blocks.html#a6707ff1fc0e839a6b1e3a60c71bd814c',1,'mcpp::Blocks']]],
+  ['wallmounted_5fsign_5fblock_450',['WALLMOUNTED_SIGN_BLOCK',['../structmcpp_1_1Blocks.html#a42061d5cc97b7b7a3350dfb228ee9cdd',1,'mcpp::Blocks']]],
+  ['weighted_5fpressure_5fplate_5fheavy_451',['WEIGHTED_PRESSURE_PLATE_HEAVY',['../structmcpp_1_1Blocks.html#ae55600cc14bc67340128f9f3ede228a9',1,'mcpp::Blocks']]],
+  ['weighted_5fpressure_5fplate_5flight_452',['WEIGHTED_PRESSURE_PLATE_LIGHT',['../structmcpp_1_1Blocks.html#ab892288e54b812b8e8f78f3485191dfd',1,'mcpp::Blocks']]],
+  ['wet_5fsponge_453',['WET_SPONGE',['../structmcpp_1_1Blocks.html#ac1d4a1dac18ba602e8a6205561ffda58',1,'mcpp::Blocks']]],
+  ['wheat_5fcrops_454',['WHEAT_CROPS',['../structmcpp_1_1Blocks.html#a510d428cc9e2e5c31f520a9c950bdeec',1,'mcpp::Blocks']]],
+  ['white_5fcarpet_455',['WHITE_CARPET',['../structmcpp_1_1Blocks.html#aa70c8997ed09864966fa9ce978e85eab',1,'mcpp::Blocks']]],
+  ['white_5fconcrete_456',['WHITE_CONCRETE',['../structmcpp_1_1Blocks.html#a9b5fd0309b95d5d6c5a15bc741075b14',1,'mcpp::Blocks']]],
+  ['white_5fconcrete_5fpowder_457',['WHITE_CONCRETE_POWDER',['../structmcpp_1_1Blocks.html#ade447d44ced3e6c60ef86288c5097408',1,'mcpp::Blocks']]],
+  ['white_5fglazed_5fterracotta_458',['WHITE_GLAZED_TERRACOTTA',['../structmcpp_1_1Blocks.html#a1009175bc6439f88688f2d452591a090',1,'mcpp::Blocks']]],
+  ['white_5fhardened_5fclay_459',['WHITE_HARDENED_CLAY',['../structmcpp_1_1Blocks.html#a21270c353d06eeb3e3d32eae67e3538a',1,'mcpp::Blocks']]],
+  ['white_5fshulker_5fbox_460',['WHITE_SHULKER_BOX',['../structmcpp_1_1Blocks.html#a1dd79e09dac7d0d8f1f4bcd6c439513e',1,'mcpp::Blocks']]],
+  ['white_5fstained_5fglass_461',['WHITE_STAINED_GLASS',['../structmcpp_1_1Blocks.html#a3cb773ccd4d40d9dd6790a7293130c67',1,'mcpp::Blocks']]],
+  ['white_5fstained_5fglass_5fpane_462',['WHITE_STAINED_GLASS_PANE',['../structmcpp_1_1Blocks.html#a1a9bae80bd6ef59c7195f8f75a621328',1,'mcpp::Blocks']]],
+  ['white_5ftulip_463',['WHITE_TULIP',['../structmcpp_1_1Blocks.html#a22431acd59464fdf9e5b9511da97d9b7',1,'mcpp::Blocks']]],
+  ['white_5fwool_464',['WHITE_WOOL',['../structmcpp_1_1Blocks.html#a948dcddcf6593cbd568eb178d9ab6fe9',1,'mcpp::Blocks']]],
+  ['withmod_465',['withMod',['../classmcpp_1_1BlockType.html#a3d66079415fa63e4c21af40436721844',1,'mcpp::BlockType']]],
+  ['wooden_5fbutton_466',['WOODEN_BUTTON',['../structmcpp_1_1Blocks.html#a38c4c416536d12da21a5fbf4a378c7dc',1,'mcpp::Blocks']]],
+  ['wooden_5fpressure_5fplate_467',['WOODEN_PRESSURE_PLATE',['../structmcpp_1_1Blocks.html#ae2f44567fce9aa64e0bae19d2272c4a0',1,'mcpp::Blocks']]],
+  ['wooden_5fslab_468',['WOODEN_SLAB',['../structmcpp_1_1Blocks.html#a160c513e66f731ed3be363cb77dc6acd',1,'mcpp::Blocks']]],
+  ['wooden_5ftrapdoor_469',['WOODEN_TRAPDOOR',['../structmcpp_1_1Blocks.html#a9bfa8aa1720d2676ce55ea74553c145b',1,'mcpp::Blocks']]]
+];
