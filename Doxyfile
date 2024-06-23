@@ -65,7 +65,7 @@ OUTPUT_DIRECTORY       = ./doc/
 # will distribute the generated files over these directories. Enabling this
 # option can be useful when feeding doxygen a huge amount of source files, where
 # putting all generated files in the same directory would otherwise causes
-# performance problems for the file system.
+# performance problems for the fisle system.
 # The default value is: NO.
 
 CREATE_SUBDIRS         = NO
