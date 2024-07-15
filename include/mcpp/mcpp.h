@@ -37,18 +37,6 @@ class MinecraftConnection {
     unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
                          const std::vector<BlockType>& inVector);
 
-    /**
-     * @brief Helper function to convert flat height array to 2D.
-     *
-     * @param loc1 The first coordinate.
-     * @param loc2 The second coordinate.
-     * @param inVector The input flat height array.
-     * @return A 2D vector representing the heights.
-     */
-    static std::vector<std::vector<int>>
-    unflattenHeightsArray(const Coordinate& loc1, const Coordinate& loc2,
-                          const std::vector<int>& inVector);
-
   public:
     /**
      * @brief Represents the main endpoint for interaction with the minecraft
@@ -174,7 +162,6 @@ class MinecraftConnection {
      * @param loc2
      * @return Returns a vector of integers representing the 2D area of heights.
      */
-    std::vector<std::vector<int>> getHeights(const Coordinate& loc1,
-                                             const Coordinate& loc2);
+    const HeightMap getHeights(const Coordinate& loc1, const Coordinate& loc2);
 };
 } // namespace mcpp
