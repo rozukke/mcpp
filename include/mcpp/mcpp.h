@@ -25,18 +25,6 @@ class MinecraftConnection {
     /// Handle to the socket connection.
     std::unique_ptr<SocketConnection> conn;
 
-    /**
-     * @brief Helper function to convert flat block array to 3D.
-     *
-     * @param loc1 The first coordinate.
-     * @param loc2 The second coordinate.
-     * @param inVector The input flat block array.
-     * @return A 3D vector representing the blocks.
-     */
-    static std::vector<std::vector<std::vector<BlockType>>>
-    unflattenBlocksArray(const Coordinate& loc1, const Coordinate& loc2,
-                         const std::vector<BlockType>& inVector);
-
   public:
     /**
      * @brief Represents the main endpoint for interaction with the minecraft
@@ -132,10 +120,9 @@ class MinecraftConnection {
      *
      * @param loc1 1st corner of the cuboid
      * @param loc2 2nd corner of the cuboid
-     * @return 3D vector of BlockType in the specified cuboid.
+     * @return Chunk containing the blocks in the specified area.
      */
-    std::vector<std::vector<std::vector<BlockType>>>
-    getBlocks(const Coordinate& loc1, const Coordinate& loc2);
+    Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
     /**
      * @brief Returns the height of the specific provided x and y coordinate
