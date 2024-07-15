@@ -126,7 +126,7 @@ struct Chunk {
     int x_len;
     int z_len;
 };
-  
+
 /**
  * Represents a 2D area of the world with the y coordinates of the highest
  * non-air blocks at each (x,z)

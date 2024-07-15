@@ -128,6 +128,7 @@ TEST_CASE("Test the main mcpp class") {
 
 TEST_CASE("getBlocks and Chunk operations") {
     // Setup
+    Coordinate test_loc(100, 100, 100);
     Coordinate loc1{100, 100, 100};
     Coordinate loc2{110, 110, 110};
 
