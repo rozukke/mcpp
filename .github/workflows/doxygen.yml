@@ -9,7 +9,6 @@ on:
       - "Doxyfile"
       - "**/*.md"
       - ".github/workflows/doxygen.yml"
-#test
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
