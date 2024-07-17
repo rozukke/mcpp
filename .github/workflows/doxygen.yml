@@ -3,7 +3,7 @@ name: deploy-doxygen
 on:
   push:
     branches:
-      - feature/branching
+      - main
     paths:
       - "include/**"
       - "Doxyfile"
