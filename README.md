@@ -1,4 +1,4 @@
-![mcpp logo](/resources/mcpplogosmall.png)
+![mcpp logo](https://raw.githubusercontent.com/rozukke/mcpp/main/resources/mcpplogosmall.png)
 
 
 # mcpp
