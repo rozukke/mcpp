@@ -1,7 +1,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "mcpp" 
 PROJECT_NUMBER         = 
-PROJECT_BRIEF          = "mcpp is a library that lets you interact with Minecraft using C++"
+PROJECT_BRIEF          = "C++ Minecraft Library" 
 PROJECT_LOGO           = 
 OUTPUT_DIRECTORY       = ./doc/
 CREATE_SUBDIRS         = NO
