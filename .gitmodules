@@ -1,0 +1,4 @@
+[submodule "doxygen-awesome-css"]
+    path = doxygen-awesome-css
+    url = https://github.com/Jinxto/doxygen-theme.git
+	branch = main
