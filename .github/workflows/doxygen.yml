@@ -1,0 +1,33 @@
+name: deploy-doxygen
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "include/**"
+      - "Doxyfile"
+      - "**/*.md"
+      - ".github/workflows/doxygen.yml"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
+
+      - name: Generate Documentation
+        run: doxygen ./Doxyfile
+
+      - name: Deploying to Gh-pages
+        uses: jinxto/doxygen-env-setup@v1.5
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

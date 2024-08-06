@@ -27,4 +27,4 @@ jobs:
             # Run the test suite using ctest
             - name: Run test suite
               working-directory: ./build
-              run: make test_suite && ctest -R full
+              run: make test_suite && ctest -R full -V
