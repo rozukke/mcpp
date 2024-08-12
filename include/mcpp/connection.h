@@ -24,8 +24,8 @@ class SocketConnection {
 
     /**
      * Takes in parameters supporting std::stringstream conversion and a string
-     * prefix and transforms them into format "prefix(arg1,arg2,arg3)\n" (e.g.
-     * "chat.post(test)\n") and sends command to the server.
+     * prefix and transforms them into format "prefix(arg1,arg2,arg3)" e.g.
+     * "chat.post(test)" and sends command to the server.
      *
      * @tparam Types
      * @param prefix
