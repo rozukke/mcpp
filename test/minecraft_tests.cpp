@@ -198,7 +198,7 @@ TEST_CASE("getBlocks and Chunk operations") {
         for (BlockType block : res) {
             expected_blocks.push_back(block);
         }
-        CHECK_NE(blocks, expected_blocks);
+        CHECK_EQ(blocks, expected_blocks);
     }
 
     mc.setBlock(test_loc, BlockType(0));
