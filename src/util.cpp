@@ -73,6 +73,23 @@ Chunk::Chunk(const Coordinate& loc1, const Coordinate& loc2,
 
 Chunk::~Chunk() { delete[] raw_data; }
 
+Chunk& Chunk::operator=(const Chunk& other) noexcept {
+    if (this != &other) {
+        // Clean up existing resource
+        delete[] raw_data;
+
+        // Copy data from the other object
+        _base_pt = other._base_pt.clone();
+        _x_len = other._x_len;
+        _y_len = other._y_len;
+        _z_len = other._z_len;
+        raw_data = new BlockType[_x_len * _y_len * _z_len];
+        std::copy(other.raw_data, other.raw_data + _x_len * _y_len * _z_len,
+                  raw_data);
+    }
+    return *this;
+}
+
 BlockType Chunk::get(int x, int y, int z) {
     if ((x < 0 || y < 0 || z < 0) ||
         (x > _x_len - 1 || y > _y_len - 1 || z > _z_len - 1)) {
@@ -116,6 +133,26 @@ HeightMap::HeightMap(const Coordinate& loc1, const Coordinate& loc2,
 
     raw_heights = new int[heights.size()];
     std::copy(heights.begin(), heights.end(), raw_heights);
+}
+
+HeightMap::~HeightMap() { delete[] raw_heights; }
+
+HeightMap& HeightMap::operator=(const HeightMap& other) noexcept {
+    if (this != &other) {
+        // Free the existing resource
+        delete[] raw_heights;
+
+        // Copy data from the other object
+        _base_pt = other._base_pt.clone();
+        _x_len = other._x_len;
+        _z_len = other._z_len;
+
+        // Allocate memory and copy the heights
+        raw_heights = new int[_x_len * _z_len];
+        std::copy(other.raw_heights, other.raw_heights + _x_len * _z_len,
+                  raw_heights);
+    }
+    return *this;
 }
 
 int HeightMap::get(int x, int z) const {

@@ -100,6 +100,8 @@ struct Chunk {
 
     ~Chunk();
 
+    Chunk& operator=(const Chunk& other) noexcept;
+
     /**
      * Accesses the Minecraft block at absolute position pos and returns its
      * BlockType if it is in the included area.
@@ -145,10 +147,10 @@ struct Chunk {
 
   private:
     Coordinate _base_pt;
-    BlockType* raw_data;
     int _y_len;
     int _x_len;
     int _z_len;
+    BlockType* raw_data;
 };
 
 /**
@@ -158,6 +160,10 @@ struct Chunk {
 struct HeightMap {
     HeightMap(const Coordinate& loc1, const Coordinate& loc2,
               const std::vector<int>& heights);
+
+    ~HeightMap();
+
+    HeightMap& operator=(const HeightMap& other) noexcept;
 
     /**
      * Get the height using an offset from the origin/base point of the heights
@@ -201,9 +207,9 @@ struct HeightMap {
     Coordinate base_pt() const;
 
   private:
+    Coordinate _base_pt;
     int _x_len;
     int _z_len;
-    Coordinate _base_pt;
     int* raw_heights;
 };
 

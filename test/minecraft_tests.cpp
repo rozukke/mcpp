@@ -143,14 +143,16 @@ TEST_CASE("getBlocks and Chunk operations") {
     SUBCASE("getters") {
         Chunk data = mc.getBlocks(loc1, loc2);
 
-        CHECK_EQ(data.base_pt(), Coordinate{100, 100, 100});
+        CHECK_EQ(data.base_pt(), loc1);
         CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.y_len(), 11);
         CHECK_EQ(data.z_len(), 11);
 
         data = mc.getBlocks(loc2, loc1);
 
-        CHECK_EQ(data.base_pt(), Coordinate{100, 100, 100});
+        CHECK_EQ(data.base_pt(), loc1);
         CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.y_len(), 11);
         CHECK_EQ(data.z_len(), 11);
     }
 
