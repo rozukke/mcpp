@@ -129,7 +129,7 @@ class MinecraftConnection {
      *
      * ***IMPORTANT:***
      * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
-     * USE getHeights() INSTEAD
+     * USE getHeights() instead
      *
      * Gets the y-value of the highest non-air block at the specified (x, z)
      * coordinate.
@@ -143,7 +143,7 @@ class MinecraftConnection {
      * @brief Provides a scaled option of the getHeight call to allow for
      * considerable performance gains.
      *
-     * \par USE THIS instead of getHeight in a for loop.
+     * \par USE this instead of getHeight in a for loop.
      *
      * @param loc1
      * @param loc2
