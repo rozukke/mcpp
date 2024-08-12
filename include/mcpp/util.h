@@ -158,6 +158,94 @@ struct Chunk {
  * non-air blocks at each (x,z)
  */
 struct HeightMap {
+    /**
+     * @brief An iterator for the HeightMap structure.
+     *
+     * This iterator allows for range-based for loops and standard iterator
+     * operations over the height data stored within a HeightMap.
+     */
+    struct Iterator {
+        using value_type = int;
+        using pointer = int*;
+        using reference = int&;
+
+        /**
+         * @brief Constructs an iterator at the given pointer position.
+         *
+         * @param ptr Pointer to the position in the height array.
+         */
+        Iterator(pointer ptr) : m_ptr(ptr) {}
+
+        /**
+         * @brief Dereference the iterator to access the value at the current
+         * position.
+         *
+         * @return Reference to the current element.
+         */
+        reference operator*() const { return *m_ptr; }
+
+        /**
+         * @brief Access the pointer to the current element.
+         *
+         * @return Pointer to the current element.
+         */
+        pointer operator->() { return m_ptr; }
+
+        /**
+         * @brief Pre-increment operator. Advances the iterator to the next
+         * position.
+         *
+         * @return Reference to the updated iterator.
+         */
+        Iterator& operator++() {
+            m_ptr++;
+            return *this;
+        }
+
+        /**
+         * @brief Post-increment operator. Advances the iterator to the next
+         * position.
+         *
+         * @param int Unused dummy parameter to differentiate from prefix
+         * increment.
+         * @return Iterator to the original position before incrementing.
+         */
+        Iterator operator++(int) {
+            Iterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        /**
+         * @brief Equality comparison operator.
+         *
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return true if both iterators point to the same position, false
+         * otherwise.
+         */
+        friend bool operator==(const Iterator& a, const Iterator& b) {
+            return a.m_ptr == b.m_ptr;
+        };
+
+        /**
+         * @brief Inequality comparison operator.
+         *
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return true if iterators point to different positions, false
+         * otherwise.
+         */
+        friend bool operator!=(const Iterator& a, const Iterator& b) {
+            return a.m_ptr != b.m_ptr;
+        };
+
+      private:
+        pointer m_ptr;
+    };
+
+    Iterator begin() { return Iterator(&raw_heights[0]); }
+    Iterator end() { return Iterator(&raw_heights[_x_len * _z_len]); }
     HeightMap(const Coordinate& loc1, const Coordinate& loc2,
               const std::vector<int>& heights);
 
