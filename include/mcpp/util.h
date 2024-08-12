@@ -158,10 +158,28 @@ struct HeightMap {
      */
     void fill_coord(Coordinate& out);
 
+    /**
+     * Gets the x length of the HeightMap.
+     * @return x length of the HeightMap
+     */
+    int x_len() const;
+
+    /**
+     * Gets the z length of the HeightMap.
+     * @return z length of the HeightMap
+     */
+    int z_len() const;
+
+    /**
+     * Gets the minimum coordinate in the HeightMap.
+     * @return the minimum coordinate in the HeightMap.
+     */
+    Coordinate base_pt() const;
+
   private:
-    int x_len;
-    int z_len;
-    Coordinate base_pt;
+    int _x_len;
+    int _z_len;
+    Coordinate _base_pt;
     int* raw_heights;
 };
 

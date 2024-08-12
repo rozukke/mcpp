@@ -96,35 +96,41 @@ BlockType Chunk::get_worldspace(const Coordinate& pos) {
 
 HeightMap::HeightMap(const Coordinate& loc1, const Coordinate& loc2,
                      const std::vector<int>& heights) {
-    base_pt = Coordinate{
+    _base_pt = Coordinate{
         std::min(loc1.x, loc2.x),
         0,
         std::min(loc1.z, loc2.z),
     };
 
-    x_len = std::abs(loc1.x - loc2.x) + 1;
-    z_len = std::abs(loc1.z - loc2.z) + 1;
+    _x_len = std::abs(loc1.x - loc2.x) + 1;
+    _z_len = std::abs(loc1.z - loc2.z) + 1;
 
     raw_heights = new int[heights.size()];
     std::copy(heights.begin(), heights.end(), raw_heights);
 }
 
 int HeightMap::get(int x, int z) const {
-    if ((x < 0 || x >= x_len) || (z < 0 || z >= z_len)) {
+    if ((x < 0 || x >= _x_len) || (z < 0 || z >= _z_len)) {
         throw new std::out_of_range(
             "Out of range access of heightmap at " + std::to_string(x) + "," +
             std::to_string(z) +
-            " (worldspace x=" + std::to_string(base_pt.x + x) +
-            ",z=" + std::to_string(base_pt.z + z));
+            " (worldspace x=" + std::to_string(_base_pt.x + x) +
+            ",z=" + std::to_string(_base_pt.z + z));
     }
     // Get 2D from flat vector
-    return raw_heights[x * z_len + z];
+    return raw_heights[x * _z_len + z];
 }
 
 int HeightMap::get_worldspace(const Coordinate& loc) const {
-    return get(loc.x - base_pt.x, loc.z - base_pt.z);
+    return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 
 void HeightMap::fill_coord(Coordinate& out) { out.y = get_worldspace(out); }
+
+int HeightMap::x_len() const { return this->_x_len; }
+
+int HeightMap::z_len() const { return this->_z_len; }
+
+Coordinate HeightMap::base_pt() const { return this->_base_pt.clone(); }
 
 } // namespace mcpp
