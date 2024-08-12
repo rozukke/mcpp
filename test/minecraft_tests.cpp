@@ -127,10 +127,11 @@ TEST_CASE("Test the main mcpp class") {
 }
 
 TEST_CASE("getBlocks and Chunk operations") {
+
     // Setup
     Coordinate test_loc(100, 100, 100);
     Coordinate loc1{100, 100, 100};
-    Coordinate loc2{110, 110, 110};
+    Coordinate loc2{110, 111, 112};
 
     // Reset blocks that existed before
     mc.setBlocks(loc1, loc2, Blocks::AIR);
@@ -145,22 +146,22 @@ TEST_CASE("getBlocks and Chunk operations") {
 
         CHECK_EQ(data.base_pt(), loc1);
         CHECK_EQ(data.x_len(), 11);
-        CHECK_EQ(data.y_len(), 11);
-        CHECK_EQ(data.z_len(), 11);
+        CHECK_EQ(data.y_len(), 12);
+        CHECK_EQ(data.z_len(), 13);
 
         data = mc.getBlocks(loc2, loc1);
 
         CHECK_EQ(data.base_pt(), loc1);
         CHECK_EQ(data.x_len(), 11);
-        CHECK_EQ(data.y_len(), 11);
-        CHECK_EQ(data.z_len(), 11);
+        CHECK_EQ(data.y_len(), 12);
+        CHECK_EQ(data.z_len(), 13);
     }
 
     SUBCASE("Block accessing returns correct block using get()") {
         CHECK_EQ(res.get(0, 0, 0), Blocks::GOLD_BLOCK);
         CHECK_EQ(res.get(1, 1, 1), Blocks::BRICKS);
         CHECK_EQ(res.get(1, 2, 3), Blocks::IRON_BLOCK);
-        CHECK_EQ(res.get(10, 10, 10), Blocks::DIAMOND_BLOCK);
+        CHECK_EQ(res.get(10, 11, 12), Blocks::DIAMOND_BLOCK);
     }
 
     SUBCASE("Block accessing returns correct block using get_worldspace()") {
@@ -174,13 +175,30 @@ TEST_CASE("getBlocks and Chunk operations") {
 
     SUBCASE("Access out of bounds correctly throws") {
         CHECK_THROWS(res.get(11, 0, 0));
-        CHECK_THROWS(res.get(0, 11, 0));
-        CHECK_THROWS(res.get(0, 0, 11));
+        CHECK_THROWS(res.get(0, 12, 0));
+        CHECK_THROWS(res.get(0, 0, 13));
         CHECK_THROWS(res.get(-1, 0, 0));
         CHECK_THROWS(res.get(0, -1, 0));
         CHECK_THROWS(res.get(0, 0, -1));
         CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{-1, -1, -1}));
-        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{11, 11, 11}));
+        CHECK_THROWS(res.get_worldspace(loc1 + Coordinate{11, 12, 13}));
+    }
+
+    SUBCASE("Iterator") {
+        std::vector<BlockType> blocks;
+        for (int i = 0; i < res.y_len(); i++) {
+            for (int j = 0; j < res.x_len(); j++) {
+                for (int z = 0; z < res.z_len(); z++) {
+                    blocks.push_back(res.get(j, i, z));
+                }
+            }
+        }
+
+        std::vector<BlockType> expected_blocks;
+        for (BlockType block : res) {
+            expected_blocks.push_back(block);
+        }
+        CHECK_EQ(blocks, expected_blocks);
     }
 
     mc.setBlock(test_loc, BlockType(0));
