@@ -181,7 +181,7 @@ struct Chunk {
     };
 
     Iterator begin() { return Iterator(&raw_data[0]); }
-    Iterator end() { return Iterator(&raw_data[_x_len * _z_len * _z_len]); }
+    Iterator end() { return Iterator(&raw_data[_x_len * _y_len * _z_len]); }
 
     /**
      * Initialized by copying from a flat vector of blocks
