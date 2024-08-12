@@ -140,6 +140,20 @@ TEST_CASE("getBlocks and Chunk operations") {
     mc.setBlock(loc1 + Coordinate{1, 2, 3}, Blocks::IRON_BLOCK);
     Chunk res = mc.getBlocks(loc1, loc2);
 
+    SUBCASE("getters") {
+        Chunk data = mc.getBlocks(loc1, loc2);
+
+        CHECK_EQ(data.base_pt(), Coordinate{100, 100, 100});
+        CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.z_len(), 11);
+
+        data = mc.getBlocks(loc2, loc1);
+
+        CHECK_EQ(data.base_pt(), Coordinate{100, 100, 100});
+        CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.z_len(), 11);
+    }
+
     SUBCASE("Block accessing returns correct block using get()") {
         CHECK_EQ(res.get(0, 0, 0), Blocks::GOLD_BLOCK);
         CHECK_EQ(res.get(1, 1, 1), Blocks::BRICKS);
