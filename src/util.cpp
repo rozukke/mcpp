@@ -96,7 +96,7 @@ BlockType Chunk::get(int x, int y, int z) {
         throw std::out_of_range("Out of bounds Chunk access at " +
                                 to_string(Coordinate(x, y, z)));
     }
-    return raw_data[z + _z_len * (x + _y_len * y)];
+    return raw_data[y * _x_len * _z_len + x * _z_len + z];
 }
 
 BlockType Chunk::get_worldspace(const Coordinate& pos) {
@@ -108,8 +108,8 @@ BlockType Chunk::get_worldspace(const Coordinate& pos) {
                                 to_string(array_pos) + " (world coordinate " +
                                 to_string(pos) + " )");
     }
-    return raw_data[array_pos.z +
-                    _z_len * (array_pos.x + _y_len * array_pos.y)];
+    return raw_data[array_pos.y * _x_len * _z_len + array_pos.x * _z_len +
+                    array_pos.z];
 }
 
 int Chunk::x_len() const { return this->_x_len; }
