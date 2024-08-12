@@ -100,6 +100,8 @@ struct Chunk {
 
     ~Chunk();
 
+    Chunk& operator=(const Chunk& other) noexcept;
+
     /**
      * Accesses the Minecraft block at absolute position pos and returns its
      * BlockType if it is in the included area.
@@ -119,12 +121,36 @@ struct Chunk {
      */
     BlockType get(int x, int y, int z);
 
+    /**
+     * Gets the x length of the Chunk.
+     * @return x length of the Chunk
+     */
+    int x_len() const;
+
+    /**
+     * Gets the y length of the Chunk.
+     * @return y length of the Chunk
+     */
+    int y_len() const;
+
+    /**
+     * Gets the z length of the Chunk.
+     * @return z length of the Chunk
+     */
+    int z_len() const;
+
+    /**
+     * Gets the minimum coordinate in the Chunk.
+     * @return the minimum coordinate in the Chunk
+     */
+    Coordinate base_pt() const;
+
   private:
-    Coordinate base_pt;
+    Coordinate _base_pt;
+    int _y_len;
+    int _x_len;
+    int _z_len;
     BlockType* raw_data;
-    int y_len;
-    int x_len;
-    int z_len;
 };
 
 /**
@@ -134,6 +160,10 @@ struct Chunk {
 struct HeightMap {
     HeightMap(const Coordinate& loc1, const Coordinate& loc2,
               const std::vector<int>& heights);
+
+    ~HeightMap();
+
+    HeightMap& operator=(const HeightMap& other) noexcept;
 
     /**
      * Get the height using an offset from the origin/base point of the heights
@@ -177,9 +207,9 @@ struct HeightMap {
     Coordinate base_pt() const;
 
   private:
+    Coordinate _base_pt;
     int _x_len;
     int _z_len;
-    Coordinate _base_pt;
     int* raw_heights;
 };
 
