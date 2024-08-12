@@ -188,6 +188,22 @@ TEST_CASE("HeightMap functionality") {
     mc.setBlock(Coordinate{210, 301, 210}, Blocks::STONE);
     mc.setBlock(Coordinate{201, 301, 202}, Blocks::STONE);
 
+    SUBCASE("getters") {
+        HeightMap data =
+            mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+
+        CHECK_EQ(data.base_pt(), Coordinate{200, 0, 200});
+        CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.z_len(), 11);
+
+        data =
+            mc.getHeights(Coordinate{210, 300, 210}, Coordinate{200, 310, 200});
+
+        CHECK_EQ(data.base_pt(), Coordinate{200, 0, 200});
+        CHECK_EQ(data.x_len(), 11);
+        CHECK_EQ(data.z_len(), 11);
+    }
+
     SUBCASE("get") {
         HeightMap data =
             mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
