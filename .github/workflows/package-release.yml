@@ -1,0 +1,110 @@
+name: package-release
+
+on:
+    push:
+        paths-ignore:
+            - "README.md"
+            - "LICENSE"
+            - "Doxyfile"
+            - "doxygen-awesome"
+    
+    pull_request:
+        paths-ignore:
+            - "README.md"
+            - "LICENSE"
+            - "Doxyfile"
+            - "doxygen-awesome"
+ 
+    release:
+        types: [published] 
+ 
+jobs:
+    check_commit_message:
+        outputs:
+            commit_message: ${{ steps.capture_message.outputs.message }}
+        name: Check if workflow disabled
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Capturing commit message
+              id: capture_message
+              run: |
+                echo "message=$(git log --format=%B -n 1 ${{ github.event.after }})" >> $GITHUB_OUTPUT
+                
+    linux:
+        strategy:
+            fail-fast: false
+            matrix:
+                build-type: [Release]
+                distro: [stable]
+        needs: check_commit_message
+        if: ${{ contains(needs.check_commit_message.outputs.commit_message, 'RELEASE') }}
+        name: Debian-release ${{ matrix.distro }}
+        runs-on: ubuntu-latest
+        container: debian:${{ matrix.distro }}
+        steps:
+            - name: Setting up git
+              run: |
+                apt-get update
+                apt-get install -y git 
+            - name: Add Safe Directory for Git
+              run: |
+                git config --global --add safe.directory /__w/mcpp/mcpp
+
+            - name: Getting version
+              id: get_version
+              shell: bash
+              run: |
+                VERSION=$(echo $GITHUB_REF_NAME | cut -d / -f 2)
+                echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+               
+            - name: Checking out sources
+              uses: actions/checkout@v4
+                
+            - name: Install build dependencies
+              run: |
+                apt-get install -y build-essential ninja-build qtbase5-dev qttools5-dev cmake pkgconf bash libspdlog-dev
+                
+            - name: Configure build
+              run: |
+                mkdir build
+                cd build
+                cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DPROJECT_VERSION=${{ steps.get_version.outputs.VERSION }}
+                echo "VERSION=${{ steps.get_version.outputs.VERSION }}"
+                
+            - name: Build
+              run: |
+                cd build
+                cmake --build . --target package --parallel $(nproc)
+                
+            - name: Get package name
+              shell: bash
+              id: get_package
+              run: |
+                NAME=$(basename build/mcpp-*.deb)
+                echo "NAME=$NAME" >> $GITHUB_OUTPUT
+                
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
+                path: build/${{ steps.get_package.outputs.NAME }}
+                
+            - name: Create tag
+              run: |
+                git tag release-${{ steps.get_version.outputs.VERSION }}
+                git push origin release-${{ steps.get_version.outputs.VERSION }} --force
+             
+            - name: Upload package to release
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: ${{ secrets.GITHUB_TOKEN }}
+                  file: build/${{ steps.get_package.outputs.NAME }}
+                  asset_name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
+                  tag: release-${{ steps.get_version.outputs.VERSION }}
+                  overwrite: true
+                  
+            - name: Debug GitHub Ref
+              run: |
+                echo "GitHub Ref: ${{ github.ref }}"
+                echo "GitHub Ref Name: ${{ github.ref_name }}"
