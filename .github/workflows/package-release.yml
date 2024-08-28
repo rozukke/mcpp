@@ -100,7 +100,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: build/${{ steps.get_package.outputs.NAME }}
-                  asset_name: mcpp-${{ steps.get_version.outputs.VERSION }}--debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
+                  asset_name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
                   tag: release-${{ steps.get_version.outputs.VERSION }}
                   overwrite: true
                   
