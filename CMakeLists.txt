@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
+# Check if PROJECT_VERSION is already defined, otherwise set a default
+if(NOT DEFINED PROJECT_VERSION)
+    set(PROJECT_VERSION 1.0.0)
+endif()
 
 project(mcpp VERSION ${PROJECT_VERSION})
 
