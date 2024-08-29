@@ -1,14 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 
-
-project(mcpp VERSION ${PROJECT_VERSION})
-
-set(CMAKE_CXX_STANDARD 17)
-
 # Check if PROJECT_VERSION is already defined, otherwise set a default
 if(NOT DEFINED PROJECT_VERSION)
     set(PROJECT_VERSION 1.0.0)
 endif()
+
+project(mcpp VERSION ${PROJECT_VERSION})
+
+set(CMAKE_CXX_STANDARD 17)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
