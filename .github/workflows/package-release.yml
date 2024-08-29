@@ -2,13 +2,7 @@ name: package-release
 
 on:
     push:
-        paths-ignore:
-            - "README.md"
-            - "LICENSE"
-            - "Doxyfile"
-            - "doxygen-awesome"
-    
-    pull_request:
+        branches: 'version-**' 
         paths-ignore:
             - "README.md"
             - "LICENSE"
@@ -35,7 +29,6 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                build-type: [Release]
                 distro: [stable]
         needs: check_commit_message
         if: ${{ contains(needs.check_commit_message.outputs.commit_message, 'RELEASE') }}
@@ -55,7 +48,7 @@ jobs:
               id: get_version
               shell: bash
               run: |
-                VERSION=$(echo $GITHUB_REF_NAME | cut -d - -f 2)
+                VERSION=$(echo $GITHUB_REF_NAME | cut -d - -f 2) 
                 echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
                
             - name: Checking out sources
@@ -69,7 +62,7 @@ jobs:
               run: |
                 mkdir build
                 cd build
-                cmake .. -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DPROJECT_VERSION=${{ steps.get_version.outputs.VERSION }}
+                cmake .. -GNinja -DPROJECT_VERSION=${{ steps.get_version.outputs.VERSION }}
                 echo "VERSION=${{ steps.get_version.outputs.VERSION }}"
                 
             - name: Build
@@ -87,7 +80,7 @@ jobs:
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
+                name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}.deb
                 path: build/${{ steps.get_package.outputs.NAME }}
                 
             - name: Create tag
@@ -100,7 +93,7 @@ jobs:
               with:
                   repo_token: ${{ secrets.GITHUB_TOKEN }}
                   file: build/${{ steps.get_package.outputs.NAME }}
-                  asset_name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}-${{ matrix.build-type }}.deb
+                  asset_name: mcpp-${{ steps.get_version.outputs.VERSION }}-debian-${{ matrix.distro }}.deb
                   tag: release-${{ steps.get_version.outputs.VERSION }}
                   overwrite: true
                   
