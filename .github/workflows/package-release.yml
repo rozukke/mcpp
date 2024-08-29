@@ -55,7 +55,7 @@ jobs:
               id: get_version
               shell: bash
               run: |
-                VERSION=$(echo $GITHUB_REF_NAME | cut -d / -f 2)
+                VERSION=$(echo $GITHUB_REF_NAME | cut -d - -f 2)
                 echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
                
             - name: Checking out sources
