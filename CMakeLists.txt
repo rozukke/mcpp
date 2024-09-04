@@ -5,7 +5,7 @@ if(NOT DEFINED PROJECT_VERSION)
     set(PROJECT_VERSION 1.0.0)
 endif()
 
-project(mcpp VERSION ${PROJECT_VERSION})
+project(libmcpp-minecraft VERSION ${PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 17)
 
