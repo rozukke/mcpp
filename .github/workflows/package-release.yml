@@ -68,7 +68,7 @@ jobs:
               shell: bash
               id: get_package
               run: |
-                NAME=$(basename build/mcpp-*.deb)
+                NAME=$(basename build/libmcpp-minecraft*.deb)
                 echo "NAME=$NAME" >> $GITHUB_OUTPUT
 
             - name: Upload artifacts
