@@ -45,6 +45,12 @@ install(TARGETS ${PROJECT_NAME}
     PUBLIC_HEADER DESTINATION include/${PROJECT_NAME}
 )
 
+# Build examples
+add_executable(pyramid example/pyramid.cpp)
+target_link_libraries(pyramid ${PROJECT_NAME})
+add_executable(hello_minecraft example/hello_minecraft.cpp)
+target_link_libraries(hello_minecraft ${PROJECT_NAME})
+
 # CPack setup
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
