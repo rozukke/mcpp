@@ -50,9 +50,9 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 # Build examples
-add_executable(pyramid example/pyramid.cpp)
+add_executable(pyramid EXCLUDE_FROM_ALL example/pyramid.cpp)
 target_link_libraries(pyramid ${PROJECT_NAME})
-add_executable(hello_minecraft example/hello_minecraft.cpp)
+add_executable(hello_minecraft EXCLUDE_FROM_ALL example/hello_minecraft.cpp)
 target_link_libraries(hello_minecraft ${PROJECT_NAME})
 
 # CPack setup
