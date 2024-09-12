@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <vector>
 #include <mcpp/block.h>
 #include <mcpp/mcpp.h>
 #include <mcpp/util.h>
@@ -30,8 +31,15 @@ int main() {
         mc.getHeights(ORIGIN, ORIGIN + mcpp::Coordinate(pyramid_base_len, 0,
                                                         pyramid_base_len));
 
+    std::vector<int> height_vals;
+    for (int x = 0; x < heights.x_len(); ++x) {
+        for (int z = 0; z < heights.z_len(); ++z) {
+            height_vals.push_back(heights.get(x, z));
+        }
+    }
+
     // Use minimum height of the area as the lowest point on the pyramid
-    int min_height = *std::min_element(heights.begin(), heights.end());
+    int min_height = *std::min_element(height_vals.begin(), height_vals.end());
 
     // Build rings, diminishing up to pyramid height
     mcpp::Coordinate base_pt = heights.base_pt();
@@ -41,3 +49,4 @@ int main() {
         make_ring(base_pt + mcpp::Coordinate(i, i, i), side_len - (i * 2));
     }
 }
+
