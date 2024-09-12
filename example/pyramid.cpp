@@ -31,11 +31,10 @@ int main() {
         mc.getHeights(ORIGIN, ORIGIN + mcpp::Coordinate(pyramid_base_len, 0,
                                                         pyramid_base_len));
 
+    // Convert heights of build area to vector
     std::vector<int> height_vals;
-    for (int x = 0; x < heights.x_len(); ++x) {
-        for (int z = 0; z < heights.z_len(); ++z) {
-            height_vals.push_back(heights.get(x, z));
-        }
+    for (const auto& height : heights) {
+        height_values.push_back(height);
     }
 
     // Use minimum height of the area as the lowest point on the pyramid
@@ -49,4 +48,3 @@ int main() {
         make_ring(base_pt + mcpp::Coordinate(i, i, i), side_len - (i * 2));
     }
 }
-
