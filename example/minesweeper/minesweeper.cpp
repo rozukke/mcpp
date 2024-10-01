@@ -1,3 +1,4 @@
+#include <math.h>
 #include <mcpp/mcpp.h>
 #include <unistd.h>
 
@@ -12,9 +13,9 @@
 
 class Minesweeper {
   private:
-    const int X_SIZE = 20;
-    const int Z_SIZE = 20;
-    const int MINE_COUNT = 60;
+    const int X_SIZE = 10;
+    const int Z_SIZE = 10;
+    const int MINE_COUNT = 20;
 
     int*** field;
     int clearstowin;
@@ -42,17 +43,63 @@ class Minesweeper {
     void Reveal();
     void FirstClickProtection(int x, int z);
     void UpdateDisplays();
+    void MakeMines(int minecount, int x, int z);
+    void GenerateBoard();
+    void ResetField();
+    bool GameLoop();
 };
 
 int main() {
     Minesweeper ms;
-    // ms.UpdateDisplays();
-    while (ms.Playing()) {
+    ms.GameLoop();
+    std::cout << "Done" << std::endl;
+}
+
+bool Minesweeper::GameLoop() {
+    while (Playing()) {
         // std::cout<<"Tick"<<std::endl;
-        ms.UpdateDisplays();
+        UpdateDisplays();
         usleep(5000);
     }
-    ms.Reveal();
+    Reveal();
+    mc.postToChat("Play Again??");
+    mc.postToChat("Place another mine to generate a new board!");
+    mc.postToChat("Otherwise leave the area or place a barrier to end.");
+
+    bool finish = true;
+    while (finish) {
+        usleep(50000);
+        mcpp::Chunk choices = mc.getBlocks(cornerOrigin, cornerOpposite);
+        for (int x = 0; x < X_SIZE; x++) {
+            for (int z = 0; z < Z_SIZE; z++) {
+                printer.x = origin.x + x;
+                printer.z = origin.z + z;
+                printer.y = origin.y; // Set printer pos
+
+                if (choices.get(x, 0, z) == clear) {
+                    printer.y++;
+                    mc.setBlock(printer, air);
+                    mc.postToChat("Replaying");
+                    GenerateBoard();
+                    GameLoop();
+                    finish = false;
+                } else if (choices.get(x, 0, z) == quit) {
+                    printer.y++;
+                    mc.setBlock(printer, air);
+                    mc.postToChat("Quitting");
+                    finish = false;
+                }
+            }
+        }
+
+        mcpp::Coordinate playerpos = mc.getPlayerPosition();
+        if (fabs(playerpos.x - origin.x) - X_SIZE > 10 ||
+            fabs(playerpos.z - origin.z) - Z_SIZE > 10) {
+            mc.postToChat("Left player area. Quitting.");
+            finish = false;
+        }
+    }
+    return false;
 }
 
 Minesweeper::Minesweeper() {
@@ -94,15 +141,7 @@ Minesweeper::Minesweeper() {
 
     // Builds board
     origin = mc.getPlayerTilePosition();
-    cornerOrigin = origin;
-    cornerOpposite = origin;
-    cornerOpposite.x += X_SIZE - 1;
-    cornerOpposite.z += Z_SIZE - 1;
-    mc.setBlocks(cornerOrigin, cornerOpposite, uncleared);
-
-    // Moves corners up for later use in grabbing game area;
-    cornerOpposite.y++;
-    cornerOrigin.y++;
+    GenerateBoard();
 
     // Prints the legend
     printer = origin;
@@ -131,40 +170,6 @@ Minesweeper::Minesweeper() {
     displayflagsorigin.x += 4;
     mc.setBlock(displayflagsorigin, flag);
     displayflagsorigin.x++;
-
-    // Generates mines and increases values around mines by 1
-    srand(time(nullptr));
-    for (int mines = 0; mines < MINE_COUNT; mines++) {
-        int x = rand() % X_SIZE;
-        int z = rand() % Z_SIZE;
-
-        if (field[x][z][0] != 9) {
-            field[x][z][0] = 9;
-
-            for (int xOfset = -1; xOfset <= 1; xOfset++) {
-                if (x + xOfset >= 0 && x + xOfset < X_SIZE) {
-                    for (int zOfset = -1; zOfset <= 1; zOfset++) {
-                        if (z + zOfset >= 0 && z + zOfset < Z_SIZE) {
-                            if (field[x + xOfset][z + zOfset][0] != 9) {
-                                field[x + xOfset][z + zOfset][0]++;
-                            }
-                        }
-                    }
-                }
-            }
-        } else { // If a mine is already in the place make another mine
-            mines--;
-        }
-    }
-    // This value counts down until you are finished clearing the field
-    clearstowin = X_SIZE * Z_SIZE - MINE_COUNT;
-
-    // Defaults bools
-    playing = true;
-    firstclick = true;
-
-    // Defaults
-    flagsleft = MINE_COUNT;
 }
 
 bool Minesweeper::Playing() {
@@ -311,28 +316,7 @@ void Minesweeper::FirstClickProtection(int x, int z) {
         }
     }
 
-    for (int mines = 0; mines < 1; mines++) {
-        int xR = rand() % X_SIZE;
-        int zR = rand() % Z_SIZE;
-
-        if (field[xR][zR][0] != 9 && (x != xR || z != zR)) {
-            field[xR][zR][0] = 9;
-
-            for (int xOfset = -1; xOfset <= 1; xOfset++) {
-                if (xR + xOfset >= 0 && xR + xOfset < X_SIZE) {
-                    for (int zOfset = -1; zOfset <= 1; zOfset++) {
-                        if (zR + zOfset >= 0 && zR + zOfset < Z_SIZE) {
-                            if (field[xR + xOfset][zR + zOfset][0] != 9) {
-                                field[xR + xOfset][zR + zOfset][0]++;
-                            }
-                        }
-                    }
-                }
-            }
-        } else { // If a mine is already in the place make another mine
-            mines--;
-        }
-    }
+    MakeMines(1, x, z);
 }
 
 void Minesweeper::UpdateDisplays() {
@@ -359,9 +343,9 @@ void Minesweeper::UpdateDisplays() {
     }
 
     printer = displayflagsorigin;
-    printer.x += 3;
+    printer.x += 2;
     mc.setBlocks(printer, displayflagsorigin, air);
-    printer.x -= 3;
+    printer.x -= 2;
     if (flagsleft >= 1000) {
         mc.setBlock(printer, numbers[flagsleft / 1000]);
         printer.x++;
@@ -377,5 +361,67 @@ void Minesweeper::UpdateDisplays() {
     if (flagsleft >= 1) {
         mc.setBlock(printer, numbers[flagsleft % 10]);
         printer.x++;
+    }
+}
+
+void Minesweeper::MakeMines(int mineamount, int xS, int zS) {
+    for (int mines = 0; mines < mineamount; mines++) {
+        int x = rand() % X_SIZE;
+        int z = rand() % Z_SIZE;
+
+        if (field[x][z][0] != 9 && (x != xS || z != zS)) {
+            field[x][z][0] = 9;
+
+            for (int xOfset = -1; xOfset <= 1; xOfset++) {
+                if (x + xOfset >= 0 && x + xOfset < X_SIZE) {
+                    for (int zOfset = -1; zOfset <= 1; zOfset++) {
+                        if (z + zOfset >= 0 && z + zOfset < Z_SIZE) {
+                            if (field[x + xOfset][z + zOfset][0] != 9) {
+                                field[x + xOfset][z + zOfset][0]++;
+                            }
+                        }
+                    }
+                }
+            }
+        } else { // If a mine is already in the place make another mine
+            mines--;
+        }
+    }
+}
+
+void Minesweeper::GenerateBoard() {
+    // Resets Field
+    ResetField();
+
+    cornerOrigin = origin;
+    cornerOpposite = origin;
+    cornerOpposite.x += X_SIZE - 1;
+    cornerOpposite.z += Z_SIZE - 1;
+    mc.setBlocks(cornerOrigin, cornerOpposite, uncleared);
+
+    // Moves corners up for later use in grabbing game area;
+    cornerOpposite.y++;
+    cornerOrigin.y++;
+
+    // Generates mines and increases values around mines by 1
+    srand(time(nullptr));
+    MakeMines(MINE_COUNT, -1, -1);
+    // This value counts down until you are finished clearing the field
+    clearstowin = X_SIZE * Z_SIZE - MINE_COUNT;
+
+    // Defaults bools
+    playing = true;
+    firstclick = true;
+
+    // Defaults
+    flagsleft = MINE_COUNT;
+}
+
+void Minesweeper::ResetField() {
+    for (int x = 0; x < X_SIZE; x++) {
+        for (int z = 0; z < Z_SIZE; z++) {
+            field[x][z][0] = 0;
+            field[x][z][1] = 0;
+        }
     }
 }
