@@ -12,21 +12,26 @@
 
 class Minesweeper {
   private:
-    const int X_SIZE = 10;
-    const int Z_SIZE = 10;
-    const int MINE_COUNT = 5;
+    const int X_SIZE = 20;
+    const int Z_SIZE = 20;
+    const int MINE_COUNT = 60;
 
     int*** field;
     int clearstowin;
+    int flagsleft;
     bool playing;
+    bool firstclick;
 
     std::vector<mcpp::BlockType> blocks;
+    std::vector<mcpp::BlockType> numbers;
 
     mcpp::MinecraftConnection mc;
     mcpp::Coordinate origin;
     mcpp::Coordinate cornerOrigin;
     mcpp::Coordinate cornerOpposite;
     mcpp::Coordinate printer;
+    mcpp::Coordinate displayclearsorigin;
+    mcpp::Coordinate displayflagsorigin;
 
   public:
     Minesweeper();
@@ -35,12 +40,16 @@ class Minesweeper {
     void Clear(int x, int z);
     void ZeroClear(int x, int z);
     void Reveal();
+    void FirstClickProtection(int x, int z);
+    void UpdateDisplays();
 };
 
 int main() {
     Minesweeper ms;
+    // ms.UpdateDisplays();
     while (ms.Playing()) {
         // std::cout<<"Tick"<<std::endl;
+        ms.UpdateDisplays();
         usleep(5000);
     }
     ms.Reveal();
@@ -63,6 +72,12 @@ Minesweeper::Minesweeper() {
               mcpp::Blocks::LIME_CONCRETE,   mcpp::Blocks::YELLOW_CONCRETE,
               mcpp::Blocks::ORANGE_CONCRETE, mcpp::Blocks::RED_CONCRETE,
               mcpp::Blocks::BROWN_CONCRETE,  mcpp::Blocks::TNT};
+
+    numbers = {mcpp::Blocks::WHITE_WOOL,  mcpp::Blocks::LIGHT_BLUE_WOOL,
+               mcpp::Blocks::CYAN_WOOL,   mcpp::Blocks::GREEN_WOOL,
+               mcpp::Blocks::LIME_WOOL,   mcpp::Blocks::YELLOW_WOOL,
+               mcpp::Blocks::ORANGE_WOOL, mcpp::Blocks::RED_WOOL,
+               mcpp::Blocks::BROWN_WOOL,  mcpp::Blocks::BLACK_WOOL};
 
     // Gives player items to play
     mc.doCommand("gamerule sendCommandFeedback false");
@@ -105,6 +120,18 @@ Minesweeper::Minesweeper() {
     printer.y++;
     mc.setBlock(printer, badmine);
 
+    // Sets the display origins and keys
+    displayclearsorigin = origin;
+    displayclearsorigin.z--;
+    displayclearsorigin.y += 3;
+    mc.setBlock(displayclearsorigin, uncleared);
+    displayclearsorigin.x++;
+
+    displayflagsorigin = displayclearsorigin;
+    displayflagsorigin.x += 4;
+    mc.setBlock(displayflagsorigin, flag);
+    displayflagsorigin.x++;
+
     // Generates mines and increases values around mines by 1
     srand(time(nullptr));
     for (int mines = 0; mines < MINE_COUNT; mines++) {
@@ -132,7 +159,12 @@ Minesweeper::Minesweeper() {
     // This value counts down until you are finished clearing the field
     clearstowin = X_SIZE * Z_SIZE - MINE_COUNT;
 
+    // Defaults bools
     playing = true;
+    firstclick = true;
+
+    // Defaults
+    flagsleft = MINE_COUNT;
 }
 
 bool Minesweeper::Playing() {
@@ -167,9 +199,11 @@ bool Minesweeper::Playing() {
 void Minesweeper::Flag(int x, int z) {
     if (field[x][z][1] == 0) {
         field[x][z][1] = 1;
+        flagsleft--;
         mc.setBlock(printer, flag);
     } else if (field[x][z][1] == 1) {
         field[x][z][1] = 0;
+        flagsleft++;
         mc.setBlock(printer, uncleared);
     }
 
@@ -183,8 +217,14 @@ void Minesweeper::Clear(int x, int z) {
         mc.setBlock(printer, blocks[field[x][z][0]]);
 
         if (field[x][z][0] == 9) { // If a mine, you loose
-            mc.postToChat("GAMEOVER!");
-            playing = false;
+            if (firstclick) {
+                firstclick = false;
+                FirstClickProtection(x, z);
+                Clear(x, z);
+            } else {
+                mc.postToChat("GAMEOVER!");
+                playing = false;
+            }
         } else if (field[x][z][0] == 0) { // If zero add location to a stack
             ZeroClear(x, z);
         }
@@ -194,6 +234,7 @@ void Minesweeper::Clear(int x, int z) {
         }
 
         field[x][z][1] = 2;
+        firstclick = false;
     }
 
     printer.y++; // removes block above the board
@@ -252,6 +293,89 @@ void Minesweeper::Reveal() {
             printer.z++;
         }
         printer.z = origin.z;
+        printer.x++;
+    }
+}
+
+void Minesweeper::FirstClickProtection(int x, int z) {
+    mc.postToChat("Saved, Would have been a mine");
+    field[x][z][0] = 1;
+
+    for (int xo = -1; xo <= 1; xo++) {
+        for (int zo = -1; zo <= 1; zo++) {
+            if (field[x + xo][z + zo][0] == 9) {
+                field[x][z][0]++;
+            } else {
+                field[x + xo][z + zo][0]--;
+            }
+        }
+    }
+
+    for (int mines = 0; mines < 1; mines++) {
+        int xR = rand() % X_SIZE;
+        int zR = rand() % Z_SIZE;
+
+        if (field[xR][zR][0] != 9 && (x != xR || z != zR)) {
+            field[xR][zR][0] = 9;
+
+            for (int xOfset = -1; xOfset <= 1; xOfset++) {
+                if (xR + xOfset >= 0 && xR + xOfset < X_SIZE) {
+                    for (int zOfset = -1; zOfset <= 1; zOfset++) {
+                        if (zR + zOfset >= 0 && zR + zOfset < Z_SIZE) {
+                            if (field[xR + xOfset][zR + zOfset][0] != 9) {
+                                field[xR + xOfset][zR + zOfset][0]++;
+                            }
+                        }
+                    }
+                }
+            }
+        } else { // If a mine is already in the place make another mine
+            mines--;
+        }
+    }
+}
+
+void Minesweeper::UpdateDisplays() {
+    printer = displayclearsorigin;
+    printer.x += 3;
+    mc.setBlocks(printer, displayclearsorigin, air);
+    printer.x -= 3;
+
+    if (clearstowin >= 1000) {
+        mc.setBlock(printer, numbers[clearstowin / 1000]);
+        printer.x++;
+    }
+    if (clearstowin >= 100) {
+        mc.setBlock(printer, numbers[(clearstowin % 1000) / 100]);
+        printer.x++;
+    }
+    if (clearstowin >= 10) {
+        mc.setBlock(printer, numbers[(clearstowin % 100) / 10]);
+        printer.x++;
+    }
+    if (clearstowin >= 1) {
+        mc.setBlock(printer, numbers[clearstowin % 10]);
+        printer.x++;
+    }
+
+    printer = displayflagsorigin;
+    printer.x += 3;
+    mc.setBlocks(printer, displayflagsorigin, air);
+    printer.x -= 3;
+    if (flagsleft >= 1000) {
+        mc.setBlock(printer, numbers[flagsleft / 1000]);
+        printer.x++;
+    }
+    if (flagsleft >= 100) {
+        mc.setBlock(printer, numbers[(flagsleft % 1000) / 100]);
+        printer.x++;
+    }
+    if (flagsleft >= 10) {
+        mc.setBlock(printer, numbers[(flagsleft % 100) / 10]);
+        printer.x++;
+    }
+    if (flagsleft >= 1) {
+        mc.setBlock(printer, numbers[flagsleft % 10]);
         printer.x++;
     }
 }
