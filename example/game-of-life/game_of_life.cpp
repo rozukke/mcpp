@@ -10,14 +10,14 @@ class Life {
     bool isRunning;
     int delay;
 
-    const mcpp::BlockType play_block = mcpp::Blocks::GREEN_CONCRETE;
-    const mcpp::BlockType pause_block = mcpp::Blocks::RED_CONCRETE;
-    const mcpp::BlockType dead_block = mcpp::Blocks::BLACK_CONCRETE;
-    const mcpp::BlockType alive_block = mcpp::Blocks::WHITE_CONCRETE;
-    const mcpp::BlockType speed_block = mcpp::Blocks::YELLOW_CONCRETE;
-    const mcpp::BlockType slow_block = mcpp::Blocks::BLUE_CONCRETE;
-    const mcpp::BlockType random_block = mcpp::Blocks::PINK_CONCRETE;
-    const mcpp::BlockType clear_block = mcpp::Blocks::BARRIER;
+    const mcpp::BlockType PLAY_BLOCK = mcpp::Blocks::GREEN_CONCRETE;
+    const mcpp::BlockType PAUSE_BLOCK = mcpp::Blocks::RED_CONCRETE;
+    const mcpp::BlockType DEAD_BLOCK = mcpp::Blocks::BLACK_CONCRETE;
+    const mcpp::BlockType ALIVE_BLOCK = mcpp::Blocks::WHITE_CONCRETE;
+    const mcpp::BlockType SPEED_BLOCK = mcpp::Blocks::YELLOW_CONCRETE;
+    const mcpp::BlockType SLOW_BLOCK = mcpp::Blocks::BLUE_CONCRETE;
+    const mcpp::BlockType RANDOM_BLOCK = mcpp::Blocks::PINK_CONCRETE;
+    const mcpp::BlockType CLEAR_BLOCK = mcpp::Blocks::BARRIER;
 
     mcpp::Coordinate buildPosition, bounds, upperBuildPosition, upperBounds;
 
@@ -112,30 +112,30 @@ void Life::Update() {
                 mc.setBlock(position, mcpp::Blocks::AIR);
             }
 
-            if (block == play_block) {
+            if (block == PLAY_BLOCK) {
                 Play();
                 mc.postToChat("Playing");
-            } else if (block == pause_block) {
+            } else if (block == PAUSE_BLOCK) {
                 Pause();
                 mc.postToChat("Pausing");
-            } else if (block == alive_block) {
+            } else if (block == ALIVE_BLOCK) {
                 game[x][z] = 1;
-            } else if (block == dead_block) {
+            } else if (block == DEAD_BLOCK) {
                 game[x][z] = 0;
-            } else if (block == speed_block) {
+            } else if (block == SPEED_BLOCK) {
                 delay = std::max(delay / 2, 1);
                 mc.postToChat("Speeding up");
-            } else if (block == slow_block) {
+            } else if (block == SLOW_BLOCK) {
                 delay *= 2;
                 mc.postToChat("Slowing down");
-            } else if (block == random_block) {
+            } else if (block == RANDOM_BLOCK) {
                 for (int x = 0; x < width; x++) {
                     for (int z = 0; z < depth; z++) {
                         game[x][z] = rand() % 2;
                     }
                 }
                 mc.postToChat("Randomizing");
-            } else if (block == clear_block) {
+            } else if (block == CLEAR_BLOCK) {
                 for (int x = 0; x < width; x++) {
                     for (int z = 0; z < depth; z++) {
                         game[x][z] = 0;
@@ -178,13 +178,13 @@ void Life::Update() {
     }
 
     // draw
-    mc.setBlocks(buildPosition, bounds, dead_block);
+    mc.setBlocks(buildPosition, bounds, DEAD_BLOCK);
     for (int x = 0; x < width; x++) {
         for (int z = 0; z < depth; z++) {
             mcpp::Coordinate position(buildPosition.x + x, buildPosition.y,
                                       buildPosition.z + z);
             if (game[x][z] == 1) {
-                mc.setBlock(position, alive_block);
+                mc.setBlock(position, ALIVE_BLOCK);
             }
         }
     }
