@@ -11,10 +11,10 @@ Once opened move the .zip into the folder, and back into minecraft select it fro
 
 The game is played by launching the compiled code and originates from the player deleting only blocks where it
 requires to place blocks. It is recommended to run the code while flying in the air to avoid clipping issues.
-The code continues to loop until either you win, lose or place a barrier block on the board.
+The code continues to loop until either you win, lose or place a barrier block on the board. 
 
-The games size and mine count can be modified by changing the following values from the top of the .cpp file
+The games size and mine count can be modified by changing the following values from the top of the Minesweeper class
 before recompiling
-    `const int size_x = 10;`
-    `const int size_z = 10;`
-    `const int minecount = 15;`
+    `const int X_SIZE = 10;`
+    `const int Z_SIZE = 10;`
+    `const int MINE_COUNT = 20;`
