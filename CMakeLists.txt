@@ -18,7 +18,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 set(MCPP_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(MCPP_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/mcpp)
+set(MCPP_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Testing
 add_subdirectory(test)
