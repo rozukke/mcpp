@@ -16,22 +16,13 @@ jobs:
 
         runs-on: ${{ matrix.os }}
         steps:
-            # Start and join the Spigot Server
-            - name: Set up Minecraft testing environment
-              uses: nhatdongdang/mc-env-setup@v1.1
-
             # Checkout the mcpp repository for building and testing
             - name: Checkout mcpp
               uses: actions/checkout@v4
 
-            # Build files using CMake
+            # Build CMake cache
             - name: Build file
-              run: cmake -Bbuild
-
-            # Run the test suite using ctest
-            - name: Run test suite
-              working-directory: ./build
-              run: make test_suite && ctest -R full -V
+              run: cmake --debug-output -B build
 
             - name: Install library
               working-directory: ./build
@@ -44,6 +35,15 @@ jobs:
             - name: Compile and link library
               working-directory: ./build
               run: make examples
+
+            # Start and join the Spigot Server
+            - name: Set up Minecraft testing environment
+              uses: nhatdongdang/mc-env-setup@v1.1
+
+            # Run the test suite using ctest
+            - name: Run test suite
+              working-directory: ./build
+              run: make test_suite && ctest -R full -V
 
             - name: Run example
               working-directory: ./build
