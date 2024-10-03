@@ -13,7 +13,7 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest,macos-latest] 
-        
+
         runs-on: ${{ matrix.os }}
         steps:
             # Start and join the Spigot Server
@@ -42,8 +42,9 @@ jobs:
               run: sudo ldconfig
 
             - name: Compile and link library
+              working-directory: ./build
               run: make examples
 
             - name: Run example
               working-directory: ./build
-              run: hello_minecraft
+              run: ./hello_minecraft

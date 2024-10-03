@@ -60,9 +60,9 @@ add_executable(minesweeper EXCLUDE_FROM_ALL example/minesweeper/minesweeper.cpp)
 target_link_libraries(minesweeper ${PROJECT_NAME})
 add_executable(video_mc EXCLUDE_FROM_ALL example/video-generation/video-mc.cpp)
 target_link_libraries(video_mc ${PROJECT_NAME})
-add_executable(model_mc EXCLUDE_FROM_ALL example/model-generation/model-mc.cpp)
-target_link_libraries(model_mc ${PROJECT_NAME})
-add_custom_target(examples hello_minecraft pyramid game_of_life minesweeper video_mc model_mc)
+add_executable(obj_mc EXCLUDE_FROM_ALL example/model-generation/obj-mc.cpp)
+target_link_libraries(obj_mc ${PROJECT_NAME})
+add_custom_target(examples DEPENDS hello_minecraft pyramid game_of_life minesweeper video_mc obj_mc)
 
 # CPack setup
 SET(CPACK_GENERATOR "DEB")
