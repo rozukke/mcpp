@@ -29,7 +29,7 @@ jobs:
               run: sudo make install
 
             - name: Update linux cache
-              if: runner.os == 'Linux'
+              if: runner.os == 'ubuntu-latest'
               run: sudo ldconfig
 
             - name: Compile and link library

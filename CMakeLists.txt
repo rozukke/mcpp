@@ -17,8 +17,8 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-set(MCPP_SRC_DIR src)
-set(MCPP_INC_DIR include/mcpp)
+set(MCPP_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(MCPP_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/mcpp)
 
 # Testing
 add_subdirectory(test)
@@ -42,6 +42,13 @@ set_target_properties(${PROJECT_NAME}
     SOVERSION 1
     PUBLIC_HEADER "${MCPP_INCLUDE_FILES}"
     INSTALL_NAME_DIR ${LIB_INSTALL_DIR}
+)
+
+# Fix silly macOS include errors
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${MCPP_INC_DIR}>
+    $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
 )
 
 install(TARGETS ${PROJECT_NAME}
