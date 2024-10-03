@@ -50,10 +50,19 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 # Build examples
-add_executable(pyramid EXCLUDE_FROM_ALL example/pyramid.cpp)
-target_link_libraries(pyramid ${PROJECT_NAME})
 add_executable(hello_minecraft EXCLUDE_FROM_ALL example/hello_minecraft.cpp)
 target_link_libraries(hello_minecraft ${PROJECT_NAME})
+add_executable(pyramid EXCLUDE_FROM_ALL example/pyramid.cpp)
+target_link_libraries(pyramid ${PROJECT_NAME})
+add_executable(game_of_life EXCLUDE_FROM_ALL example/game-of-life/game_of_life.cpp)
+target_link_libraries(game_of_life ${PROJECT_NAME})
+add_executable(minesweeper EXCLUDE_FROM_ALL example/minesweeper/minesweeper.cpp)
+target_link_libraries(minesweeper ${PROJECT_NAME})
+add_executable(video_mc EXCLUDE_FROM_ALL example/video-generation/video-mc.cpp)
+target_link_libraries(video_mc ${PROJECT_NAME})
+add_executable(model_mc EXCLUDE_FROM_ALL example/model-generation/model-mc.cpp)
+target_link_libraries(model_mc ${PROJECT_NAME})
+add_custom_target(examples hello_minecraft pyramid game_of_life minesweeper video_mc model_mc)
 
 # CPack setup
 SET(CPACK_GENERATOR "DEB")

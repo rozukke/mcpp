@@ -42,7 +42,8 @@ jobs:
               run: sudo ldconfig
 
             - name: Compile and link library
-              run: g++ -std=c++17 example/pyramid.cpp -o example/pyramid -lmcpp
+              run: make examples
 
             - name: Run example
-              run: example/pyramid
+              working-directory: ./build
+              run: hello_minecraft
