@@ -33,17 +33,27 @@ file(GLOB_RECURSE MCPP_SOURCE_FILES ${MCPP_SRC_DIR}/*.cpp)
 # Library build
 add_library(${PROJECT_NAME} SHARED ${MCPP_INCLUDE_FILES} ${MCPP_SOURCE_FILES})
 
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+set(HEADER_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
+
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
     PUBLIC_HEADER "${MCPP_INCLUDE_FILES}"
+    INSTALL_NAME_DIR ${LIB_INSTALL_DIR}
 )
 
 install(TARGETS ${PROJECT_NAME}
-    LIBRARY DESTINATION lib
-    PUBLIC_HEADER DESTINATION include/${PROJECT_NAME}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    PUBLIC_HEADER DESTINATION ${HEADER_INSTALL_DIR}
 )
+
+# Build examples
+add_executable(pyramid EXCLUDE_FROM_ALL example/pyramid.cpp)
+target_link_libraries(pyramid ${PROJECT_NAME})
+add_executable(hello_minecraft EXCLUDE_FROM_ALL example/hello_minecraft.cpp)
+target_link_libraries(hello_minecraft ${PROJECT_NAME})
 
 # CPack setup
 SET(CPACK_GENERATOR "DEB")

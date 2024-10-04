@@ -1,6 +1,8 @@
 #pragma once
 
 #include "block.h"
+#include <cstddef>
+#include <iterator>
 #include <ostream>
 #include <vector>
 
@@ -101,6 +103,8 @@ struct Chunk {
      * access to the elements stored in the chunk.
      */
     struct Iterator {
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
         using value_type = BlockType;
         using pointer = BlockType*;
         using reference = BlockType&;
@@ -256,6 +260,8 @@ struct HeightMap {
      * operations over the height data stored within a HeightMap.
      */
     struct Iterator {
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
         using value_type = int;
         using pointer = int*;
         using reference = int&;
