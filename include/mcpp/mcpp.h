@@ -125,7 +125,7 @@ class MinecraftConnection {
     Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
     /**
-     * @brief Returns the height of the specific provided x and y coordinate
+     * @brief Returns the height of the specific provided x and z coordinate
      *
      * ***IMPORTANT:***
      * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
