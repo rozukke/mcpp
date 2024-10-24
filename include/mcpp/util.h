@@ -204,7 +204,7 @@ struct Chunk {
      * for
      * @return BlockType at specified location
      */
-    BlockType get_worldspace(const Coordinate& pos);
+    BlockType get_worldspace(const Coordinate& pos) const;
 
     /**
      * Local equivalent of get_worldspace, equivalent to a 3D array access of
@@ -214,7 +214,7 @@ struct Chunk {
      * @param z: z element of array access
      * @return BlockType at specified location
      */
-    BlockType get(int x, int y, int z);
+    BlockType get(int x, int y, int z) const;
 
     /**
      * Gets the x length of the Chunk.
@@ -371,7 +371,7 @@ struct HeightMap {
      * and z components.
      * @param loc: Coordinate to fill y value for
      */
-    void fill_coord(Coordinate& out);
+    void fill_coord(Coordinate& out) const;
 
     /**
      * Gets the x length of the HeightMap.

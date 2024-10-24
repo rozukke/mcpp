@@ -90,7 +90,7 @@ Chunk& Chunk::operator=(const Chunk& other) noexcept {
     return *this;
 }
 
-BlockType Chunk::get(int x, int y, int z) {
+BlockType Chunk::get(int x, int y, int z) const {
     if ((x < 0 || y < 0 || z < 0) ||
         (x > _x_len - 1 || y > _y_len - 1 || z > _z_len - 1)) {
         throw std::out_of_range("Out of bounds Chunk access at " +
@@ -99,7 +99,7 @@ BlockType Chunk::get(int x, int y, int z) {
     return raw_data[y * _x_len * _z_len + x * _z_len + z];
 }
 
-BlockType Chunk::get_worldspace(const Coordinate& pos) {
+BlockType Chunk::get_worldspace(const Coordinate& pos) const {
     Coordinate array_pos = pos - _base_pt;
     if ((array_pos.x < 0 || array_pos.y < 0 || array_pos.z < 0) ||
         (array_pos.x > _x_len - 1 || array_pos.y > _y_len - 1 ||
@@ -171,7 +171,9 @@ int HeightMap::get_worldspace(const Coordinate& loc) const {
     return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 
-void HeightMap::fill_coord(Coordinate& out) { out.y = get_worldspace(out); }
+void HeightMap::fill_coord(Coordinate& out) const {
+    out.y = get_worldspace(out);
+}
 
 int HeightMap::x_len() const { return this->_x_len; }
 
