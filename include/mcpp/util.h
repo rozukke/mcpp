@@ -69,6 +69,14 @@ struct Coordinate {
     Coordinate operator-(const Coordinate& obj) const;
 
     /**
+     * @brief Implements hash algorithm for Coordinate object using XOR.
+     *
+     * @param obj The Coordinate object to hash.
+     * @return Hash of Coordinate object.
+     */
+    std::size_t operator()(const Coordinate& obj) const;
+
+    /**
      * @brief Creates a copy of the Coordinate object.
      *
      * @return A new Coordinate object that is a copy of the current object.

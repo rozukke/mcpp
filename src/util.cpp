@@ -41,6 +41,11 @@ Coordinate Coordinate::operator-(const Coordinate& obj) const {
     return result;
 }
 
+std::size_t Coordinate::operator()(const Coordinate& obj) const {
+    return std::hash<int>()(obj.x) ^ std::hash<int>()(obj.y) ^
+           std::hash<int>()(obj.z);
+}
+
 Coordinate Coordinate::clone() const {
     return Coordinate(this->x, this->y, this->z);
 }
