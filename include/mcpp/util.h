@@ -23,7 +23,7 @@ struct Coordinate {
      * @param y The y-coordinate.
      * @param z The z-coordinate.
      */
-    Coordinate(int x, int y, int z);
+    Coordinate(int x, int y, int z) : x(x), y(y), z(z) {}
 
     /**
      * @brief Constructs a Coordinate object with zero values.
@@ -37,7 +37,9 @@ struct Coordinate {
      * @param y The y-coordinate as a double.
      * @param z The z-coordinate as a double.
      */
-    Coordinate(double x, double y, double z);
+    Coordinate(double x, double y, double z)
+        : x(static_cast<int>(x)), y(static_cast<int>(y)),
+          z(static_cast<int>(z)) {}
 
     /**
      * @brief Adds two Coordinate objects.
