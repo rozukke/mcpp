@@ -43,8 +43,8 @@ Coordinate Coordinate::operator-(const Coordinate& obj) const {
 
 std::size_t Coordinate::operator()(const mcpp::Coordinate& obj) const {
     return (std::hash<int>()(obj.x) * 31) ^
-           (std::hash<int>()(obj.y) * 37 << 1) ^
-           (std::hash<int>()(obj.z) * 41 << 2);
+           ((std::hash<int>()(obj.y) * 37) << 8) ^
+           ((std::hash<int>()(obj.z) * 41) << 16);
 }
 
 Coordinate Coordinate::clone() const {
