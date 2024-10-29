@@ -23,7 +23,7 @@ struct Coordinate {
      * @param y The y-coordinate. Default is 0.
      * @param z The z-coordinate. Default is 0.
      */
-    explicit Coordinate(int x = 0, int y = 0, int z = 0);
+    Coordinate(int x = 0, int y = 0, int z = 0);
 
     /**
      * @brief Constructs a Coordinate object with double values.
