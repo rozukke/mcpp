@@ -19,11 +19,16 @@ struct Coordinate {
     /**
      * @brief Constructs a Coordinate object with integer values.
      *
-     * @param x The x-coordinate. Default is 0.
-     * @param y The y-coordinate. Default is 0.
-     * @param z The z-coordinate. Default is 0.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param z The z-coordinate.
      */
-    Coordinate(int x = 0, int y = 0, int z = 0);
+    Coordinate(int x, int y, int z);
+
+    /**
+     * @brief Constructs a Coordinate object with zero values.
+     */
+    Coordinate() : x(0), y(0), z(0) {}
 
     /**
      * @brief Constructs a Coordinate object with double values.
