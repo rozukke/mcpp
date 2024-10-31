@@ -56,6 +56,42 @@ std::ostream& operator<<(std::ostream& out, const Coordinate& coord) {
     return out;
 }
 
+Coordinate2D Coordinate2D::operator+(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x + obj.x;
+    result.z = this->z + obj.z;
+    return result;
+}
+
+bool Coordinate2D::operator==(const Coordinate2D& obj) const {
+    return (this->x == obj.x) && (this->z == obj.z);
+}
+
+bool Coordinate2D::operator!=(const Coordinate2D& obj) const {
+    return !(*this == obj);
+}
+
+Coordinate2D Coordinate2D::operator-(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x - obj.x;
+    result.z = this->z - obj.z;
+    return result;
+}
+
+Coordinate2D Coordinate2D::clone() const {
+    return Coordinate2D(this->x, this->z);
+}
+
+std::string to_string(const Coordinate2D& coord) {
+    using std::to_string;
+    return "(" + to_string(coord.x) + "," + to_string(coord.z) + ")";
+}
+
+std::ostream& operator<<(std::ostream& out, const Coordinate2D& coord) {
+    out << to_string(coord);
+    return out;
+}
+
 Chunk::Chunk(const Coordinate& loc1, const Coordinate& loc2,
              const std::vector<BlockType>& block_list) {
     Coordinate min{std::min(loc1.x, loc2.x), std::min(loc1.y, loc2.y),
