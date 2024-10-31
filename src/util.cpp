@@ -156,7 +156,7 @@ int Chunk::z_len() const { return this->_z_len; }
 
 Coordinate Chunk::base_pt() const { return this->_base_pt.clone(); }
 
-HeightMap::HeightMap(const Coordinate& loc1, const Coordinate& loc2,
+HeightMap::HeightMap(const Coordinate2D& loc1, const Coordinate2D& loc2,
                      const std::vector<int>& heights) {
     _base_pt = Coordinate{
         std::min(loc1.x, loc2.x),
@@ -203,7 +203,7 @@ int HeightMap::get(int x, int z) const {
     return raw_heights[x * _z_len + z];
 }
 
-int HeightMap::get_worldspace(const Coordinate& loc) const {
+int HeightMap::get_worldspace(const Coordinate2D& loc) const {
     return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 
@@ -215,6 +215,6 @@ int HeightMap::x_len() const { return this->_x_len; }
 
 int HeightMap::z_len() const { return this->_z_len; }
 
-Coordinate HeightMap::base_pt() const { return this->_base_pt.clone(); }
+Coordinate2D HeightMap::base_pt() const { return this->_base_pt.clone(); }
 
 } // namespace mcpp

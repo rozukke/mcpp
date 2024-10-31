@@ -451,7 +451,7 @@ struct HeightMap {
 
     Iterator begin() { return Iterator(&raw_heights[0]); }
     Iterator end() { return Iterator(&raw_heights[_x_len * _z_len]); }
-    HeightMap(const Coordinate& loc1, const Coordinate& loc2,
+    HeightMap(const Coordinate2D& loc1, const Coordinate2D& loc2,
               const std::vector<int>& heights);
 
     ~HeightMap();
@@ -469,10 +469,10 @@ struct HeightMap {
 
     /**
      * Get the height at a Minecraft coordinate if saved inside the height map
-     * @param loc: Coordinate in Minecraft world to access in the map
+     * @param loc: 2D coordinate in Minecraft world to access in the map
      * @return: height at specified coordinate
      */
-    int get_worldspace(const Coordinate& loc) const;
+    int get_worldspace(const Coordinate2D& loc) const;
 
     /**
      * Fill a coordinate inplace with the highest y coordinate at the `loc`'s x
@@ -494,13 +494,13 @@ struct HeightMap {
     int z_len() const;
 
     /**
-     * Gets the minimum coordinate in the HeightMap.
-     * @return the minimum coordinate in the HeightMap.
+     * Gets the minimum 2D coordinate in the HeightMap.
+     * @return the minimum 2D coordinate in the HeightMap.
      */
-    Coordinate base_pt() const;
+    Coordinate2D base_pt() const;
 
   private:
-    Coordinate _base_pt;
+    Coordinate2D _base_pt;
     int _x_len;
     int _z_len;
     int* raw_heights;
