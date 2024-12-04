@@ -42,9 +42,14 @@ Coordinate Coordinate::operator-(const Coordinate& obj) const {
 }
 
 std::size_t Coordinate::operator()(const mcpp::Coordinate& obj) const {
-    return (std::hash<int>()(obj.x) * 31) ^
-           ((std::hash<int>()(obj.y) * 37) << 8) ^
-           ((std::hash<int>()(obj.z) * 41) << 16);
+    int lower = -3e7, upper = 3e7;
+    size_t base = upper - lower + 1;
+
+    // Make x,y,z non negative
+    size_t nx = obj.x - lower, ny = obj.y - lower, nz = obj.z - lower;
+
+    // Use overflow instead of modding
+    return nx * base * base + ny * base + nz;
 }
 
 Coordinate Coordinate::clone() const {
