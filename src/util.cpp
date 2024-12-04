@@ -42,13 +42,16 @@ Coordinate Coordinate::operator-(const Coordinate& obj) const {
 }
 
 std::size_t Coordinate::operator()(const mcpp::Coordinate& obj) const {
+    // Minecraft coordinate bounds
     int lower = -3e7, upper = 3e7;
     size_t base = upper - lower + 1;
 
-    // Make x,y,z non negative
-    size_t nx = obj.x - lower, ny = obj.y - lower, nz = obj.z - lower;
+    // Convert coordinate attributes to non-negative values
+    size_t nx = obj.x - lower;
+    size_t ny = obj.y - lower;
+    size_t nz = obj.z - lower;
 
-    // Use overflow instead of modding
+    // Combine and weight coordinate values using the boundary range
     return nx * base * base + ny * base + nz;
 }
 

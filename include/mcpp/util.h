@@ -69,8 +69,8 @@ struct Coordinate {
     Coordinate operator-(const Coordinate& obj) const;
 
     /**
-     * @brief Implements hash algorithm for Coordinate object using XOR, bit
-     * shifts and prime multiplication
+     * @brief Implements hash algorithm for Coordinate object using non-negative
+     * mapping and weighted coordinate values.
      *
      * @param obj The Coordinate object to hash.
      * @return Hash of Coordinate object.
