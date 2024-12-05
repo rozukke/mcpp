@@ -343,6 +343,32 @@ TEST_CASE("HeightMap functionality") {
         CHECK_EQ(heights, expected_heights);
     }
 
+    SUBCASE("Const iterator") {
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210},
+                     Blocks::AIR);
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210},
+                     Blocks::STONE);
+        mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
+        mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
+        mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+
+        const HeightMap data =
+            mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+
+        std::vector<int> expected_heights;
+        for (int i = 0; i < data.x_len(); i++) {
+            for (int j = 0; j < data.z_len(); j++) {
+                expected_heights.push_back(data.get(i, j));
+            }
+        }
+
+        std::vector<int> heights;
+        for (int height : data) {
+            heights.push_back(height);
+        }
+        CHECK_EQ(heights, expected_heights);
+    }
+
     // Clean up
     mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210},
                  Blocks::AIR);
