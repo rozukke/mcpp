@@ -125,19 +125,18 @@ class MinecraftConnection {
     Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2);
 
     /**
-     * @brief Returns the height of the specific provided x and z coordinate
+     * @brief Returns the height of the specific provided 2D coordinate
      *
      * ***IMPORTANT:***
      * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
      * USE getHeights() INSTEAD
      *
-     * Gets the y-value of the highest non-air block at the specified (x, z)
+     * Gets the y-value of the highest non-air block at the specified 2D
      * coordinate.
-     * @param x
-     * @param z
+     * @param loc 2D coordinate
      * @return Returns the integer y-height at the requested coordinate.
      */
-    int getHeight(int x, int z);
+    int getHeight(Coordinate2D loc);
 
     /**
      * @brief Provides a scaled option of the getHeight call to allow for
@@ -145,10 +144,11 @@ class MinecraftConnection {
      *
      * \par USE THIS instead of getHeight in a for loop.
      *
-     * @param loc1
-     * @param loc2
+     * @param loc1 1st corner of rectangle
+     * @param loc2 2nd corner of rectangle
      * @return Returns a vector of integers representing the 2D area of heights.
      */
-    const HeightMap getHeights(const Coordinate& loc1, const Coordinate& loc2);
+    const HeightMap getHeights(const Coordinate2D& loc1,
+                               const Coordinate2D& loc2);
 };
 } // namespace mcpp
