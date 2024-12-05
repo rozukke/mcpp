@@ -19,11 +19,16 @@ struct Coordinate {
     /**
      * @brief Constructs a Coordinate object with integer values.
      *
-     * @param x The x-coordinate. Default is 0.
-     * @param y The y-coordinate. Default is 0.
-     * @param z The z-coordinate. Default is 0.
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param z The z-coordinate.
      */
-    explicit Coordinate(int x = 0, int y = 0, int z = 0);
+    constexpr Coordinate(int x, int y, int z) : x(x), y(y), z(z) {}
+
+    /**
+     * @brief Constructs a Coordinate object with zero values.
+     */
+    constexpr Coordinate() : x(0), y(0), z(0) {}
 
     /**
      * @brief Constructs a Coordinate object with double values.
@@ -32,7 +37,9 @@ struct Coordinate {
      * @param y The y-coordinate as a double.
      * @param z The z-coordinate as a double.
      */
-    Coordinate(double x, double y, double z);
+    constexpr Coordinate(double x, double y, double z)
+        : x(static_cast<int>(x)), y(static_cast<int>(y)),
+          z(static_cast<int>(z)) {}
 
     /**
      * @brief Adds two Coordinate objects.
