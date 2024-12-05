@@ -140,6 +140,7 @@ TEST_CASE("getBlocks and Chunk operations") {
     mc.setBlock(loc2, Blocks::DIAMOND_BLOCK);
     mc.setBlock(loc1 + Coordinate{1, 2, 3}, Blocks::IRON_BLOCK);
     Chunk res = mc.getBlocks(loc1, loc2);
+    const Chunk res_const = mc.getBlocks(loc1, loc2);
 
     SUBCASE("getters") {
         Chunk data = mc.getBlocks(loc1, loc2);
@@ -196,6 +197,23 @@ TEST_CASE("getBlocks and Chunk operations") {
 
         std::vector<BlockType> expected_blocks;
         for (BlockType block : res) {
+            expected_blocks.push_back(block);
+        }
+        CHECK_EQ(blocks, expected_blocks);
+    }
+
+    SUBCASE("Const iterator") {
+        std::vector<BlockType> blocks;
+        for (int i = 0; i < res_const.y_len(); i++) {
+            for (int j = 0; j < res_const.x_len(); j++) {
+                for (int z = 0; z < res_const.z_len(); z++) {
+                    blocks.push_back(res_const.get(j, i, z));
+                }
+            }
+        }
+
+        std::vector<BlockType> expected_blocks;
+        for (BlockType block : res_const) {
             expected_blocks.push_back(block);
         }
         CHECK_EQ(blocks, expected_blocks);
@@ -309,6 +327,32 @@ TEST_CASE("HeightMap functionality") {
         mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
 
         HeightMap data =
+            mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+
+        std::vector<int> expected_heights;
+        for (int i = 0; i < data.x_len(); i++) {
+            for (int j = 0; j < data.z_len(); j++) {
+                expected_heights.push_back(data.get(i, j));
+            }
+        }
+
+        std::vector<int> heights;
+        for (int height : data) {
+            heights.push_back(height);
+        }
+        CHECK_EQ(heights, expected_heights);
+    }
+
+    SUBCASE("Const iterator") {
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210},
+                     Blocks::AIR);
+        mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210},
+                     Blocks::STONE);
+        mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
+        mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
+        mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+
+        const HeightMap data =
             mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
 
         std::vector<int> expected_heights;
