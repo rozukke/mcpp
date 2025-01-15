@@ -139,6 +139,21 @@ class MinecraftConnection {
     int getHeight(Coordinate2D loc);
 
     /**
+     * @brief Returns the coordinate with the x, z, and in-world height of the
+     * specific provided 2D coordinate
+     *
+     * ***IMPORTANT:***
+     * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
+     * USE getHeights() INSTEAD
+     *
+     * Gets the y-value of the highest non-air block at the specified 2D
+     * coordinate, and creates a new 3D coordinate.
+     * @param loc 2D coordinate
+     * @return Returns the coordinate with the filled-in height.
+     */
+    Coordinate fillHeight(Coordinate2D loc);
+
+    /**
      * @brief Provides a scaled option of the getHeight call to allow for
      * considerable performance gains.
      *

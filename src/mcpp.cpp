@@ -118,6 +118,11 @@ int MinecraftConnection::getHeight(Coordinate2D loc) {
     return stoi(returnValue);
 }
 
+Coordinate MinecraftConnection::fillHeight(Coordinate2D loc) {
+    int y = this->getHeight(loc);
+    return Coordinate(loc.x, y, loc.z);
+}
+
 const HeightMap MinecraftConnection::getHeights(const Coordinate2D& loc1,
                                                 const Coordinate2D& loc2) {
     std::string returnValue = conn->sendReceiveCommand(
