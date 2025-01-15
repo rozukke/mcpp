@@ -5,18 +5,6 @@
 
 namespace mcpp {
 
-Coordinate::Coordinate(int x, int y, int z) {
-    this->x = x;
-    this->y = y;
-    this->z = z;
-}
-
-Coordinate::Coordinate(double x, double y, double z) {
-    this->x = static_cast<int>(x);
-    this->y = static_cast<int>(y);
-    this->z = static_cast<int>(z);
-}
-
 Coordinate Coordinate::operator+(const Coordinate& obj) const {
     Coordinate result;
     result.x = this->x + obj.x;
