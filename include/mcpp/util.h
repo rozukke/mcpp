@@ -45,15 +45,6 @@ struct Coordinate {
           z(static_cast<int>(z)) {}
 
     /**
-     * @brief Constructs a Coordinate object from a Coordinate2D object and a
-     * y value.
-     *
-     * @param coord The Coordinate2D object.
-     * @param y The y value.
-     */
-    constexpr Coordinate(const Coordinate2D& coord, int y);
-
-    /**
      * @brief Adds two Coordinate objects.
      *
      * @param obj The Coordinate object to add.
@@ -145,6 +136,15 @@ struct Coordinate2D {
     constexpr Coordinate2D(const Coordinate& coord) : x(coord.x), z(coord.z) {}
 
     /**
+     * @brief Constructs a Coordinate object from a Coordinate2D object and a
+     * y value.
+     *
+     * @param coord The Coordinate2D object.
+     * @param y The y value.
+     */
+    constexpr Coordinate withHeight(int y);
+
+    /**
      * @brief Adds two Coordinate2D objects.
      *
      * @param obj The Coordinate2D object to add.
@@ -201,8 +201,9 @@ struct Coordinate2D {
     int z;
 };
 
-constexpr Coordinate::Coordinate(const Coordinate2D& coord, int y)
-    : x(coord.x), y(y), z(coord.z) {}
+constexpr Coordinate Coordinate2D::withHeight(int y) {
+    return Coordinate(this->x, y, this->z);
+}
 
 /**
  * Stores a 3D cuboid of BlockTypes while preserving their relative location to
