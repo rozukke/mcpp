@@ -112,7 +112,7 @@ TEST_CASE("Test the main mcpp class") {
     SUBCASE("getHeight") {
         Coordinate heightTestLoc(300, 200, 300);
         mc.setBlock(heightTestLoc, Blocks::DIRT);
-        auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
+        auto height = mc.getHeight(heightTestLoc);
         CHECK_EQ(height, heightTestLoc.y);
 
         // Clean up

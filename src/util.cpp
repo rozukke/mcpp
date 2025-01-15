@@ -44,6 +44,42 @@ std::ostream& operator<<(std::ostream& out, const Coordinate& coord) {
     return out;
 }
 
+Coordinate2D Coordinate2D::operator+(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x + obj.x;
+    result.z = this->z + obj.z;
+    return result;
+}
+
+bool Coordinate2D::operator==(const Coordinate2D& obj) const {
+    return (this->x == obj.x) && (this->z == obj.z);
+}
+
+bool Coordinate2D::operator!=(const Coordinate2D& obj) const {
+    return !(*this == obj);
+}
+
+Coordinate2D Coordinate2D::operator-(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x - obj.x;
+    result.z = this->z - obj.z;
+    return result;
+}
+
+Coordinate2D Coordinate2D::clone() const {
+    return Coordinate2D(this->x, this->z);
+}
+
+std::string to_string(const Coordinate2D& coord) {
+    using std::to_string;
+    return "(" + to_string(coord.x) + "," + to_string(coord.z) + ")";
+}
+
+std::ostream& operator<<(std::ostream& out, const Coordinate2D& coord) {
+    out << to_string(coord);
+    return out;
+}
+
 Chunk::Chunk(const Coordinate& loc1, const Coordinate& loc2,
              const std::vector<BlockType>& block_list) {
     Coordinate min{std::min(loc1.x, loc2.x), std::min(loc1.y, loc2.y),
@@ -108,7 +144,7 @@ int Chunk::z_len() const { return this->_z_len; }
 
 Coordinate Chunk::base_pt() const { return this->_base_pt.clone(); }
 
-HeightMap::HeightMap(const Coordinate& loc1, const Coordinate& loc2,
+HeightMap::HeightMap(const Coordinate2D& loc1, const Coordinate2D& loc2,
                      const std::vector<int>& heights) {
     _base_pt = Coordinate{
         std::min(loc1.x, loc2.x),
@@ -155,7 +191,7 @@ int HeightMap::get(int x, int z) const {
     return raw_heights[x * _z_len + z];
 }
 
-int HeightMap::get_worldspace(const Coordinate& loc) const {
+int HeightMap::get_worldspace(const Coordinate2D& loc) const {
     return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 
@@ -167,6 +203,6 @@ int HeightMap::x_len() const { return this->_x_len; }
 
 int HeightMap::z_len() const { return this->_z_len; }
 
-Coordinate HeightMap::base_pt() const { return this->_base_pt.clone(); }
+Coordinate2D HeightMap::base_pt() const { return this->_base_pt.clone(); }
 
 } // namespace mcpp

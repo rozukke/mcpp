@@ -112,13 +112,19 @@ Chunk MinecraftConnection::getBlocks(const Coordinate& loc1,
     return Chunk{loc1, loc2, result};
 }
 
-int MinecraftConnection::getHeight(int x, int z) {
-    std::string returnValue = conn->sendReceiveCommand("world.getHeight", x, z);
+int MinecraftConnection::getHeight(Coordinate2D loc) {
+    std::string returnValue =
+        conn->sendReceiveCommand("world.getHeight", loc.x, loc.z);
     return stoi(returnValue);
 }
 
-const HeightMap MinecraftConnection::getHeights(const Coordinate& loc1,
-                                                const Coordinate& loc2) {
+Coordinate MinecraftConnection::fillHeight(Coordinate2D loc) {
+    int y = this->getHeight(loc);
+    return Coordinate(loc.x, y, loc.z);
+}
+
+const HeightMap MinecraftConnection::getHeights(const Coordinate2D& loc1,
+                                                const Coordinate2D& loc2) {
     std::string returnValue = conn->sendReceiveCommand(
         "world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
