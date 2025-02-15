@@ -9,6 +9,9 @@ project(mcpp VERSION ${PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Used for clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -72,3 +75,5 @@ target_link_libraries(video_mc ${PROJECT_NAME})
 target_link_libraries(obj_mc ${PROJECT_NAME})
 
 add_custom_target(examples DEPENDS hello_minecraft pyramid game_of_life minesweeper video_mc obj_mc)
+
+
