@@ -2,20 +2,22 @@
 
 #include <cmath>
 #include <sstream>
+#include <stdexcept>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 template <typename T> void split_response(const std::string& str, std::vector<T>& vec) {
+  static_assert(std::is_integral_v<T>, "T must be an integral type.");
+
   std::stringstream ss(str);
   std::string item;
+
   while (std::getline(ss, item, ',')) {
-    if constexpr (std::is_floating_point_v<T>) {
-      vec.push_back(static_cast<T>(std::stod(item)));
-    } else if constexpr (std::is_integral_v<T>) {
-      double item_double = std::stod(item);
-      vec.push_back(static_cast<T>(std::floor(item_double)));
-    } else {
-      static_assert(std::is_arithmetic_v<T>, "T must be an arithmetic type.");
+    try {
+      vec.push_back(static_cast<T>(std::stoll(item)));
+    } catch (const std::exception&) {
+      throw std::runtime_error("Server call returned malformed response string: " + str);
     }
   }
 }
