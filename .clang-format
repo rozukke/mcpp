@@ -1,3 +1,5 @@
 BasedOnStyle: LLVM
-IndentWidth: 4
+IndentWidth: 2
 PointerAlignment: Left
+ColumnLimit: 100
+AccessModifierOffset: -2
