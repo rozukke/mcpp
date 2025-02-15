@@ -15,7 +15,7 @@ template <typename T> void split_response(const std::string& str, std::vector<T>
 
   while (std::getline(ss, item, ',')) {
     try {
-      vec.push_back(static_cast<T>(std::stoll(item)));
+      vec.push_back(static_cast<T>(std::floor(std::stod(item))));
     } catch (const std::exception&) {
       throw std::runtime_error("Server call returned malformed response string: " + str);
     }
