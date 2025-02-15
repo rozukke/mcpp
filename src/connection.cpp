@@ -33,7 +33,7 @@ SocketConnection::SocketConnection(const std::string& address_str, uint16_t port
 }
 
 std::string SocketConnection::resolve_hostname(const std::string& hostname) {
-  struct addrinfo hints{};
+  struct addrinfo hints {};
   struct addrinfo* result;
 
   hints.ai_family = AF_INET;
