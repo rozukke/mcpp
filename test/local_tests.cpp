@@ -3,6 +3,7 @@
 #include "../include/mcpp/block.h"
 #include "../include/mcpp/util.h"
 #include "doctest.h"
+#include <random>
 
 using namespace mcpp;
 
@@ -35,7 +36,25 @@ TEST_CASE("Test Coordinate class") {
 
         CHECK_EQ(testCoord, testCoordRHS);
     }
-
+    SUBCASE("Test hash no collision"){
+        std::set<size_t> hashes;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(-3e7, 3e7);
+        std::uniform_int_distribution<int> dis2(-64, 256);
+    
+        Coordinate hashing;
+        for (int i = 0; i < 100; i++) {
+            Coordinate testCoord(dis(gen), dis2(gen), dis(gen));
+            size_t hash = hashing(testCoord);
+            if (hashes.count(hash)) {
+                FAIL("Collision");
+            }
+            hashes.insert(hash);
+        }
+        CHECK_EQ(hashes.size(), 100);
+        
+    }
     SUBCASE("Test not equals") {
         Coordinate testCoord(3, 2, 1);
         Coordinate testCoordRHS(2, 2, 1);

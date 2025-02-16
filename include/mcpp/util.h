@@ -75,6 +75,9 @@ struct Coordinate {
      */
     [[nodiscard]] Coordinate clone() const;
 
+
+    std::size_t operator()(const Coordinate& obj) const;
+
     /**
      * @brief Outputs the Coordinate object to an ostream.
      *

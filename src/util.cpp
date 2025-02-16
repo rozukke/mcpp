@@ -40,6 +40,20 @@ Coordinate Coordinate::operator-(const Coordinate& obj) const {
     result.z = this->z - obj.z;
     return result;
 }
+std::size_t Coordinate::operator()(const mcpp::Coordinate& obj) const {
+    // Minecraft coordinate bounds
+    int lower = -3e7, upper = 3e7;
+    size_t base = upper - lower + 1;
+
+    // Convert coordinate attributes to non-negative values
+    size_t nx = obj.x - lower;
+    size_t ny = obj.y - lower;
+    size_t nz = obj.z - lower;
+
+    // Combine and weight coordinate values using the boundary range
+    return nx * base * base + ny * base + nz;
+}
+
 
 Coordinate Coordinate::clone() const {
     return Coordinate(this->x, this->y, this->z);
