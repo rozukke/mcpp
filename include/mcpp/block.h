@@ -12,7 +12,8 @@ class BlockType {
     int id;
     int mod;
 
-    constexpr BlockType(int id = 0, int modifier = 0) : id(id), mod(modifier){};
+    constexpr BlockType(int id = 0, int modifier = 0)
+        : id(id), mod(modifier) {};
 
     /**
      * @brief Equality comparison operator.
@@ -40,7 +41,7 @@ class BlockType {
     bool operator!=(const BlockType& other) const;
 
     /**
-     * @brief Stream insertion operator for outputting the BlockType to an
+     * @brief Stram insertion operator for outputting the BlockType to an
      * output stream.
      *
      * @param out The output stream to write to.
