@@ -3,10 +3,10 @@ name: CI
 on:
     push:
         branches: main
-        paths: ['**.cpp', '**.h', '**CMakeLists.txt'] 
+        paths: ['.github/workflows/**', '**.cpp', '**.h', '**CMakeLists.txt'] 
     pull_request:
         branches: main
-        paths: ['**.cpp', '**.h', '**CMakeLists.txt']
+        paths: ['.github/workflows/**','**.cpp', '**.h', '**CMakeLists.txt']
 
 jobs:
     build-and-test:
@@ -38,7 +38,7 @@ jobs:
 
             # Start and join the Spigot Server
             - name: Set up Minecraft testing environment
-              uses: nhatdongdang/mc-env-setup@v1.1
+              uses: nhatdongdang/mc-env-setup@v1.2
 
             # Run the test suite using ctest
             - name: Run test suite
