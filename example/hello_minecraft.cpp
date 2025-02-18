@@ -3,8 +3,8 @@
 using namespace mcpp;
 
 int main() {
-    MinecraftConnection mc;
+  MinecraftConnection mc;
 
-    // Post chat to Minecraft
-    mc.postToChat("Hello, Minecraft!");
+  // Post chat to Minecraft
+  mc.postToChat("Hello, Minecraft!");
 }

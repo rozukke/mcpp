@@ -1,132 +1,122 @@
-#include "../include/mcpp/mcpp.h"
-
 #include <cmath>
 #include <string>
 #include <vector>
 
-using std::string_view;
+#include "../include/mcpp/mcpp.h"
+#include "connection.h"
+#include "util.h"
+
 using namespace std::string_literals;
-using namespace mcpp;
 
 namespace mcpp {
 
-void splitCommaStringToInts(const std::string& str, std::vector<int>& vec) {
-    std::stringstream ss(str);
-    std::string item;
-    while (std::getline(ss, item, ',')) {
-        // Fixes flooring issue w/ negative coordinates
-        double itemDouble = std::stod(item);
-        int itemFloored = static_cast<int>(std::floor(itemDouble));
-        vec.push_back(itemFloored);
-    }
+MinecraftConnection::MinecraftConnection(const std::string& address, uint16_t port) {
+  _conn = std::make_unique<SocketConnection>(address, port);
 }
 
-MinecraftConnection::MinecraftConnection(const std::string& address, int port) {
-    conn = std::make_unique<SocketConnection>(address, port);
-}
+MinecraftConnection::~MinecraftConnection() = default;
 
 void MinecraftConnection::postToChat(const std::string& message) {
-    conn->sendCommand("chat.post", message);
+  _conn->send_command("chat.post", message);
 }
 
 void MinecraftConnection::doCommand(const std::string& command) {
-    conn->sendCommand("player.doCommand", command);
+  _conn->send_command("player.doCommand", command);
 }
 
 void MinecraftConnection::setPlayerPosition(const Coordinate& pos) {
-    conn->sendCommand("player.setPos", pos.x, pos.y, pos.z);
+  _conn->send_command("player.setPos", pos.x, pos.y, pos.z);
 }
 
-Coordinate MinecraftConnection::getPlayerPosition() {
-    std::string returnString = conn->sendReceiveCommand("player.getPos", "");
-    std::vector<int> parsedInts;
-    splitCommaStringToInts(returnString, parsedInts);
-    return Coordinate(parsedInts[0], parsedInts[1], parsedInts[2]);
+Coordinate MinecraftConnection::getPlayerPosition() const {
+  std::string response = _conn->send_receive_command("player.getPos", "");
+  std::vector<int32_t> parsed;
+  split_response(response, parsed);
+  return {parsed[0], parsed[1], parsed[2]};
 }
 
 void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile) {
-    Coordinate newTile = tile;
-    newTile.y++;
-    setPlayerPosition(newTile);
+  Coordinate new_tile = tile;
+  new_tile.y++;
+  setPlayerPosition(new_tile);
 }
 
-Coordinate MinecraftConnection::getPlayerTilePosition() {
-    Coordinate playerTile = getPlayerPosition();
-    playerTile.y--;
-    return playerTile;
+Coordinate MinecraftConnection::getPlayerTilePosition() const {
+  Coordinate player_tile = getPlayerPosition();
+  player_tile.y--;
+  return player_tile;
 }
 
-void MinecraftConnection::setBlock(const Coordinate& loc,
-                                   const BlockType& blockType) {
-    conn->sendCommand("world.setBlock", loc.x, loc.y, loc.z, blockType.id,
-                      blockType.mod);
+void MinecraftConnection::setBlock(const Coordinate& loc, const BlockType& block_type) {
+  // Static cast required because of stupid ss default of uint8_t as char
+  _conn->send_command("world.setBlock", loc.x, loc.y, loc.z, static_cast<int>(block_type.id),
+                      static_cast<int>(block_type.mod));
 }
 
-void MinecraftConnection::setBlocks(const Coordinate& loc1,
-                                    const Coordinate& loc2,
-                                    const BlockType& blockType) {
-    auto [x, y, z] = loc1;
-    auto [x2, y2, z2] = loc2;
-    conn->sendCommand("world.setBlocks", x, y, z, x2, y2, z2, blockType.id,
-                      blockType.mod);
+void MinecraftConnection::setBlocks(const Coordinate& loc1, const Coordinate& loc2,
+                                    const BlockType& block_type) {
+  auto [x1, y1, z1] = loc1;
+  auto [x2, y2, z2] = loc2;
+  _conn->send_command("world.setBlocks", x1, y1, z1, x2, y2, z2, static_cast<int>(block_type.id),
+                      static_cast<int>(block_type.mod));
 }
 
-BlockType MinecraftConnection::getBlock(const Coordinate& loc) {
-    std::string returnString =
-        conn->sendReceiveCommand("world.getBlockWithData", loc.x, loc.y, loc.z);
-    std::vector<int> parsedInts;
-    splitCommaStringToInts(returnString, parsedInts);
+BlockType MinecraftConnection::getBlock(const Coordinate& loc) const {
+  std::string return_str =
+      _conn->send_receive_command("world.getBlockWithData", loc.x, loc.y, loc.z);
+  std::vector<uint8_t> parsed;
+  split_response(return_str, parsed);
 
-    // Values are id and mod
-    return {parsedInts[0], parsedInts[1]};
+  // Values are id and mod
+  return {parsed[0], parsed[1]};
 }
 
-Chunk MinecraftConnection::getBlocks(const Coordinate& loc1,
-                                     const Coordinate& loc2) {
-    std::string returnValue =
-        conn->sendReceiveCommand("world.getBlocksWithData", loc1.x, loc1.y,
-                                 loc1.z, loc2.x, loc2.y, loc2.z);
+Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) const {
+  std::string response = _conn->send_receive_command("world.getBlocksWithData", loc1.x, loc1.y,
+                                                     loc1.z, loc2.x, loc2.y, loc2.z);
 
-    // Received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and mod 2
-    std::vector<BlockType> result;
-    std::stringstream stream(returnValue);
+  // Received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and mod 2
+  std::vector<BlockType> result;
+  std::stringstream stream(response);
 
-    int id;
-    int data;
-    char delimiter;
-    while (stream >> id) {
-        stream >> delimiter;
-        if (delimiter == ',') {
-            stream >> data;
-            result.emplace_back(id, data);
-            stream >> delimiter;
-        }
-        if (delimiter == ';') {
-            continue;
-        }
-        if (delimiter == EOF) {
-            break;
-        }
+  // uint16_t because stupid << is overloaded to read first character instead
+  // of number for uint8_t raaaa
+  // This shouldn't return anything larger than a uint8_t anyway
+  uint16_t id;
+  uint16_t mod;
+  char delimiter;
+  while (stream >> id) {
+    stream >> delimiter;
+    if (delimiter == ',') {
+      stream >> mod;
+      result.emplace_back(id, mod);
+      stream >> delimiter;
     }
+    if (delimiter == ';') {
+      continue;
+    }
+    if (delimiter == EOF) {
+      break;
+    }
+  }
 
-    return Chunk{loc1, loc2, result};
+  return Chunk{loc1, loc2, result};
 }
 
-int MinecraftConnection::getHeight(int x, int z) {
-    std::string returnValue = conn->sendReceiveCommand("world.getHeight", x, z);
-    return stoi(returnValue);
+int MinecraftConnection::getHeight(int x, int z) const {
+  std::string response = _conn->send_receive_command("world.getHeight", x, z);
+  return stoi(response);
 }
 
-const HeightMap MinecraftConnection::getHeights(const Coordinate& loc1,
-                                                const Coordinate& loc2) {
-    std::string returnValue = conn->sendReceiveCommand(
-        "world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
+HeightMap MinecraftConnection::getHeights(const Coordinate& loc1, const Coordinate& loc2) const {
+  std::string response =
+      _conn->send_receive_command("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
-    // Returned in format "1,2,3,4,5"
-    std::vector<int> returnVector;
-    splitCommaStringToInts(returnValue, returnVector);
+  // Returned in format "1,2,3,4,5"
+  std::vector<int16_t> parsed;
+  split_response(response, parsed);
 
-    return HeightMap(loc1, loc2, returnVector);
+  return {loc1, loc2, parsed};
 }
 
 } // namespace mcpp

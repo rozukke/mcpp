@@ -1,8 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "../include/mcpp/block.h"
-#include "../include/mcpp/util.h"
+#include "../include/mcpp/coordinate.h"
 #include "doctest.h"
+
+// NOLINTBEGIN
 
 using namespace mcpp;
 
@@ -13,105 +15,99 @@ using namespace mcpp;
  */
 
 TEST_CASE("Test Coordinate class") {
-    SUBCASE("Test init") {
-        Coordinate testCoord;
-        CHECK_EQ(testCoord.x, 0);
-        CHECK_EQ(testCoord.y, 0);
-        CHECK_EQ(testCoord.z, 0);
-    }
+  SUBCASE("Test init") {
+    Coordinate test_coord;
+    CHECK_EQ(test_coord.x, 0);
+    CHECK_EQ(test_coord.y, 0);
+    CHECK_EQ(test_coord.z, 0);
+  }
 
-    SUBCASE("Test double init") {
-        Coordinate testCoord(1.5, 2.5, 3.5);
-        Coordinate testCoordFloat(1.5f, 2.5f, 3.5f);
-        Coordinate testCoordRHS(1, 2, 3);
+  SUBCASE("Test double init") {
+    Coordinate test_coord(1.5, 2.5, 3.5);
+    Coordinate test_coord_float(1.5F, 2.5F, 3.5F);
+    Coordinate test_coord_rhs(1, 2, 3);
 
-        CHECK_EQ(testCoord, testCoordRHS);
-        CHECK_EQ(testCoord, testCoordFloat);
-    }
+    CHECK_EQ(test_coord, test_coord_rhs);
+    CHECK_EQ(test_coord, test_coord_float);
+  }
 
-    SUBCASE("Test equals") {
-        Coordinate testCoord(3, 2, 1);
-        Coordinate testCoordRHS(3, 2, 1);
+  SUBCASE("Test equals") {
+    Coordinate testCoord(3, 2, 1);
+    Coordinate testCoordRHS(3, 2, 1);
 
-        CHECK_EQ(testCoord, testCoordRHS);
-    }
+    CHECK_EQ(testCoord, testCoordRHS);
+  }
 
-    SUBCASE("Test not equals") {
-        Coordinate testCoord(3, 2, 1);
-        Coordinate testCoordRHS(2, 2, 1);
+  SUBCASE("Test not equals") {
+    Coordinate testCoord(3, 2, 1);
+    Coordinate testCoordRHS(2, 2, 1);
 
-        CHECK(testCoord != testCoordRHS);
-        CHECK_NE(testCoord, testCoordRHS);
-    }
+    CHECK(testCoord != testCoordRHS);
+    CHECK_NE(testCoord, testCoordRHS);
+  }
 
-    SUBCASE("Test add") {
-        Coordinate testCoord(3, 2, 1);
-        Coordinate testCoordRHS(1, 2, 3);
-        Coordinate result(4, 4, 4);
+  SUBCASE("Test add") {
+    Coordinate testCoord(3, 2, 1);
+    Coordinate testCoordRHS(1, 2, 3);
+    Coordinate result(4, 4, 4);
 
-        CHECK_EQ((testCoord + testCoordRHS), result);
-    }
+    CHECK_EQ((testCoord + testCoordRHS), result);
+  }
 
-    SUBCASE("Test subtract") {
-        Coordinate testCoord(1, 2, 3);
-        Coordinate testCoordRHS(0, 2, 4);
+  SUBCASE("Test subtract") {
+    Coordinate testCoord(1, 2, 3);
+    Coordinate testCoordRHS(0, 2, 4);
 
-        Coordinate result(1, 0, -1);
+    Coordinate result(1, 0, -1);
 
-        CHECK_EQ((testCoord - testCoordRHS), result);
-    }
+    CHECK_EQ((testCoord - testCoordRHS), result);
+  }
 
-    SUBCASE("Test clone") {
-        Coordinate testCoord(1, 2, 3);
-        Coordinate testCoordClone = testCoord.clone();
-
-        CHECK_EQ(testCoord, testCoordClone);
-        CHECK_NE(&testCoord, &testCoordClone);
-    }
-
-    SUBCASE("Test print") {
-        Coordinate testCoord(1, 2, 3);
-        std::stringstream ss;
-        ss << testCoord;
-        CHECK_EQ(ss.str(), "(1,2,3)");
-    }
+  SUBCASE("Test print") {
+    Coordinate testCoord(1, 2, 3);
+    std::stringstream ss;
+    ss << testCoord;
+    CHECK_EQ(ss.str(), "(1,2,3)");
+  }
 }
 
 TEST_CASE("Test block class") {
-    SUBCASE("Default ctor") {
-        BlockType def;
-        CHECK_EQ(def.id, 0);
-        CHECK_EQ(def.mod, 0);
-    }
+  SUBCASE("Default ctor") {
+    BlockType def;
+    CHECK_EQ(def.id, 0);
+    CHECK_EQ(def.mod, 0);
+  }
 
-    SUBCASE("Test equality") {
-        BlockType testBlock(10, 2);
-        BlockType testBlockRHS(10, 2);
-        CHECK_EQ(testBlock, testBlockRHS);
-    }
+  SUBCASE("Test equality") {
+    BlockType testBlock(10, 2);
+    BlockType testBlockRHS(10, 2);
+    CHECK_EQ(testBlock, testBlockRHS);
+  }
 
-    SUBCASE("Test non equality") {
-        BlockType testBlock(10);
-        BlockType testBlockRHS(11);
-        CHECK(testBlock != testBlockRHS);
-        CHECK_NE(testBlock, testBlockRHS);
+  SUBCASE("Test non equality") {
+    BlockType testBlock(10);
+    BlockType testBlockRHS(11);
+    CHECK(testBlock != testBlockRHS);
+    CHECK_NE(testBlock, testBlockRHS);
 
-        BlockType testBlockWithMod(10, 2);
-        BlockType testBlockWithModRHS(10, 3);
-        CHECK(testBlockWithMod != testBlockWithModRHS);
-        CHECK_NE(testBlockWithMod, testBlockWithModRHS);
-    }
+    BlockType testBlockWithMod(10, 2);
+    BlockType testBlockWithModRHS(10, 3);
+    CHECK(testBlockWithMod != testBlockWithModRHS);
+    CHECK_NE(testBlockWithMod, testBlockWithModRHS);
+  }
 
-    SUBCASE("Test withMod") {
-        BlockType testBlock(10);
-        BlockType testBlockRHS(10, 2);
-        CHECK_EQ(testBlock.withMod(2), testBlockRHS);
-    }
+  SUBCASE("Test withMod") {
+    BlockType testBlock(10);
+    BlockType testBlockRHS(10, 2);
+    CHECK_EQ(testBlock.with_mod(2), testBlockRHS);
+  }
 
-    SUBCASE("Test print") {
-        BlockType testBlock(2, 3);
-        std::stringstream ss;
-        ss << testBlock;
-        CHECK_EQ(ss.str(), "[2, 3]");
-    }
+  SUBCASE("Test print") {
+    BlockType testBlock(2, 3);
+    std::stringstream ss;
+    ss << testBlock;
+    CHECK_EQ(ss.str(), "[2, 3]");
+  }
 }
+
+// NOLINTEND
