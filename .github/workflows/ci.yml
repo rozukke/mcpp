@@ -36,6 +36,10 @@ jobs:
               working-directory: ./build
               run: make examples
 
+            - name: Install dotnet
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: '7.0.0'
             # Start and join the Spigot Server
             - name: Set up Minecraft testing environment
               uses: nhatdongdang/mc-env-setup@v1.1
