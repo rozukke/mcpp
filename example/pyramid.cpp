@@ -34,7 +34,7 @@ int main() {
     int min_height = *std::min_element(heights.begin(), heights.end());
 
     // Build rings, diminishing up to pyramid height
-    mcpp::Coordinate base_pt = heights.base_pt().withHeight(min_height);
+    mcpp::Coordinate base_pt = heights.base_pt().with_height(min_height);
     int side_len = pyramid_base_len;
     for (int i = 0; i < PYRAMID_HEIGHT; i++) {
         make_ring(base_pt + mcpp::Coordinate(i, i, i), side_len - (i * 2));

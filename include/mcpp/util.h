@@ -142,7 +142,7 @@ struct Coordinate2D {
      * @param coord The Coordinate2D object.
      * @param y The y value.
      */
-    constexpr Coordinate withHeight(int y) const;
+    constexpr Coordinate with_height(int y) const;
 
     /**
      * @brief Adds two Coordinate2D objects.
@@ -201,7 +201,7 @@ struct Coordinate2D {
     int z;
 };
 
-constexpr Coordinate Coordinate2D::withHeight(int y) const {
+constexpr Coordinate Coordinate2D::with_height(int y) const {
     return Coordinate(this->x, y, this->z);
 }
 
