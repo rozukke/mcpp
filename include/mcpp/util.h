@@ -181,13 +181,6 @@ struct Coordinate2D {
     Coordinate2D operator-(const Coordinate2D& obj) const;
 
     /**
-     * @brief Creates a copy of the Coordinate2D object.
-     *
-     * @return A new Coordinate2D object that is a copy of the current object.
-     */
-    [[nodiscard]] Coordinate2D clone() const;
-
-    /**
      * @brief Outputs the Coordinate2D object to an ostream.
      *
      * @param out The output stream.

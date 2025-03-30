@@ -74,10 +74,6 @@ Coordinate2D Coordinate2D::operator-(const Coordinate2D& obj) const {
     return result;
 }
 
-Coordinate2D Coordinate2D::clone() const {
-    return Coordinate2D(this->x, this->z);
-}
-
 std::string to_string(const Coordinate2D& coord) {
     using std::to_string;
     return "(" + to_string(coord.x) + "," + to_string(coord.z) + ")";
@@ -175,7 +171,7 @@ HeightMap& HeightMap::operator=(const HeightMap& other) noexcept {
         delete[] raw_heights;
 
         // Copy data from the other object
-        _base_pt = other._base_pt.clone();
+        _base_pt = other._base_pt;
         _x_len = other._x_len;
         _z_len = other._z_len;
 
@@ -211,6 +207,6 @@ int HeightMap::x_len() const { return this->_x_len; }
 
 int HeightMap::z_len() const { return this->_z_len; }
 
-Coordinate2D HeightMap::base_pt() const { return this->_base_pt.clone(); }
+Coordinate2D HeightMap::base_pt() const { return this->_base_pt; }
 
 } // namespace mcpp
