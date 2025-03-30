@@ -52,6 +52,10 @@ std::ostream& operator<<(std::ostream& out, const Coordinate& coord) {
     return out;
 }
 
+Coordinate Coordinate2D::with_height(int y) const {
+    return Coordinate(this->x, y, this->z);
+}
+
 Coordinate2D Coordinate2D::operator+(const Coordinate2D& obj) const {
     Coordinate2D result;
     result.x = this->x + obj.x;

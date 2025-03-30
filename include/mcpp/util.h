@@ -144,7 +144,7 @@ struct Coordinate2D {
      * @param coord The Coordinate2D object.
      * @param y The y value.
      */
-    constexpr Coordinate with_height(int y) const;
+    Coordinate with_height(int y) const;
 
     /**
      * @brief Adds two Coordinate2D objects.
@@ -193,10 +193,6 @@ struct Coordinate2D {
     int x;
     int z;
 };
-
-constexpr Coordinate Coordinate2D::with_height(int y) const {
-    return Coordinate(this->x, y, this->z);
-}
 
 /**
  * Stores a 3D cuboid of BlockTypes while preserving their relative location to
