@@ -53,6 +53,8 @@ struct Coordinate {
      */
     Coordinate operator+(const Coordinate& obj) const;
 
+    Coordinate operator+(const Coordinate2D& obj) const;
+
     /**
      * @brief Checks if two Coordinate objects are equal.
      *
@@ -152,8 +154,6 @@ struct Coordinate2D {
      * coordinates.
      */
     Coordinate2D operator+(const Coordinate2D& obj) const;
-
-    // TODO: Add Coordinate + Coordinate2D
 
     /**
      * @brief Checks if two Coordinate2D objects are equal.

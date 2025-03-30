@@ -13,6 +13,14 @@ Coordinate Coordinate::operator+(const Coordinate& obj) const {
     return result;
 }
 
+Coordinate Coordinate::operator+(const Coordinate2D& obj) const {
+    Coordinate result;
+    result.x = this->x + obj.x;
+    result.y = this->y;
+    result.z = this->z + obj.z;
+    return result;
+}
+
 bool Coordinate::operator==(const Coordinate& obj) const {
     return (this->x == obj.x) && (this->y == obj.y) && (this->z == obj.z);
 }
