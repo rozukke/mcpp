@@ -75,6 +75,15 @@ struct Coordinate {
   Coordinate operator-(const Coordinate& obj) const;
 
   /**
+   * @brief Implements hash algorithm for Coordinate object using non-negative
+   * mapping and weighted coordinate values.
+   *
+   * @param obj The Coordinate object to hash.
+   * @return Hash of Coordinate object.
+   */
+  std::size_t operator()(const Coordinate& obj) const;
+
+  /**
    * @brief Outputs the Coordinate object to an ostream.
    *
    * @param out The output stream.

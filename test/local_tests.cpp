@@ -3,6 +3,7 @@
 #include "../include/mcpp/block.h"
 #include "../include/mcpp/coordinate.h"
 #include "doctest.h"
+#include <random>
 
 // NOLINTBEGIN
 
@@ -20,6 +21,22 @@ TEST_CASE("Test Coordinate class") {
     CHECK_EQ(test_coord.x, 0);
     CHECK_EQ(test_coord.y, 0);
     CHECK_EQ(test_coord.z, 0);
+  }
+
+  SUBCASE("Test hash no collision") {
+    const int seed = 12345;
+    std::set<size_t> hashes;
+    std::mt19937 gen(seed);
+    std::uniform_int_distribution<int> dis(-3e7, 3e7);
+    std::uniform_int_distribution<int> dis2(-64, 256);
+
+    Coordinate hashing;
+    for (int i = 0; i < 100; i++) {
+      Coordinate testCoord(dis(gen), dis2(gen), dis(gen));
+      size_t hash = hashing(testCoord);
+      hashes.insert(hash);
+    }
+    CHECK_EQ(hashes.size(), 100);
   }
 
   SUBCASE("Test double init") {
