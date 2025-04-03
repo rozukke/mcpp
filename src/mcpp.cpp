@@ -16,54 +16,54 @@ MinecraftConnection::MinecraftConnection(const std::string& address, uint16_t po
 
 MinecraftConnection::~MinecraftConnection() = default;
 
-void MinecraftConnection::postToChat(const std::string& message) {
+void MinecraftConnection::post_to_chat(const std::string& message) {
   _conn->send_command("chat.post", message);
 }
 
-void MinecraftConnection::doCommand(const std::string& command) {
-  _conn->send_command("player.doCommand", command);
+void MinecraftConnection::do_command(const std::string& command) {
+  _conn->send_command("player.do_command", command);
 }
 
-void MinecraftConnection::setPlayerPosition(const Coordinate& pos) {
+void MinecraftConnection::set_player_position(const Coordinate& pos) {
   _conn->send_command("player.setPos", pos.x, pos.y, pos.z);
 }
 
-Coordinate MinecraftConnection::getPlayerPosition() const {
+Coordinate MinecraftConnection::get_player_position() const {
   std::string response = _conn->send_receive_command("player.getPos", "");
   std::vector<int32_t> parsed;
   split_response(response, parsed);
   return {parsed[0], parsed[1], parsed[2]};
 }
 
-void MinecraftConnection::setPlayerTilePosition(const Coordinate& tile) {
+void MinecraftConnection::set_player_tile_position(const Coordinate& tile) {
   Coordinate new_tile = tile;
   new_tile.y++;
-  setPlayerPosition(new_tile);
+  set_player_position(new_tile);
 }
 
-Coordinate MinecraftConnection::getPlayerTilePosition() const {
-  Coordinate player_tile = getPlayerPosition();
+Coordinate MinecraftConnection::get_player_tile_position() const {
+  Coordinate player_tile = get_player_position();
   player_tile.y--;
   return player_tile;
 }
 
-void MinecraftConnection::setBlock(const Coordinate& loc, const BlockType& block_type) {
+void MinecraftConnection::set_block(const Coordinate& loc, const BlockType& block_type) {
   // Static cast required because of stupid ss default of uint8_t as char
-  _conn->send_command("world.setBlock", loc.x, loc.y, loc.z, static_cast<int>(block_type.id),
+  _conn->send_command("world.set_block", loc.x, loc.y, loc.z, static_cast<int>(block_type.id),
                       static_cast<int>(block_type.mod));
 }
 
-void MinecraftConnection::setBlocks(const Coordinate& loc1, const Coordinate& loc2,
+void MinecraftConnection::set_blocks(const Coordinate& loc1, const Coordinate& loc2,
                                     const BlockType& block_type) {
   auto [x1, y1, z1] = loc1;
   auto [x2, y2, z2] = loc2;
-  _conn->send_command("world.setBlocks", x1, y1, z1, x2, y2, z2, static_cast<int>(block_type.id),
+  _conn->send_command("world.set_blocks", x1, y1, z1, x2, y2, z2, static_cast<int>(block_type.id),
                       static_cast<int>(block_type.mod));
 }
 
-BlockType MinecraftConnection::getBlock(const Coordinate& loc) const {
+BlockType MinecraftConnection::get_block(const Coordinate& loc) const {
   std::string return_str =
-      _conn->send_receive_command("world.getBlockWithData", loc.x, loc.y, loc.z);
+      _conn->send_receive_command("world.get_blockWithData", loc.x, loc.y, loc.z);
   std::vector<uint8_t> parsed;
   split_response(return_str, parsed);
 
@@ -71,8 +71,8 @@ BlockType MinecraftConnection::getBlock(const Coordinate& loc) const {
   return {parsed[0], parsed[1]};
 }
 
-Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& loc2) const {
-  std::string response = _conn->send_receive_command("world.getBlocksWithData", loc1.x, loc1.y,
+Chunk MinecraftConnection::get_blocks(const Coordinate& loc1, const Coordinate& loc2) const {
+  std::string response = _conn->send_receive_command("world.get_blocksWithData", loc1.x, loc1.y,
                                                      loc1.z, loc2.x, loc2.y, loc2.z);
 
   // Received in format 1,2;1,2;1,2 where 1,2 is a block of type 1 and mod 2
@@ -103,14 +103,14 @@ Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& l
   return Chunk{loc1, loc2, result};
 }
 
-int MinecraftConnection::getHeight(int x, int z) const {
-  std::string response = _conn->send_receive_command("world.getHeight", x, z);
+int MinecraftConnection::get_height(int x, int z) const {
+  std::string response = _conn->send_receive_command("world.get_height", x, z);
   return stoi(response);
 }
 
-HeightMap MinecraftConnection::getHeights(const Coordinate& loc1, const Coordinate& loc2) const {
+HeightMap MinecraftConnection::get_heights(const Coordinate& loc1, const Coordinate& loc2) const {
   std::string response =
-      _conn->send_receive_command("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
+      _conn->send_receive_command("world.get_heights", loc1.x, loc1.z, loc2.x, loc2.z);
 
   // Returned in format "1,2,3,4,5"
   std::vector<int16_t> parsed;

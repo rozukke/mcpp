@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
   mcpp::MinecraftConnection mc;
 
   Model* model = new Model(filename);
-  model->SetPosition(mc.getPlayerPosition());
+  model->SetPosition(mc.get_player_position());
   model->Scale(scale);
   model->BuildModel(mc);      // Fills the model
   model->BuildPointCloud(mc); // Places blocks at vertices
@@ -120,7 +120,7 @@ void Model::BuildPointCloud(mcpp::MinecraftConnection& mc) {
   for (const Vec3& vertex : _vertices) {
     mcpp::Coordinate blockPosition =
         mcpp::Coordinate(_position.x + vertex.x, _position.y + vertex.y, _position.z + vertex.z);
-    mc.setBlock(blockPosition, mcpp::Blocks::GRAY_WOOL);
+    mc.set_block(blockPosition, mcpp::Blocks::GRAY_WOOL);
   }
 }
 
@@ -147,7 +147,7 @@ void Model::BuildModel(mcpp::MinecraftConnection& mc) {
         if (IsWithin(position)) {
           mcpp::Coordinate blockPosition =
               mcpp::Coordinate(_position.x + x, _position.y + y, _position.z + z);
-          mc.setBlock(blockPosition, mcpp::Blocks::GRAY_CONCRETE);
+          mc.set_block(blockPosition, mcpp::Blocks::GRAY_CONCRETE);
         }
       }
     }

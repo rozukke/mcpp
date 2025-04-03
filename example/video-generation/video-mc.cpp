@@ -159,7 +159,7 @@ void Video::Play(mcpp::MinecraftConnection& mc) {
   _optionColors.push_back(Pixel{228, 236, 253}); // LIGHT BLUE WOOL
   _optionColors.push_back(Pixel{160, 167, 167}); // LIGHT GRAY WOOL
 
-  _position = mc.getPlayerPosition();
+  _position = mc.get_player_position();
   _position.y += (_height / _scaleFactor) / 2;
   _position.z -= std::max((_width / _scaleFactor) / 2, (_height / _scaleFactor) / 2);
   _position.x += std::min((_width / _scaleFactor) / 2, 16);
@@ -190,7 +190,7 @@ void Video::DisplayFrame(size_t index, mcpp::MinecraftConnection& mc) {
         pixelPosition.z += (i % _width) / _scaleFactor;
         pixelPosition.y -= (i / _width) / _scaleFactor;
 
-        mc.setBlock(pixelPosition, blockType);
+        mc.set_block(pixelPosition, blockType);
       }
     }
   }

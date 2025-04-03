@@ -10,11 +10,11 @@ mcpp::MinecraftConnection mc;
 
 void make_ring(mcpp::Coordinate base_pt, int side_len) {
   // Flat plane
-  mc.setBlocks(base_pt, base_pt + mcpp::Coordinate(side_len, 0, side_len), mcpp::Blocks::SANDSTONE);
+  mc.set_blocks(base_pt, base_pt + mcpp::Coordinate(side_len, 0, side_len), mcpp::Blocks::SANDSTONE);
 
   // Air inside to make border
   base_pt = base_pt + mcpp::Coordinate(1, 0, 1);
-  mc.setBlocks(base_pt, base_pt + mcpp::Coordinate(side_len - 2, 0, side_len - 2),
+  mc.set_blocks(base_pt, base_pt + mcpp::Coordinate(side_len - 2, 0, side_len - 2),
                mcpp::Blocks::AIR);
 }
 
@@ -23,7 +23,7 @@ int main() {
 
   // Get heights of build area
   mcpp::HeightMap heights =
-      mc.getHeights(ORIGIN, ORIGIN + mcpp::Coordinate(pyramid_base_len, 0, pyramid_base_len));
+      mc.get_heights(ORIGIN, ORIGIN + mcpp::Coordinate(pyramid_base_len, 0, pyramid_base_len));
 
   // Use minimum height of the area as the lowest point on the pyramid
   int min_height = *std::min_element(heights.begin(), heights.end());
