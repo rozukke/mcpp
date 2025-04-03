@@ -30,32 +30,32 @@ TEST_CASE("Socket connection test") {
   }
 
   SUBCASE("Test receive") {
-    tcp_conn.send("world.set_block(100,100,100,30)\n");
-    tcp_conn.send("world.get_block(100,100,100)\n");
+    tcp_conn.send("world.setBlock(100,100,100,30)\n");
+    tcp_conn.send("world.getBlock(100,100,100)\n");
     std::string return_str = tcp_conn.recv();
     CHECK_EQ(return_str, "30");
-    tcp_conn.send("world.set_block(100,100,100,0)\n");
+    tcp_conn.send("world.setBlock(100,100,100,0)\n");
   }
 
   SUBCASE("Repeated receive") {
-    tcp_conn.send("world.set_block(100,100,100,29)\n");
-    tcp_conn.send("world.get_block(100,100,100)\n");
+    tcp_conn.send("world.setBlock(100,100,100,29)\n");
+    tcp_conn.send("world.getBlock(100,100,100)\n");
     std::string return_str = tcp_conn.recv();
     CHECK_EQ(return_str, "29");
-    tcp_conn.send("world.set_block(100,100,100,0)\n");
+    tcp_conn.send("world.setBlock(100,100,100,0)\n");
   }
 
   SUBCASE("Send command") { tcp_conn.send_command("chat.post", "test message"); }
 
   SUBCASE("Send receive command") {
-    tcp_conn.send_command("world.set_block", 100, 100, 100, 26);
-    auto result = tcp_conn.send_receive_command("world.get_block", 100, 100, 100);
+    tcp_conn.send_command("world.setBlock", 100, 100, 100, 26);
+    auto result = tcp_conn.send_receive_command("world.getBlock", 100, 100, 100);
     CHECK_EQ(result, "26");
 
-    tcp_conn.send_command("world.set_block", 100, 100, 100, 25);
-    result = tcp_conn.send_receive_command("world.get_block", 100, 100, 100);
+    tcp_conn.send_command("world.setBlock", 100, 100, 100, 25);
+    result = tcp_conn.send_receive_command("world.getBlock", 100, 100, 100);
     CHECK_EQ(result, "25");
-    tcp_conn.send_command("world.set_block", 100, 100, 100, 0);
+    tcp_conn.send_command("world.setBlock", 100, 100, 100, 0);
   }
 
   // TODO: This is no longer the same size for whatever reason. Please fix or
