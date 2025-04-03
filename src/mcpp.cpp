@@ -54,7 +54,7 @@ void MinecraftConnection::set_block(const Coordinate& loc, const BlockType& bloc
 }
 
 void MinecraftConnection::set_blocks(const Coordinate& loc1, const Coordinate& loc2,
-                                    const BlockType& block_type) {
+                                     const BlockType& block_type) {
   auto [x1, y1, z1] = loc1;
   auto [x2, y2, z2] = loc2;
   _conn->send_command("world.setBlocks", x1, y1, z1, x2, y2, z2, static_cast<int>(block_type.id),
