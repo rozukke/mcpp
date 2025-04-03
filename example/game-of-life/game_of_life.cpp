@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 }
 
 Life::Life(int width, int depth) : width(width), depth(depth), isRunning(false), delay(250) {
-  buildPosition = mc.getPlayerPosition();
+  buildPosition = mc.get_player_position();
   buildPosition.y -= 5;
   buildPosition.x -= width / 2;
   buildPosition.z -= depth / 2;
@@ -75,15 +75,15 @@ Life::Life(int width, int depth) : width(width), depth(depth), isRunning(false),
     }
   }
 
-  mc.doCommand("clear @p");
-  mc.doCommand("give @p minecraft:white_concrete");
-  mc.doCommand("give @p minecraft:black_concrete");
-  mc.doCommand("give @p minecraft:green_concrete");
-  mc.doCommand("give @p minecraft:red_concrete");
-  mc.doCommand("give @p minecraft:yellow_concrete");
-  mc.doCommand("give @p minecraft:blue_concrete");
-  mc.doCommand("give @p minecraft:pink_concrete");
-  mc.doCommand("give @p minecraft:barrier");
+  mc.do_command("clear @p");
+  mc.do_command("give @p minecraft:white_concrete");
+  mc.do_command("give @p minecraft:black_concrete");
+  mc.do_command("give @p minecraft:green_concrete");
+  mc.do_command("give @p minecraft:red_concrete");
+  mc.do_command("give @p minecraft:yellow_concrete");
+  mc.do_command("give @p minecraft:blue_concrete");
+  mc.do_command("give @p minecraft:pink_concrete");
+  mc.do_command("give @p minecraft:barrier");
 }
 
 Life::~Life() {
@@ -95,7 +95,7 @@ Life::~Life() {
 
 void Life::Update() {
   // check for actions
-  mcpp::Chunk chunk = mc.getBlocks(upperBuildPosition, upperBounds);
+  mcpp::Chunk chunk = mc.get_blocks(upperBuildPosition, upperBounds);
   for (int x = 0; x < width; x++) {
     for (int z = 0; z < depth; z++) {
       mcpp::BlockType block = chunk.get(x, 0, z);
@@ -103,39 +103,39 @@ void Life::Update() {
       mcpp::Coordinate position(upperBuildPosition.x + x, upperBuildPosition.y,
                                 upperBuildPosition.z + z);
       if (block != mcpp::Blocks::AIR) {
-        mc.setBlock(position, mcpp::Blocks::AIR);
+        mc.set_block(position, mcpp::Blocks::AIR);
       }
 
       if (block == PLAY_BLOCK) {
         Play();
-        mc.postToChat("Playing");
+        mc.post_to_chat("Playing");
       } else if (block == PAUSE_BLOCK) {
         Pause();
-        mc.postToChat("Pausing");
+        mc.post_to_chat("Pausing");
       } else if (block == ALIVE_BLOCK) {
         game[x][z] = 1;
       } else if (block == DEAD_BLOCK) {
         game[x][z] = 0;
       } else if (block == SPEED_BLOCK) {
         delay = std::max(delay / 2, 1);
-        mc.postToChat("Speeding up");
+        mc.post_to_chat("Speeding up");
       } else if (block == SLOW_BLOCK) {
         delay *= 2;
-        mc.postToChat("Slowing down");
+        mc.post_to_chat("Slowing down");
       } else if (block == RANDOM_BLOCK) {
         for (int x = 0; x < width; x++) {
           for (int z = 0; z < depth; z++) {
             game[x][z] = rand() % 2;
           }
         }
-        mc.postToChat("Randomizing");
+        mc.post_to_chat("Randomizing");
       } else if (block == CLEAR_BLOCK) {
         for (int x = 0; x < width; x++) {
           for (int z = 0; z < depth; z++) {
             game[x][z] = 0;
           }
         }
-        mc.postToChat("Clearing");
+        mc.post_to_chat("Clearing");
       }
     }
   }
@@ -172,12 +172,12 @@ void Life::Update() {
   }
 
   // draw
-  mc.setBlocks(buildPosition, bounds, DEAD_BLOCK);
+  mc.set_blocks(buildPosition, bounds, DEAD_BLOCK);
   for (int x = 0; x < width; x++) {
     for (int z = 0; z < depth; z++) {
       mcpp::Coordinate position(buildPosition.x + x, buildPosition.y, buildPosition.z + z);
       if (game[x][z] == 1) {
-        mc.setBlock(position, ALIVE_BLOCK);
+        mc.set_block(position, ALIVE_BLOCK);
       }
     }
   }

@@ -6,5 +6,5 @@ int main() {
   MinecraftConnection mc;
 
   // Post chat to Minecraft
-  mc.postToChat("Hello, Minecraft!");
+  mc.post_to_chat("Hello, Minecraft!");
 }

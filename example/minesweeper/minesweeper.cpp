@@ -63,14 +63,14 @@ bool Minesweeper::GameLoop() {
     usleep(5000);
   }
   Reveal();
-  mc.postToChat("Play Again??");
-  mc.postToChat("Place another mine to generate a new board!");
-  mc.postToChat("Otherwise leave the area or place a barrier to end.");
+  mc.post_to_chat("Play Again??");
+  mc.post_to_chat("Place another mine to generate a new board!");
+  mc.post_to_chat("Otherwise leave the area or place a barrier to end.");
 
   bool finish = true;
   while (finish) {
     usleep(50000);
-    mcpp::Chunk choices = mc.getBlocks(cornerOrigin, cornerOpposite);
+    mcpp::Chunk choices = mc.get_blocks(cornerOrigin, cornerOpposite);
     for (int x = 0; x < X_SIZE; x++) {
       for (int z = 0; z < Z_SIZE; z++) {
         printer.x = origin.x + x;
@@ -79,23 +79,23 @@ bool Minesweeper::GameLoop() {
 
         if (choices.get(x, 0, z) == clear) {
           printer.y++;
-          mc.setBlock(printer, air);
-          mc.postToChat("Replaying");
+          mc.set_block(printer, air);
+          mc.post_to_chat("Replaying");
           GenerateBoard();
           GameLoop();
           finish = false;
         } else if (choices.get(x, 0, z) == quit) {
           printer.y++;
-          mc.setBlock(printer, air);
-          mc.postToChat("Quitting");
+          mc.set_block(printer, air);
+          mc.post_to_chat("Quitting");
           finish = false;
         }
       }
     }
 
-    mcpp::Coordinate playerpos = mc.getPlayerPosition();
+    mcpp::Coordinate playerpos = mc.get_player_position();
     if (fabs(playerpos.x - origin.x) - X_SIZE > 10 || fabs(playerpos.z - origin.z) - Z_SIZE > 10) {
-      mc.postToChat("Left player area. Quitting.");
+      mc.post_to_chat("Left player area. Quitting.");
       finish = false;
     }
   }
@@ -126,20 +126,20 @@ Minesweeper::Minesweeper() {
              mcpp::Blocks::BLACK_WOOL};
 
   // Gives player items to play
-  mc.doCommand("gamerule sendCommandFeedback false");
-  mc.doCommand("clear @p");
-  mc.doCommand("give @p tnt");
-  mc.doCommand("give @p sea_lantern");
-  mc.doCommand("give @p barrier");
-  mc.doCommand("gamerule sendCommandFeedback true");
+  mc.do_command("gamerule sendCommandFeedback false");
+  mc.do_command("clear @p");
+  mc.do_command("give @p tnt");
+  mc.do_command("give @p sea_lantern");
+  mc.do_command("give @p barrier");
+  mc.do_command("gamerule sendCommandFeedback true");
   // Lets player know how to play
-  mc.postToChat("The TNT/Mine clears the spot below");
-  mc.postToChat("The Sea_Lantern/Flag flags the spot below");
-  mc.postToChat("The barrier exits the game");
-  mc.postToChat("To play, place blocks above the board");
+  mc.post_to_chat("The TNT/Mine clears the spot below");
+  mc.post_to_chat("The Sea_Lantern/Flag flags the spot below");
+  mc.post_to_chat("The barrier exits the game");
+  mc.post_to_chat("To play, place blocks above the board");
 
   // Builds board
-  origin = mc.getPlayerTilePosition();
+  origin = mc.get_player_tile_position();
   GenerateBoard();
 
   // Prints the legend
@@ -147,32 +147,32 @@ Minesweeper::Minesweeper() {
   printer.z--;
   printer.y++;
   for (int i = 0; i <= 9; i++) {
-    mc.setBlock(printer, blocks[i]);
+    mc.set_block(printer, blocks[i]);
     printer.x++;
   }
-  mc.setBlock(printer, flag);
+  mc.set_block(printer, flag);
   printer.y++;
-  mc.setBlock(printer, badflag);
+  mc.set_block(printer, badflag);
   printer.x--;
-  mc.setBlock(printer, goodmine);
+  mc.set_block(printer, goodmine);
   printer.y++;
-  mc.setBlock(printer, badmine);
+  mc.set_block(printer, badmine);
 
   // Sets the display origins and keys
   displayclearsorigin = origin;
   displayclearsorigin.z--;
   displayclearsorigin.y += 3;
-  mc.setBlock(displayclearsorigin, uncleared);
+  mc.set_block(displayclearsorigin, uncleared);
   displayclearsorigin.x++;
 
   displayflagsorigin = displayclearsorigin;
   displayflagsorigin.x += 4;
-  mc.setBlock(displayflagsorigin, flag);
+  mc.set_block(displayflagsorigin, flag);
   displayflagsorigin.x++;
 }
 
 bool Minesweeper::Playing() {
-  mcpp::Chunk choices = mc.getBlocks(cornerOrigin, cornerOpposite);
+  mcpp::Chunk choices = mc.get_blocks(cornerOrigin, cornerOpposite);
   for (int x = 0; x < X_SIZE; x++) {
     for (int z = 0; z < Z_SIZE; z++) {
       printer.x = origin.x + x;
@@ -186,14 +186,14 @@ bool Minesweeper::Playing() {
       } else if (choices.get(x, 0, z) == quit) {
         playing = false;
         printer.y++;
-        mc.setBlock(printer, air);
-        mc.postToChat("Quitting");
+        mc.set_block(printer, air);
+        mc.post_to_chat("Quitting");
       }
     }
   }
 
   if (clearstowin == 0) {
-    mc.postToChat("YOU WIN!!");
+    mc.post_to_chat("YOU WIN!!");
     playing = false;
   }
 
@@ -204,21 +204,21 @@ void Minesweeper::Flag(int x, int z) {
   if (field[x][z][1] == 0) {
     field[x][z][1] = 1;
     flagsleft--;
-    mc.setBlock(printer, flag);
+    mc.set_block(printer, flag);
   } else if (field[x][z][1] == 1) {
     field[x][z][1] = 0;
     flagsleft++;
-    mc.setBlock(printer, uncleared);
+    mc.set_block(printer, uncleared);
   }
 
   printer.y++;
-  mc.setBlock(printer, air);
+  mc.set_block(printer, air);
 }
 
 void Minesweeper::Clear(int x, int z) {
   if (field[x][z][1] == 0) {
 
-    mc.setBlock(printer, blocks[field[x][z][0]]);
+    mc.set_block(printer, blocks[field[x][z][0]]);
 
     if (field[x][z][0] == 9) { // If a mine, you loose
       if (firstclick) {
@@ -226,7 +226,7 @@ void Minesweeper::Clear(int x, int z) {
         FirstClickProtection(x, z);
         Clear(x, z);
       } else {
-        mc.postToChat("GAMEOVER!");
+        mc.post_to_chat("GAMEOVER!");
         playing = false;
       }
     } else if (field[x][z][0] == 0) { // If zero add location to a stack
@@ -242,7 +242,7 @@ void Minesweeper::Clear(int x, int z) {
   }
 
   printer.y++; // removes block above the board
-  mc.setBlock(printer, air);
+  mc.set_block(printer, air);
 }
 
 void Minesweeper::ZeroClear(int x, int z) {
@@ -263,7 +263,7 @@ void Minesweeper::ZeroClear(int x, int z) {
 
           printer.x = origin.x + xC + xo;
           printer.z = origin.z + zC + zo;
-          mc.setBlock(printer, blocks[field[xC + xo][zC + zo][0]]);
+          mc.set_block(printer, blocks[field[xC + xo][zC + zo][0]]);
 
           if (field[xC + xo][zC + zo][1] != 2) {
             clearstowin--;
@@ -283,14 +283,14 @@ void Minesweeper::Reveal() {
     for (int z = 0; z < Z_SIZE; z++) { // shows what you did correctly and
       if (field[x][z][0] == 9) {       // incorrectly
         if (field[x][z][1] == 1) {
-          mc.setBlock(printer, goodmine);
+          mc.set_block(printer, goodmine);
         } else if (field[x][z][1] == 0) {
-          mc.setBlock(printer, clear);
+          mc.set_block(printer, clear);
         } else {
-          mc.setBlock(printer, badmine);
+          mc.set_block(printer, badmine);
         }
       } else if (field[x][z][1] == 1) {
-        mc.setBlock(printer, badflag);
+        mc.set_block(printer, badflag);
       }
       printer.z++;
     }
@@ -300,7 +300,7 @@ void Minesweeper::Reveal() {
 }
 
 void Minesweeper::FirstClickProtection(int x, int z) {
-  mc.postToChat("Saved, Would have been a mine");
+  mc.post_to_chat("Saved, Would have been a mine");
   field[x][z][0] = 1;
 
   for (int xo = -1; xo <= 1; xo++) {
@@ -319,44 +319,44 @@ void Minesweeper::FirstClickProtection(int x, int z) {
 void Minesweeper::UpdateDisplays() {
   printer = displayclearsorigin;
   printer.x += 3;
-  mc.setBlocks(printer, displayclearsorigin, air);
+  mc.set_blocks(printer, displayclearsorigin, air);
   printer.x -= 3;
 
   if (clearstowin >= 1000) {
-    mc.setBlock(printer, numbers[clearstowin / 1000]);
+    mc.set_block(printer, numbers[clearstowin / 1000]);
     printer.x++;
   }
   if (clearstowin >= 100) {
-    mc.setBlock(printer, numbers[(clearstowin % 1000) / 100]);
+    mc.set_block(printer, numbers[(clearstowin % 1000) / 100]);
     printer.x++;
   }
   if (clearstowin >= 10) {
-    mc.setBlock(printer, numbers[(clearstowin % 100) / 10]);
+    mc.set_block(printer, numbers[(clearstowin % 100) / 10]);
     printer.x++;
   }
   if (clearstowin >= 1) {
-    mc.setBlock(printer, numbers[clearstowin % 10]);
+    mc.set_block(printer, numbers[clearstowin % 10]);
     printer.x++;
   }
 
   printer = displayflagsorigin;
   printer.x += 2;
-  mc.setBlocks(printer, displayflagsorigin, air);
+  mc.set_blocks(printer, displayflagsorigin, air);
   printer.x -= 2;
   if (flagsleft >= 1000) {
-    mc.setBlock(printer, numbers[flagsleft / 1000]);
+    mc.set_block(printer, numbers[flagsleft / 1000]);
     printer.x++;
   }
   if (flagsleft >= 100) {
-    mc.setBlock(printer, numbers[(flagsleft % 1000) / 100]);
+    mc.set_block(printer, numbers[(flagsleft % 1000) / 100]);
     printer.x++;
   }
   if (flagsleft >= 10) {
-    mc.setBlock(printer, numbers[(flagsleft % 100) / 10]);
+    mc.set_block(printer, numbers[(flagsleft % 100) / 10]);
     printer.x++;
   }
   if (flagsleft >= 1) {
-    mc.setBlock(printer, numbers[flagsleft % 10]);
+    mc.set_block(printer, numbers[flagsleft % 10]);
     printer.x++;
   }
 }
@@ -394,7 +394,7 @@ void Minesweeper::GenerateBoard() {
   cornerOpposite = origin;
   cornerOpposite.x += X_SIZE - 1;
   cornerOpposite.z += Z_SIZE - 1;
-  mc.setBlocks(cornerOrigin, cornerOpposite, uncleared);
+  mc.set_blocks(cornerOrigin, cornerOpposite, uncleared);
 
   // Moves corners up for later use in grabbing game area;
   cornerOpposite.y++;

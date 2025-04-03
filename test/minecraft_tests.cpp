@@ -72,17 +72,17 @@ TEST_CASE("Socket connection test") {
   //     int x1 = 0, y1 = 0, z1 = 0;
   //     int x2 = 31, y2 = 100, z2 = 31;
   //
-  //     tcp_conn.sendCommand("world.setBlocks", x1, y1, z1, x2, y2, z2,
+  //     tcp_conn.sendCommand("world.set_blocks", x1, y1, z1, x2, y2, z2,
   //                          Blocks::DIRT.id, Blocks::DIRT.mod);
   //     std::string result =
-  //         tcp_conn.sendReceiveCommand("world.getHeights", x1, z1, x2, z2);
+  //         tcp_conn.sendReceiveCommand("world.get_heights", x1, z1, x2, z2);
   //     int real_size = result.size();
   //
   //     // -1 because newline is removed
   //     CHECK_EQ(real_size, expected_size - 1);
   //
   //     // Cleanup
-  //     tcp_conn.sendCommand("world.setBlocks", x1, y1, z1, x2, y2, z2,
+  //     tcp_conn.sendCommand("world.set_blocks", x1, y1, z1, x2, y2, z2,
   //                          Blocks::AIR.id, Blocks::AIR.mod);
   // }
 
@@ -94,42 +94,42 @@ TEST_CASE("Socket connection test") {
 TEST_CASE("Test the main mcpp class") {
   Coordinate test_loc(100, 100, 100);
 
-  SUBCASE("postToChat") { mc.postToChat("test string"); }
+  SUBCASE("post_to_chat") { mc.post_to_chat("test string"); }
 
-  SUBCASE("setBlock") { mc.setBlock(test_loc, BlockType(50)); }
+  SUBCASE("set_block") { mc.set_block(test_loc, BlockType(50)); }
 
-  SUBCASE("getBlock") {
-    mc.setBlock(test_loc, BlockType(34));
-    CHECK_EQ(mc.getBlock(test_loc), BlockType(34));
+  SUBCASE("get_block") {
+    mc.set_block(test_loc, BlockType(34));
+    CHECK_EQ(mc.get_block(test_loc), BlockType(34));
   }
 
   // Using values from the Blocks struct in block.h beyond this point
-  SUBCASE("getBlock with mod") {
-    mc.setBlock(test_loc, BlockType(5, 5));
-    CHECK_EQ(mc.getBlock(test_loc), BlockType(5, 5));
+  SUBCASE("get_block with mod") {
+    mc.set_block(test_loc, BlockType(5, 5));
+    CHECK_EQ(mc.get_block(test_loc), BlockType(5, 5));
 
-    mc.setBlock(test_loc, Blocks::LIGHT_BLUE_CONCRETE);
-    CHECK_EQ(mc.getBlock(test_loc), Blocks::LIGHT_BLUE_CONCRETE);
+    mc.set_block(test_loc, Blocks::LIGHT_BLUE_CONCRETE);
+    CHECK_EQ(mc.get_block(test_loc), Blocks::LIGHT_BLUE_CONCRETE);
   }
 
-  SUBCASE("getHeight") {
+  SUBCASE("get_height") {
     Coordinate heightTestLoc(300, 200, 300);
-    mc.setBlock(heightTestLoc, Blocks::DIRT);
-    auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
+    mc.set_block(heightTestLoc, Blocks::DIRT);
+    auto height = mc.get_height(heightTestLoc.x, heightTestLoc.z);
     CHECK_EQ(height, heightTestLoc.y);
 
     // Clean up
-    mc.setBlock(heightTestLoc, Blocks::AIR);
+    mc.set_block(heightTestLoc, Blocks::AIR);
   }
 
-  SUBCASE("setBlocks") {
+  SUBCASE("set_blocks") {
     Coordinate loc1{100, 100, 100};
     Coordinate loc2{110, 110, 110};
-    mc.setBlocks(loc1, loc2, Blocks::STONE);
+    mc.set_blocks(loc1, loc2, Blocks::STONE);
   }
 }
 
-TEST_CASE("getBlocks and Chunk operations") {
+TEST_CASE("get_blocks and Chunk operations") {
 
   // Setup
   Coordinate test_loc(100, 100, 100);
@@ -137,23 +137,23 @@ TEST_CASE("getBlocks and Chunk operations") {
   Coordinate loc2{110, 111, 112};
 
   // Reset blocks that existed before
-  mc.setBlocks(loc1, loc2, Blocks::AIR);
-  mc.setBlocks(loc1, loc2, Blocks::BRICKS);
-  mc.setBlock(loc1, Blocks::GOLD_BLOCK);
-  mc.setBlock(loc2, Blocks::DIAMOND_BLOCK);
-  mc.setBlock(loc1 + Coordinate{1, 2, 3}, Blocks::IRON_BLOCK);
-  Chunk res = mc.getBlocks(loc1, loc2);
-  const Chunk res_const = mc.getBlocks(loc1, loc2);
+  mc.set_blocks(loc1, loc2, Blocks::AIR);
+  mc.set_blocks(loc1, loc2, Blocks::BRICKS);
+  mc.set_block(loc1, Blocks::GOLD_BLOCK);
+  mc.set_block(loc2, Blocks::DIAMOND_BLOCK);
+  mc.set_block(loc1 + Coordinate{1, 2, 3}, Blocks::IRON_BLOCK);
+  Chunk res = mc.get_blocks(loc1, loc2);
+  const Chunk res_const = mc.get_blocks(loc1, loc2);
 
   SUBCASE("getters") {
-    Chunk data = mc.getBlocks(loc1, loc2);
+    Chunk data = mc.get_blocks(loc1, loc2);
 
     CHECK_EQ(data.base_pt(), loc1);
     CHECK_EQ(data.x_len(), 11);
     CHECK_EQ(data.y_len(), 12);
     CHECK_EQ(data.z_len(), 13);
 
-    data = mc.getBlocks(loc2, loc1);
+    data = mc.get_blocks(loc2, loc1);
 
     CHECK_EQ(data.base_pt(), loc1);
     CHECK_EQ(data.x_len(), 11);
@@ -222,14 +222,14 @@ TEST_CASE("getBlocks and Chunk operations") {
 
   SUBCASE("Constructors & assignment") {
     // Copy assignment
-    mc.setBlock({10, 10, 10}, Blocks::BLUE_CONCRETE);
-    auto chunk = mc.getBlocks({10, 10, 10}, {20, 20, 20});
+    mc.set_block({10, 10, 10}, Blocks::BLUE_CONCRETE);
+    auto chunk = mc.get_blocks({10, 10, 10}, {20, 20, 20});
     Chunk chunk_copy = chunk; // Contains BLUE
     CHECK_EQ(chunk.get(0, 0, 0), chunk_copy.get(0, 0, 0));
 
     // Reassignment
-    mc.setBlock({10, 10, 10}, Blocks::RED_CONCRETE);
-    chunk = mc.getBlocks({10, 10, 10}, {20, 20, 20}); // Now contains RED
+    mc.set_block({10, 10, 10}, Blocks::RED_CONCRETE);
+    chunk = mc.get_blocks({10, 10, 10}, {20, 20, 20}); // Now contains RED
     CHECK_NE(chunk.get(0, 0, 0), chunk_copy.get(0, 0, 0));
 
     // Move assignment
@@ -238,8 +238,8 @@ TEST_CASE("getBlocks and Chunk operations") {
 
     // Copy constructor
     auto chunk_copy2 = Chunk(chunk); // Contains BLUE
-    mc.setBlock({10, 10, 10}, Blocks::WHITE_CONCRETE);
-    chunk = mc.getBlocks({10, 10, 10}, {20, 20, 20}); // Now contains WHITE
+    mc.set_block({10, 10, 10}, Blocks::WHITE_CONCRETE);
+    chunk = mc.get_blocks({10, 10, 10}, {20, 20, 20}); // Now contains WHITE
     CHECK_NE(chunk_copy2.get(0, 0, 0), Blocks::WHITE_CONCRETE);
 
     // Move constructor
@@ -247,33 +247,33 @@ TEST_CASE("getBlocks and Chunk operations") {
     CHECK_EQ(chunk.get(0, 0, 0), Blocks::BLUE_CONCRETE);
   }
 
-  mc.setBlock(test_loc, BlockType(0));
+  mc.set_block(test_loc, BlockType(0));
 }
 
 TEST_CASE("Test blocks struct") {
   Coordinate testLoc;
-  mc.setBlock(testLoc, Blocks::AIR);
-  CHECK_EQ(mc.getBlock(testLoc), Blocks::AIR);
-  mc.setBlock(testLoc, Blocks::STONE);
-  CHECK_EQ(mc.getBlock(testLoc), Blocks::STONE);
+  mc.set_block(testLoc, Blocks::AIR);
+  CHECK_EQ(mc.get_block(testLoc), Blocks::AIR);
+  mc.set_block(testLoc, Blocks::STONE);
+  CHECK_EQ(mc.get_block(testLoc), Blocks::STONE);
 }
 
 TEST_CASE("HeightMap functionality") {
   // 319 is the build limit in 1.19
-  mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 319, 210}, Blocks::AIR);
-  mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 300, 210}, Blocks::STONE);
-  mc.setBlock(Coordinate{200, 301, 200}, Blocks::STONE);
-  mc.setBlock(Coordinate{210, 301, 210}, Blocks::STONE);
-  mc.setBlock(Coordinate{201, 301, 202}, Blocks::STONE);
+  mc.set_blocks(Coordinate{200, 300, 200}, Coordinate{210, 319, 210}, Blocks::AIR);
+  mc.set_blocks(Coordinate{200, 300, 200}, Coordinate{210, 300, 210}, Blocks::STONE);
+  mc.set_block(Coordinate{200, 301, 200}, Blocks::STONE);
+  mc.set_block(Coordinate{210, 301, 210}, Blocks::STONE);
+  mc.set_block(Coordinate{201, 301, 202}, Blocks::STONE);
 
   SUBCASE("getters") {
-    HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+    HeightMap data = mc.get_heights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
 
     CHECK_EQ(data.base_pt(), Coordinate{200, 0, 200});
     CHECK_EQ(data.x_len(), 11);
     CHECK_EQ(data.z_len(), 11);
 
-    data = mc.getHeights(Coordinate{210, 300, 210}, Coordinate{200, 310, 200});
+    data = mc.get_heights(Coordinate{210, 300, 210}, Coordinate{200, 310, 200});
 
     CHECK_EQ(data.base_pt(), Coordinate{200, 0, 200});
     CHECK_EQ(data.x_len(), 11);
@@ -281,7 +281,7 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("get") {
-    HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+    HeightMap data = mc.get_heights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
     CHECK_EQ(data.get(0, 0), 301);
     CHECK_EQ(data.get(1, 1), 300);
     CHECK_EQ(data.get(10, 10), 301);
@@ -289,7 +289,7 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("get_worldspace") {
-    HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+    HeightMap data = mc.get_heights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
     CHECK_EQ(data.get_worldspace(Coordinate{200, 0, 200}), 301);
     CHECK_EQ(data.get_worldspace(Coordinate{201, 0, 201}), 300);
     CHECK_EQ(data.get_worldspace(Coordinate{210, 0, 210}), 301);
@@ -297,7 +297,7 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("fill_coord") {
-    HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+    HeightMap data = mc.get_heights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
 
     Coordinate to_fill{200, 0, 200};
     data.fill_coord(to_fill);
@@ -305,7 +305,7 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("Bounds checking") {
-    HeightMap data = mc.getHeights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
+    HeightMap data = mc.get_heights(Coordinate{200, 0, 200}, Coordinate{210, 0, 210});
     CHECK_THROWS(data.get(-1, 0));
     CHECK_THROWS(data.get(0, -1));
     CHECK_THROWS(data.get(11, 0));
@@ -321,13 +321,13 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("Negative coord") {
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
-    mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-200, 301, -200}, Blocks::STONE);
+    mc.set_block(Coordinate{-210, 301, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-201, 301, -202}, Blocks::STONE);
 
-    HeightMap data = mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+    HeightMap data = mc.get_heights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
     CHECK_EQ(data.get_worldspace(Coordinate{-200, 0, -200}), 301);
     CHECK_EQ(data.get_worldspace(Coordinate{-201, 0, -201}), 300);
     CHECK_EQ(data.get_worldspace(Coordinate{-210, 0, -210}), 301);
@@ -335,13 +335,13 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("Iterator") {
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
-    mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-200, 301, -200}, Blocks::STONE);
+    mc.set_block(Coordinate{-210, 301, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-201, 301, -202}, Blocks::STONE);
 
-    HeightMap data = mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+    HeightMap data = mc.get_heights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
 
     std::vector<int> expected_heights;
     for (int i = 0; i < data.x_len(); i++) {
@@ -358,13 +358,13 @@ TEST_CASE("HeightMap functionality") {
   }
 
   SUBCASE("Const iterator") {
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
-    mc.setBlocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-200, 301, -200}, Blocks::STONE);
-    mc.setBlock(Coordinate{-210, 301, -210}, Blocks::STONE);
-    mc.setBlock(Coordinate{-201, 301, -202}, Blocks::STONE);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 319, -210}, Blocks::AIR);
+    mc.set_blocks(Coordinate{-200, 300, -200}, Coordinate{-210, 300, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-200, 301, -200}, Blocks::STONE);
+    mc.set_block(Coordinate{-210, 301, -210}, Blocks::STONE);
+    mc.set_block(Coordinate{-201, 301, -202}, Blocks::STONE);
 
-    const HeightMap data = mc.getHeights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
+    const HeightMap data = mc.get_heights(Coordinate{-200, 0, -200}, Coordinate{-210, 0, -210});
 
     std::vector<int> expected_heights;
     for (int i = 0; i < data.x_len(); i++) {
@@ -382,16 +382,16 @@ TEST_CASE("HeightMap functionality") {
 
   SUBCASE("Constructors & assignment") {
     // Copy assignment
-    mc.setBlocks({10, 310, 10}, {20, 320, 20}, Blocks::AIR);
-    mc.setBlocks({10, 310, 10}, {20, 310, 20}, Blocks::STONE);
-    auto map = mc.getHeights({10, 10, 10}, {20, 20, 20});
+    mc.set_blocks({10, 310, 10}, {20, 320, 20}, Blocks::AIR);
+    mc.set_blocks({10, 310, 10}, {20, 310, 20}, Blocks::STONE);
+    auto map = mc.get_heights({10, 10, 10}, {20, 20, 20});
     HeightMap map_copy = map; // Contains 310
     CHECK_EQ(map.get(0, 0), map_copy.get(0, 0));
     CHECK_EQ(map.get(0, 0), 310);
 
     // Reassignment
-    mc.setBlock({10, 311, 10}, Blocks::STONE);
-    map = mc.getHeights({10, 10, 10}, {20, 20, 20}); // Now contains 311
+    mc.set_block({10, 311, 10}, Blocks::STONE);
+    map = mc.get_heights({10, 10, 10}, {20, 20, 20}); // Now contains 311
     CHECK_NE(map.get(0, 0), map_copy.get(0, 0));
     CHECK_EQ(map.get(0, 0), 311);
 
@@ -401,8 +401,8 @@ TEST_CASE("HeightMap functionality") {
 
     // Copy constructor
     auto map_copy2 = HeightMap(map); // Contains 310
-    mc.setBlock({10, 312, 10}, Blocks::STONE);
-    map = mc.getHeights({10, 10, 10}, {20, 20, 20}); // Now contains 312
+    mc.set_block({10, 312, 10}, Blocks::STONE);
+    map = mc.get_heights({10, 10, 10}, {20, 20, 20}); // Now contains 312
     CHECK_NE(map_copy2.get(0, 0), 312);
     CHECK_EQ(map.get(0, 0), 312);
 
@@ -410,11 +410,11 @@ TEST_CASE("HeightMap functionality") {
     map = HeightMap(std::move(map_copy2)); // Now contains 310
     CHECK_EQ(map.get(0, 0), 310);
 
-    mc.setBlocks({10, 310, 10}, {20, 320, 20}, Blocks::AIR);
+    mc.set_blocks({10, 310, 10}, {20, 320, 20}, Blocks::AIR);
   }
 
   // Clean up
-  mc.setBlocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210}, Blocks::AIR);
+  mc.set_blocks(Coordinate{200, 300, 200}, Coordinate{210, 301, 210}, Blocks::AIR);
 }
 
 // Requires player joined to server, will throw serverside if player is not
@@ -423,43 +423,43 @@ TEST_CASE("HeightMap functionality") {
 
 TEST_CASE("Player operations") {
   Coordinate test_loc{110, 110, 110};
-  mc.setBlock(test_loc, Blocks::DIRT);
+  mc.set_block(test_loc, Blocks::DIRT);
 
-  SUBCASE("Execute command") { mc.doCommand("time set noon"); }
+  SUBCASE("Execute command") { mc.do_command("time set noon"); }
 
-  SUBCASE("Set position") { mc.setPlayerPosition(test_loc + Coordinate(0, 1, 0)); }
+  SUBCASE("Set position") { mc.set_player_position(test_loc + Coordinate(0, 1, 0)); }
 
   SUBCASE("Get position") {
-    mc.setPlayerPosition(Coordinate(0, 0, 0));
-    mc.setPlayerPosition(test_loc + Coordinate(0, 1, 0));
-    Coordinate player_loc = mc.getPlayerPosition();
+    mc.set_player_position(Coordinate(0, 0, 0));
+    mc.set_player_position(test_loc + Coordinate(0, 1, 0));
+    Coordinate player_loc = mc.get_player_position();
     CHECK((player_loc == (test_loc + Coordinate(0, 1, 0))));
   }
 
   SUBCASE("Check correct flooring") {
     Coordinate negative_loc(-2, 100, -2);
-    mc.doCommand("tp -2 100 -2");
-    CHECK_EQ(mc.getPlayerPosition(), negative_loc);
+    mc.do_command("tp -2 100 -2");
+    CHECK_EQ(mc.get_player_position(), negative_loc);
   }
 
-  SUBCASE("setPlayerTilePosition and getPlayerTilePosition") {
-    mc.setPlayerPosition(Coordinate(0, 0, 0));
+  SUBCASE("set_player_tile_position and get_player_tile_position") {
+    mc.set_player_position(Coordinate(0, 0, 0));
 
-    mc.setPlayerTilePosition(test_loc);
+    mc.set_player_tile_position(test_loc);
 
-    Coordinate result = mc.getPlayerTilePosition();
+    Coordinate result = mc.get_player_tile_position();
     Coordinate expected = test_loc;
 
     CHECK_EQ(result, expected);
 
-    Coordinate p_result = mc.getPlayerPosition();
+    Coordinate p_result = mc.get_player_position();
     Coordinate p_expected = test_loc + Coordinate(0, 1, 0);
 
     CHECK_EQ(p_result, p_expected);
   }
 
   // Cleanup
-  mc.setBlock(test_loc, Blocks::AIR);
+  mc.set_block(test_loc, Blocks::AIR);
 }
 
 #endif

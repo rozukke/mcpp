@@ -14,7 +14,7 @@ public:
   uint8_t mod; // NOLINT
 
   // NOLINTNEXTLINE
-  constexpr BlockType(uint8_t id = 0, uint8_t mod = 0) : id(id), mod(mod){};
+  constexpr BlockType(uint8_t id = 0, uint8_t mod = 0) : id(id), mod(mod) {};
 
   /**
    * @brief Equality comparison operator.

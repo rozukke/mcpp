@@ -52,7 +52,7 @@ public:
    *
    * @param message
    */
-  void postToChat(const std::string& message);
+  void post_to_chat(const std::string& message);
 
   /**
    * @brief Performs an in-game minecraft command. Players have to exist on
@@ -60,7 +60,7 @@ public:
    *
    * @param command Command string in the in-game format (e.g. "time set day")
    */
-  void doCommand(const std::string& command);
+  void do_command(const std::string& command);
 
   /**
    * @brief Sets player pos (block pos of lower half of playermodel) to
@@ -68,7 +68,7 @@ public:
    *
    * @param pos Coordinate to set
    */
-  void setPlayerPosition(const Coordinate& pos);
+  void set_player_position(const Coordinate& pos);
 
   /**
    * @brief Returns a coordinate representing player position (block pos of
@@ -76,7 +76,7 @@ public:
    *
    * @return Coordinate of location
    */
-  [[nodiscard]] Coordinate getPlayerPosition() const;
+  [[nodiscard]] Coordinate get_player_position() const;
 
   /**
    * @brief Sets player position to be one above specified tile (i.e. tile =
@@ -84,7 +84,7 @@ public:
    *
    * @param tile Coordinate to set
    */
-  void setPlayerTilePosition(const Coordinate& tile);
+  void set_player_tile_position(const Coordinate& tile);
 
   /**
    * @brief Returns the coordinate location of the block the player is
@@ -92,7 +92,7 @@ public:
    *
    * @return Coordinate of location
    */
-  [[nodiscard]] Coordinate getPlayerTilePosition() const;
+  [[nodiscard]] Coordinate get_player_tile_position() const;
 
   /**
    * @brief Sets block at Coordinate loc to the BlockType specified by
@@ -101,7 +101,7 @@ public:
    * @param loc
    * @param blockType
    */
-  void setBlock(const Coordinate& loc, const BlockType& block_type);
+  void set_block(const Coordinate& loc, const BlockType& block_type);
 
   /**
    * @brief Sets a cuboid of blocks to the specified BlockType blockType, with
@@ -111,7 +111,7 @@ public:
    * @param loc2
    * @param blockType
    */
-  void setBlocks(const Coordinate& loc1, const Coordinate& loc2, const BlockType& block_type);
+  void set_blocks(const Coordinate& loc1, const Coordinate& loc2, const BlockType& block_type);
 
   /**
    * @brief Returns BlockType object from the specified Coordinate loc with
@@ -121,7 +121,7 @@ public:
    * @return BlockType of the requested block
    */
   [[nodiscard]] BlockType
-  getBlock(const Coordinate& loc) const; // NOLINT(readability-identifier-naming)
+  get_block(const Coordinate& loc) const; // NOLINT(readability-identifier-naming)
 
   /**
    * @brief Returns a 3D vector of the BlockTypes of the requested cuboid with
@@ -131,14 +131,14 @@ public:
    * @param loc2 2nd corner of the cuboid
    * @return Chunk containing the blocks in the specified area.
    */
-  [[nodiscard]] Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2) const;
+  [[nodiscard]] Chunk get_blocks(const Coordinate& loc1, const Coordinate& loc2) const;
 
   /**
    * @brief Returns the height of the specific provided x and z coordinate
    *
    * ***IMPORTANT:***
    * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
-   * USE getHeights() INSTEAD
+   * USE get_heights() INSTEAD
    *
    * Gets the y-value of the highest non-air block at the specified (x, z)
    * coordinate.
@@ -146,19 +146,19 @@ public:
    * @param z
    * @return Returns the integer y-height at the requested coordinate.
    */
-  [[nodiscard]] int32_t getHeight(int x, int z) const;
+  [[nodiscard]] int32_t get_height(int x, int z) const;
 
   /**
-   * @brief Provides a scaled option of the getHeight call to allow for
+   * @brief Provides a scaled option of the get_height call to allow for
    * considerable performance gains.
    *
-   * \par USE THIS instead of getHeight in a for loop.
+   * \par USE THIS instead of get_height in a for loop.
    *
    * @param loc1
    * @param loc2
    * @return Returns a vector of integers representing the 2D area of heights.
    */
-  [[nodiscard]] HeightMap getHeights(const Coordinate& loc1, const Coordinate& loc2) const;
+  [[nodiscard]] HeightMap get_heights(const Coordinate& loc1, const Coordinate& loc2) const;
 
   // NOLINTEND(readability-identifier-naming)
 };
