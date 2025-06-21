@@ -10,6 +10,14 @@ Coordinate Coordinate::operator+(const Coordinate& obj) const {
   return result;
 }
 
+Coordinate Coordinate::operator+(const Coordinate2D& obj) const {
+    Coordinate result;
+    result.x = this->x + obj.x;
+    result.y = this->y;
+    result.z = this->z + obj.z;
+    return result;
+}
+
 bool Coordinate::operator==(const Coordinate& obj) const {
   return (this->x == obj.x) && (this->y == obj.y) && (this->z == obj.z);
 }
@@ -43,5 +51,41 @@ std::string to_string(const Coordinate& coord) {
 std::ostream& operator<<(std::ostream& out, const Coordinate& coord) {
   out << to_string(coord);
   return out;
+}
+
+Coordinate Coordinate2D::with_height(int y) const {
+    return Coordinate(this->x, y, this->z);
+}
+
+Coordinate2D Coordinate2D::operator+(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x + obj.x;
+    result.z = this->z + obj.z;
+    return result;
+}
+
+bool Coordinate2D::operator==(const Coordinate2D& obj) const {
+    return (this->x == obj.x) && (this->z == obj.z);
+}
+
+bool Coordinate2D::operator!=(const Coordinate2D& obj) const {
+    return !(*this == obj);
+}
+
+Coordinate2D Coordinate2D::operator-(const Coordinate2D& obj) const {
+    Coordinate2D result;
+    result.x = this->x - obj.x;
+    result.z = this->z - obj.z;
+    return result;
+}
+
+std::string to_string(const Coordinate2D& coord) {
+    using std::to_string;
+    return "(" + to_string(coord.x) + "," + to_string(coord.z) + ")";
+}
+
+std::ostream& operator<<(std::ostream& out, const Coordinate2D& coord) {
+    out << to_string(coord);
+    return out;
 }
 } // namespace mcpp

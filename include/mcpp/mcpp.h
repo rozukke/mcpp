@@ -172,7 +172,7 @@ public:
    * @param loc2 2nd corner of rectangle
    * @return Returns a vector of integers representing the 2D area of heights.
    */
-  [[nodiscard]] HeightMap getHeights(const Coordinate2D& loc1, const Coordinate2D& loc2);
+  [[nodiscard]] HeightMap getHeights(const Coordinate2D& loc1, const Coordinate2D& loc2) const;
 
   // NOLINTEND(readability-identifier-naming)
 };

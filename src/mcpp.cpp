@@ -122,7 +122,7 @@ HeightMap MinecraftConnection::getHeights(const Coordinate2D& loc1,
   std::vector<int16_t> parsed;
   split_response(response, parsed);
 
-  return {loc1, loc2, parsed};
+  return HeightMap{loc1, loc2, parsed};
 }
 
 } // namespace mcpp
