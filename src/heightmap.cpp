@@ -37,7 +37,7 @@ int16_t HeightMap::get(int x, int z) const {
   return _raw_heights[(x * _z_len) + z];
 }
 
-int16_t HeightMap::get_worldspace(const Coordinate& loc) const {
+int16_t HeightMap::get_worldspace(const Coordinate2D& loc) const {
   return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 

@@ -46,10 +46,10 @@ public:
 
   /**
    * Get the height at a Minecraft coordinate if saved inside the height map
-   * @param loc: Coordinate in Minecraft world to access in the map
+   * @param loc: Coordinate2D in Minecraft world to access in the map
    * @return: height at specified coordinate
    */
-  int16_t get_worldspace(const Coordinate& loc) const;
+  int16_t get_worldspace(const Coordinate2D& loc) const;
 
   /**
    * Fill a coordinate inplace with the highest y coordinate at the `loc`'s x
