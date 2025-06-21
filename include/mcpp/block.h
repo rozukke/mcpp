@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <ostream>
 
 /**
@@ -9,10 +10,11 @@
 namespace mcpp {
 class BlockType {
 public:
-  int id;
-  int mod;
+  uint8_t id;  // NOLINT
+  uint8_t mod; // NOLINT
 
-  constexpr BlockType(int id = 0, int modifier = 0) : id(id), mod(modifier) {};
+  // NOLINTNEXTLINE
+  constexpr BlockType(uint8_t id = 0, uint8_t mod = 0) : id(id), mod(mod){};
 
   /**
    * @brief Equality comparison operator.
@@ -57,7 +59,7 @@ public:
    * @param modifier New modifier for the BlockType
    * @return New BlockType object with the specified modifier
    */
-  [[nodiscard]] BlockType withMod(int modifier) const;
+  [[nodiscard]] BlockType with_mod(uint8_t modifier) const;
 };
 
 // Using script to extract ids from https://minecraft-ids.grahamedgecombe.com/
@@ -68,6 +70,7 @@ public:
  * using Blocks::TYPE after importing <block.h>
  */
 struct Blocks {
+  // NOLINTBEGIN
   static constexpr BlockType AIR = BlockType(0);
   static constexpr BlockType STONE = BlockType(1);
   static constexpr BlockType GRANITE = BlockType(1, 1);
@@ -510,5 +513,6 @@ struct Blocks {
   static constexpr BlockType RED_CONCRETE_POWDER = BlockType(252, 14);
   static constexpr BlockType BLACK_CONCRETE_POWDER = BlockType(252, 15);
   static constexpr BlockType STRUCTURE_BLOCK = BlockType(255);
+  // NOLINTEND
 };
 } // namespace mcpp

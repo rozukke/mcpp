@@ -1,11 +1,11 @@
 #pragma once
 
 #include "block.h"
-#include "connection.h"
-#include "util.h"
+#include "chunk.h"
+#include "coordinate.h"
+#include "heightmap.h"
+
 #include <memory>
-#include <string_view>
-#include <vector>
 
 /** @file
  * @brief MinecraftConnection class.
@@ -20,150 +20,160 @@
  * and data manipulations.
  */
 namespace mcpp {
+// Forward declare to avoid polluting namespace
+class SocketConnection;
+
+const uint16_t MCPP_PORT = 4711;
+
 class MinecraftConnection {
-  private:
-    /// Handle to the socket connection.
-    std::unique_ptr<SocketConnection> conn;
+private:
+  /// Handle to the socket connection.
+  std::unique_ptr<SocketConnection> _conn;
 
-  public:
-    /**
-     * @brief Represents the main endpoint for interaction with the minecraft
-     * world.
-     *
-     * @param address String address in IPV4 format, defaults to "localhost"
-     * @param port Integer port to run on, defaults to 4711 as that is the port
-     * for ELCI
-     */
-    explicit MinecraftConnection(const std::string& address = "localhost",
-                                 int port = 4711);
+public:
+  /**
+   * @brief Represents the main endpoint for interaction with the minecraft
+   * world.
+   *
+   * @param address String address in IPV4 format, defaults to "localhost"
+   * @param port Integer port to run on, defaults to 4711 as that is the port
+   * for ELCI
+   */
+  explicit MinecraftConnection(const std::string& address = "localhost", uint16_t port = MCPP_PORT);
 
-    /**
-     * @brief Sends a message to the in-game chat, does not require a joined
-     * player
-     *
-     * @param message
-     */
-    void postToChat(const std::string& message);
+  // Declared here, defaulted in mcpp.cpp to allow for forward declare of
+  // SocketConnection
+  ~MinecraftConnection();
 
-    /**
-     * @brief Performs an in-game minecraft command. Players have to exist on
-     * the server and should be server operators (default with ELCI)
-     *
-     * @param command Command string in the in-game format (e.g. "time set day")
-     */
-    void doCommand(const std::string& command);
+  // NOLINTBEGIN(readability-identifier-naming)
+  /**
+   * @brief Sends a message to the in-game chat, does not require a joined
+   * player
+   *
+   * @param message
+   */
+  void postToChat(const std::string& message);
 
-    /**
-     * @brief Sets player pos (block pos of lower half of playermodel) to
-     * specified Coordinate
-     *
-     * @param pos Coordinate to set
-     */
-    void setPlayerPosition(const Coordinate& pos);
+  /**
+   * @brief Performs an in-game minecraft command. Players have to exist on
+   * the server and should be server operators (default with ELCI)
+   *
+   * @param command Command string in the in-game format (e.g. "time set day")
+   */
+  void doCommand(const std::string& command);
 
-    /**
-     * @brief Returns a coordinate representing player position (block pos of
-     * lower half of playermodel)
-     *
-     * @return Coordinate of location
-     */
-    Coordinate getPlayerPosition();
+  /**
+   * @brief Sets player pos (block pos of lower half of playermodel) to
+   * specified Coordinate
+   *
+   * @param pos Coordinate to set
+   */
+  void setPlayerPosition(const Coordinate& pos);
 
-    /**
-     * @brief Sets player position to be one above specified tile (i.e. tile =
-     * block player is standing on)
-     *
-     * @param tile Coordinate to set
-     */
-    void setPlayerTilePosition(const Coordinate& tile);
+  /**
+   * @brief Returns a coordinate representing player position (block pos of
+   * lower half of playermodel)
+   *
+   * @return Coordinate of location
+   */
+  [[nodiscard]] Coordinate getPlayerPosition() const;
 
-    /**
-     * @brief Returns the coordinate location of the block the player is
-     * standing on
-     *
-     * @return Coordinate of location
-     */
-    Coordinate getPlayerTilePosition();
+  /**
+   * @brief Sets player position to be one above specified tile (i.e. tile =
+   * block player is standing on)
+   *
+   * @param tile Coordinate to set
+   */
+  void setPlayerTilePosition(const Coordinate& tile);
 
-    /**
-     * @brief Sets block at Coordinate loc to the BlockType specified by
-     * blockType
-     *
-     * @param loc
-     * @param blockType
-     */
-    void setBlock(const Coordinate& loc, const BlockType& blockType);
+  /**
+   * @brief Returns the coordinate location of the block the player is
+   * standing on
+   *
+   * @return Coordinate of location
+   */
+  [[nodiscard]] Coordinate getPlayerTilePosition() const;
 
-    /**
-     * @brief Sets a cuboid of blocks to the specified BlockType blockType, with
-     * the corners of the cuboid provided by the Coordinate loc1 and loc2
-     *
-     * @param loc1
-     * @param loc2
-     * @param blockType
-     */
-    void setBlocks(const Coordinate& loc1, const Coordinate& loc2,
-                   const BlockType& blockType);
+  /**
+   * @brief Sets block at Coordinate loc to the BlockType specified by
+   * blockType
+   *
+   * @param loc
+   * @param blockType
+   */
+  void setBlock(const Coordinate& loc, const BlockType& block_type);
 
-    /**
-     * @brief Returns BlockType object from the specified Coordinate loc with
-     * modifier
-     *
-     * @param loc
-     * @return BlockType of the requested block
-     */
-    BlockType getBlock(const Coordinate& loc);
+  /**
+   * @brief Sets a cuboid of blocks to the specified BlockType blockType, with
+   * the corners of the cuboid provided by the Coordinate loc1 and loc2
+   *
+   * @param loc1
+   * @param loc2
+   * @param blockType
+   */
+  void setBlocks(const Coordinate& loc1, const Coordinate& loc2, const BlockType& block_type);
 
-    /**
-     * @brief Returns a 3D vector of the BlockTypes of the requested cuboid with
-     * modifiers
-     *
-     * @param loc1 1st corner of the cuboid
-     * @param loc2 2nd corner of the cuboid
-     * @return Chunk containing the blocks in the specified area.
-     */
-    Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2);
+  /**
+   * @brief Returns BlockType object from the specified Coordinate loc with
+   * modifier
+   *
+   * @param loc
+   * @return BlockType of the requested block
+   */
+  [[nodiscard]] BlockType
+  getBlock(const Coordinate& loc) const; // NOLINT(readability-identifier-naming)
 
-    /**
-     * @brief Returns the height of the specific provided 2D coordinate
-     *
-     * ***IMPORTANT:***
-     * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
-     * USE getHeights() INSTEAD
-     *
-     * Gets the y-value of the highest non-air block at the specified 2D
-     * coordinate.
-     * @param loc 2D coordinate
-     * @return Returns the integer y-height at the requested coordinate.
-     */
-    int getHeight(Coordinate2D loc);
+  /**
+   * @brief Returns a 3D vector of the BlockTypes of the requested cuboid with
+   * modifiers
+   *
+   * @param loc1 1st corner of the cuboid
+   * @param loc2 2nd corner of the cuboid
+   * @return Chunk containing the blocks in the specified area.
+   */
+  [[nodiscard]] Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2) const;
 
-    /**
-     * @brief Returns the coordinate with the x, z, and in-world height of the
-     * specific provided 2D coordinate
-     *
-     * ***IMPORTANT:***
-     * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
-     * USE getHeights() INSTEAD
-     *
-     * Gets the y-value of the highest non-air block at the specified 2D
-     * coordinate, and creates a new 3D coordinate.
-     * @param loc 2D coordinate
-     * @return Returns the coordinate with the filled-in height.
-     */
-    Coordinate fillHeight(Coordinate2D loc);
+  /**
+   * @brief Returns the height of the specific provided 2D coordinate
+   *
+   * ***IMPORTANT:***
+   * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
+   * USE getHeights() INSTEAD
+   *
+   * Gets the y-value of the highest non-air block at the specified 2D
+   * coordinate.
+   * @param loc 2D coordinate
+   * @return Returns the integer y-height at the requested coordinate.
+   */
+  [[nodiscard]] int32_t getHeight(Coordinate2D loc) const;
 
-    /**
-     * @brief Provides a scaled option of the getHeight call to allow for
-     * considerable performance gains.
-     *
-     * \par USE THIS instead of getHeight in a for loop.
-     *
-     * @param loc1 1st corner of rectangle
-     * @param loc2 2nd corner of rectangle
-     * @return Returns a vector of integers representing the 2D area of heights.
-     */
-    const HeightMap getHeights(const Coordinate2D& loc1,
-                               const Coordinate2D& loc2);
+  /**
+   * @brief Returns the coordinate with the x, z, and in-world height of the
+   * specific provided 2D coordinate
+   *
+   * ***IMPORTANT:***
+   * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
+   * USE getHeights() INSTEAD
+   *
+   * Gets the y-value of the highest non-air block at the specified 2D
+   * coordinate, and creates a new 3D coordinate.
+   * @param loc 2D coordinate
+   * @return Returns the coordinate with the filled-in height.
+   */
+  Coordinate fillHeight(Coordinate2D loc);
+
+  /**
+   * @brief Provides a scaled option of the getHeight call to allow for
+   * considerable performance gains.
+   *
+   * \par USE THIS instead of getHeight in a for loop.
+   *
+   * @param loc1 1st corner of rectangle
+   * @param loc2 2nd corner of rectangle
+   * @return Returns a vector of integers representing the 2D area of heights.
+   */
+  [[nodiscard]] HeightMap getHeights(const Coordinate2D& loc1, const Coordinate2D& loc2);
+
+  // NOLINTEND(readability-identifier-naming)
 };
 } // namespace mcpp
