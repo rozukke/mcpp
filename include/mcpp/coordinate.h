@@ -177,6 +177,15 @@ struct Coordinate2D {
   Coordinate2D operator-(const Coordinate2D& obj) const;
 
   /**
+   * @brief Implements hash algorithm for Coordinate2D object using non-negative
+   * mapping and weighted coordinate values.
+   *
+   * @param obj The Coordinate2D object to hash.
+   * @return Hash of Coordinate2D object.
+   */
+  std::size_t operator()(const Coordinate2D& obj) const;
+
+  /**
    * @brief Outputs the Coordinate2D object to an ostream.
    *
    * @param out The output stream.

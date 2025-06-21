@@ -79,6 +79,16 @@ Coordinate2D Coordinate2D::operator-(const Coordinate2D& obj) const {
     return result;
 }
 
+std::size_t Coordinate2D::operator()(const mcpp::Coordinate2D& obj) const {
+  int lower = -3e7, upper = 3e7;
+  size_t base = upper - lower + 1;
+
+  size_t nx = obj.x - lower;
+  size_t nz = obj.z - lower;
+
+  return nx * base + nz;
+}
+
 std::string to_string(const Coordinate2D& coord) {
     using std::to_string;
     return "(" + to_string(coord.x) + "," + to_string(coord.z) + ")";
