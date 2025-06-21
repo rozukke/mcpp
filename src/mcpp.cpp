@@ -108,7 +108,7 @@ int MinecraftConnection::getHeight(Coordinate2D loc) const {
   return stoi(response);
 }
 
-Coordinate MinecraftConnection::fillHeight(Coordinate2D loc) {
+Coordinate MinecraftConnection::fillHeight(Coordinate2D loc) const {
   int y = this->getHeight(loc);
   return Coordinate(loc.x, y, loc.z);
 }

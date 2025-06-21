@@ -160,7 +160,7 @@ public:
    * @param loc 2D coordinate
    * @return Returns the coordinate with the filled-in height.
    */
-  Coordinate fillHeight(Coordinate2D loc);
+  Coordinate fillHeight(Coordinate2D loc) const;
 
   /**
    * @brief Provides a scaled option of the getHeight call to allow for
