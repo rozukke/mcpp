@@ -1,0 +1,11 @@
+<map id="include/mcpp/coordinate.h" name="include/mcpp/coordinate.h">
+<area shape="rect" id="Node000001" title="Coordinate class." alt="" coords="110,5,305,31"/>
+<area shape="rect" id="Node000002" href="$chunk_8h.html" title=" " alt="" coords="5,79,169,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,40,108,81,106,76,175,35"/>
+<area shape="rect" id="Node000003" href="$mcpp_8h.html" title="MinecraftConnection class." alt="" coords="127,152,288,177"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="210,45,210,152,205,152,205,45"/>
+<area shape="rect" id="Node000004" href="$heightmap_8h.html" title=" " alt="" coords="245,79,439,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="242,35,321,76,319,81,240,39"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,109,189,149,186,154,117,113"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="310,113,231,154,228,149,307,108"/>
+</map>
