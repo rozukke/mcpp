@@ -12,14 +12,15 @@ namespace mcpp {
  */
 struct HeightMap {
 private:
-  Coordinate _base_pt;
+  Coordinate2D _base_pt;
   uint16_t _x_len;
   uint16_t _z_len;
   std::unique_ptr<int16_t[]> _raw_heights;
 
 public:
   // Constructors and assignment
-  HeightMap(const Coordinate& loc1, const Coordinate& loc2, const std::vector<int16_t>& heights);
+  HeightMap(const Coordinate2D& loc1, const Coordinate2D& loc2,
+            const std::vector<int16_t>& heights);
   ~HeightMap() = default;
 
   HeightMap(const HeightMap& other)
@@ -45,10 +46,10 @@ public:
 
   /**
    * Get the height at a Minecraft coordinate if saved inside the height map
-   * @param loc: Coordinate in Minecraft world to access in the map
+   * @param loc: Coordinate2D in Minecraft world to access in the map
    * @return: height at specified coordinate
    */
-  int16_t get_worldspace(const Coordinate& loc) const;
+  int16_t get_worldspace(const Coordinate2D& loc) const;
 
   /**
    * Fill a coordinate inplace with the highest y coordinate at the `loc`'s x
@@ -73,7 +74,7 @@ public:
    * Gets the minimum coordinate in the HeightMap.
    * @return the minimum coordinate in the HeightMap.
    */
-  Coordinate base_pt() const;
+  Coordinate2D base_pt() const;
 
   /**
    * @brief An iterator for the HeightMap structure.

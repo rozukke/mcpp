@@ -134,19 +134,33 @@ public:
   [[nodiscard]] Chunk getBlocks(const Coordinate& loc1, const Coordinate& loc2) const;
 
   /**
-   * @brief Returns the height of the specific provided x and z coordinate
+   * @brief Returns the height of the specific provided 2D coordinate
    *
    * ***IMPORTANT:***
    * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
    * USE getHeights() INSTEAD
    *
-   * Gets the y-value of the highest non-air block at the specified (x, z)
+   * Gets the y-value of the highest non-air block at the specified 2D
    * coordinate.
-   * @param x
-   * @param z
+   * @param loc 2D coordinate
    * @return Returns the integer y-height at the requested coordinate.
    */
-  [[nodiscard]] int32_t getHeight(int x, int z) const;
+  [[nodiscard]] int32_t getHeight(Coordinate2D loc) const;
+
+  /**
+   * @brief Returns the coordinate with the x, z, and in-world height of the
+   * specific provided 2D coordinate
+   *
+   * ***IMPORTANT:***
+   * DO NOT USE FOR LARGE AREAS, IT WILL BE VERY SLOW
+   * USE getHeights() INSTEAD
+   *
+   * Gets the y-value of the highest non-air block at the specified 2D
+   * coordinate, and creates a new 3D coordinate.
+   * @param loc 2D coordinate
+   * @return Returns the coordinate with the filled-in height.
+   */
+  Coordinate fillHeight(Coordinate2D loc) const;
 
   /**
    * @brief Provides a scaled option of the getHeight call to allow for
@@ -154,11 +168,11 @@ public:
    *
    * \par USE THIS instead of getHeight in a for loop.
    *
-   * @param loc1
-   * @param loc2
+   * @param loc1 1st corner of rectangle
+   * @param loc2 2nd corner of rectangle
    * @return Returns a vector of integers representing the 2D area of heights.
    */
-  [[nodiscard]] HeightMap getHeights(const Coordinate& loc1, const Coordinate& loc2) const;
+  [[nodiscard]] HeightMap getHeights(const Coordinate2D& loc1, const Coordinate2D& loc2) const;
 
   // NOLINTEND(readability-identifier-naming)
 };

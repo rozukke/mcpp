@@ -103,12 +103,18 @@ Chunk MinecraftConnection::getBlocks(const Coordinate& loc1, const Coordinate& l
   return Chunk{loc1, loc2, result};
 }
 
-int MinecraftConnection::getHeight(int x, int z) const {
-  std::string response = _conn->send_receive_command("world.getHeight", x, z);
+int MinecraftConnection::getHeight(Coordinate2D loc) const {
+  std::string response = _conn->send_receive_command("world.getHeight", loc.x, loc.z);
   return stoi(response);
 }
 
-HeightMap MinecraftConnection::getHeights(const Coordinate& loc1, const Coordinate& loc2) const {
+Coordinate MinecraftConnection::fillHeight(Coordinate2D loc) const {
+  int y = this->getHeight(loc);
+  return Coordinate(loc.x, y, loc.z);
+}
+
+HeightMap MinecraftConnection::getHeights(const Coordinate2D& loc1,
+                                          const Coordinate2D& loc2) const {
   std::string response =
       _conn->send_receive_command("world.getHeights", loc1.x, loc1.z, loc2.x, loc2.z);
 
@@ -116,7 +122,7 @@ HeightMap MinecraftConnection::getHeights(const Coordinate& loc1, const Coordina
   std::vector<int16_t> parsed;
   split_response(response, parsed);
 
-  return {loc1, loc2, parsed};
+  return HeightMap{loc1, loc2, parsed};
 }
 
 } // namespace mcpp

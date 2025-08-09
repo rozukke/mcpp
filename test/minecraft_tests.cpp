@@ -115,7 +115,7 @@ TEST_CASE("Test the main mcpp class") {
   SUBCASE("getHeight") {
     Coordinate heightTestLoc(300, 200, 300);
     mc.setBlock(heightTestLoc, Blocks::DIRT);
-    auto height = mc.getHeight(heightTestLoc.x, heightTestLoc.z);
+    auto height = mc.getHeight(heightTestLoc);
     CHECK_EQ(height, heightTestLoc.y);
 
     // Clean up
@@ -384,14 +384,14 @@ TEST_CASE("HeightMap functionality") {
     // Copy assignment
     mc.setBlocks({10, 310, 10}, {20, 320, 20}, Blocks::AIR);
     mc.setBlocks({10, 310, 10}, {20, 310, 20}, Blocks::STONE);
-    auto map = mc.getHeights({10, 10, 10}, {20, 20, 20});
+    auto map = mc.getHeights({10, 10}, {20, 20});
     HeightMap map_copy = map; // Contains 310
     CHECK_EQ(map.get(0, 0), map_copy.get(0, 0));
     CHECK_EQ(map.get(0, 0), 310);
 
     // Reassignment
     mc.setBlock({10, 311, 10}, Blocks::STONE);
-    map = mc.getHeights({10, 10, 10}, {20, 20, 20}); // Now contains 311
+    map = mc.getHeights({10, 10}, {20, 20}); // Now contains 311
     CHECK_NE(map.get(0, 0), map_copy.get(0, 0));
     CHECK_EQ(map.get(0, 0), 311);
 
@@ -402,7 +402,7 @@ TEST_CASE("HeightMap functionality") {
     // Copy constructor
     auto map_copy2 = HeightMap(map); // Contains 310
     mc.setBlock({10, 312, 10}, Blocks::STONE);
-    map = mc.getHeights({10, 10, 10}, {20, 20, 20}); // Now contains 312
+    map = mc.getHeights({10, 10}, {20, 20}); // Now contains 312
     CHECK_NE(map_copy2.get(0, 0), 312);
     CHECK_EQ(map.get(0, 0), 312);
 

@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace mcpp {
-HeightMap::HeightMap(const Coordinate& loc1, const Coordinate& loc2,
+HeightMap::HeightMap(const Coordinate2D& loc1, const Coordinate2D& loc2,
                      const std::vector<int16_t>& heights) {
   _base_pt = Coordinate{
       std::min(loc1.x, loc2.x),
@@ -37,7 +37,7 @@ int16_t HeightMap::get(int x, int z) const {
   return _raw_heights[(x * _z_len) + z];
 }
 
-int16_t HeightMap::get_worldspace(const Coordinate& loc) const {
+int16_t HeightMap::get_worldspace(const Coordinate2D& loc) const {
   return get(loc.x - _base_pt.x, loc.z - _base_pt.z);
 }
 
@@ -47,5 +47,5 @@ uint16_t HeightMap::x_len() const { return _x_len; }
 
 uint16_t HeightMap::z_len() const { return _z_len; }
 
-Coordinate HeightMap::base_pt() const { return _base_pt; }
+Coordinate2D HeightMap::base_pt() const { return _base_pt; }
 } // namespace mcpp
