@@ -16,6 +16,15 @@ MinecraftConnection::MinecraftConnection(const std::string& address, uint16_t po
 
 MinecraftConnection::~MinecraftConnection() = default;
 
+MinecraftConnection::MinecraftConnection(MinecraftConnection&& other) noexcept {
+  this->_conn = std::move(other._conn);
+}
+
+MinecraftConnection& MinecraftConnection::operator=(MinecraftConnection&& other) noexcept {
+  this->_conn = std::move(other._conn);
+  return *this;
+}
+
 void MinecraftConnection::postToChat(const std::string& message) {
   _conn->send_command("chat.post", message);
 }

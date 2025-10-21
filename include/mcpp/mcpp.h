@@ -45,6 +45,10 @@ public:
   // SocketConnection
   ~MinecraftConnection();
 
+  MinecraftConnection(MinecraftConnection&& other) noexcept;
+
+  MinecraftConnection& operator=(MinecraftConnection&& other) noexcept;
+
   // NOLINTBEGIN(readability-identifier-naming)
   /**
    * @brief Sends a message to the in-game chat, does not require a joined
