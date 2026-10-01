@@ -39,6 +39,11 @@ git clone https://github.com/rozukke/mcpp.git && cd mcpp
 cmake -B build && cd build
 sudo make install
 ```
+
+On an M-series Mac, you may encounter: `found architecture 'x86_64', required architecture 'arm64'`.
+This means `cmake` is running under Rosetta. You can fix this by adding `-DCMAKE_OSX_ARCHITECTURES=arm64` after `cmake -B build`.
+But you should fix the root cause by ensuring your `cmake` or `brew` installs are not the intel x86 versions.
+
 - After doing this, the library should be accessible via a `#include <mcpp/mcpp.h>` directive. 
 - When compiling code using the library, use the flag `-lmcpp` for Makefiles or `target_link_libraries(your_executable mcpp)` for CMake.
 

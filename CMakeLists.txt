@@ -5,6 +5,26 @@ if(NOT DEFINED PROJECT_VERSION)
     set(PROJECT_VERSION 1.0.0)
 endif()
 
+# Check for and warn if running under Rosetta
+if(APPLE)
+    execute_process(
+        COMMAND sysctl -in sysctl.proc_translated
+        OUTPUT_VARIABLE MACOS_TRANSLATED
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+
+    if(MACOS_TRANSLATED)
+        message(
+            WARNING
+            "CMake is running under Rosetta. "
+            "This may cause the project to be built for x86_64 instead of arm64. "
+            "Run CMake natively under Apple Silicon or explicitly pass "
+            "-DCMAKE_OSX_ARCHITECTURES=arm64"
+        )
+    endif()
+endif()
+
 project(mcpp VERSION ${PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 17)
